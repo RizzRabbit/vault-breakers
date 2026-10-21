@@ -49,7 +49,7 @@ export const RULES_MD = `
 - In the base game and Ante, VAULTs trigger one of three Free Spins tiers. Every tier awards {{FS_SPINS}} Free Spins:
 - 3 VAULTs: {{FS_SPINS}} Free Spins (REGULAR).
 - 4 VAULTs: {{FS_SPINS}} Super Free Spins (SUPER). Every spot starts at x{{SUPER_START}}.
-- 5+ VAULTs: {{FS_SPINS}} Epic Free Spins (EPIC). Every spot starts at x{{EPIC_START}}, and the round always pays at least {{EPIC_MIN_WIN}}x the bet.
+- 5+ VAULTs: {{FS_SPINS}} Epic Free Spins (EPIC). Every spot starts at x{{EPIC_START}}, and the Epic Free Spins always pay at least {{EPIC_MIN_WIN}}x the base bet, not counting the triggering spin.
 - 3+ VAULTs during Free Spins add {{RETRIGGER_SPINS}} more spins and keep the same tier. There's no limit on retriggers.
 
 ## Vault Meter (Free Spins only)
