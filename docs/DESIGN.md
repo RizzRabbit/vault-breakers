@@ -23,7 +23,7 @@
 ## Free spins
 - 3 / 4 / 5+ scatters award 10 / 12 / 15 free spins.
 - 3+ scatters during free spins: +5 spins. No retrigger limit.
-- Free spins use the same pay multiple in every mode (base, ante, bonus, super): {{FS_MULT}}x the base paytable, filled from the math checklist.
+- Free spins use the same pay multiple in every mode (base, ante, bonus, super): 1.625x the base paytable.
 
 ## Vault Meter (free spins only)
 - Each tumble (cascade after a win) in free spins adds 1 to the meter; the opening drop of a spin does not count.
