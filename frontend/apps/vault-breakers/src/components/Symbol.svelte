@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { Sprite } from 'pixi-svelte';
 
-	import SymbolSpine from './SymbolSpine.svelte';
 	import SymbolSprite from './SymbolSprite.svelte';
 	import type { SymbolState, RawSymbol } from '../game/types';
 	import { SYMBOL_SIZE } from '../game/constants';
 	import { getSymbolInfo } from '../game/utils';
-	import { getContext } from '../game/context';
 
 	type Props = {
 		x?: number;
@@ -18,33 +16,14 @@
 	};
 
 	const props: Props = $props();
-	const context = getContext();
 	const symbolInfo = $derived(getSymbolInfo({ rawSymbol: props.rawSymbol, state: props.state }));
-	const isSprite = $derived(symbolInfo.type === 'sprite');
 	const showWinFrame = $derived(
 		['win', 'postWinStatic', 'explosion'].includes(props.state) &&
 			!['S'].includes(props.rawSymbol.name),
 	);
 </script>
 
-{#if isSprite}
-	<SymbolSprite {symbolInfo} state={props.state} x={props.x} y={props.y} oncomplete={props.oncomplete} />
-{:else}
-	<SymbolSpine
-		loop={props.loop}
-		{symbolInfo}
-		x={props.x}
-		y={props.y}
-		listener={{
-			complete: props.oncomplete,
-			event: (_, event) => {
-				if (event.data?.name === 'wildExplode') {
-					context.eventEmitter?.broadcast({ type: 'soundOnce', name: 'sfx_wild_explode' });
-				}
-			},
-		}}
-	/>
-{/if}
+<SymbolSprite {symbolInfo} state={props.state} x={props.x} y={props.y} oncomplete={props.oncomplete} />
 
 {#if showWinFrame}
 	<Sprite

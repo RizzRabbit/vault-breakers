@@ -30,6 +30,9 @@
 	import FreeSpinOutro from './FreeSpinOutro.svelte';
 	import Transition from './Transition.svelte';
 	import VaultMeter from './VaultMeter.svelte';
+	import GameRules from './GameRules.svelte';
+	import MaxWin from './MaxWin.svelte';
+	import VaultFly from './VaultFly.svelte';
 
 	const context = getContext();
 
@@ -66,6 +69,10 @@
 		</MainContainer>
 
 		<MainContainer>
+			<MultiplierGrid layer="frames" />
+		</MainContainer>
+
+		<MainContainer>
 			<Board />
 			<Anticipations />
 			<TumbleWinAmount />
@@ -75,12 +82,8 @@
 			<TumbleBoard />
 		</MainContainer>
 
-		<!-- spot multipliers drawn over the symbols so the x2..x128 labels stay readable -->
 		<MainContainer>
-			<MultiplierGrid />
-		</MainContainer>
-
-		<MainContainer>
+			<MultiplierGrid layer="labels" />
 			<ClusterWinAmounts />
 		</MainContainer>
 
@@ -108,7 +111,9 @@
 			<FreeSpinCounter />
 		{/if}
 		<VaultMeter />
+		<VaultFly />
 		<FreeSpinOutro />
+		<MaxWin />
 		<Transition />
 
 	{/if}
@@ -116,6 +121,11 @@
 
 <Modals>
 	{#snippet version()}
+		{#if stateModal.modal?.name === 'gameRules'}
+			<GameRules view="rules" />
+		{:else if stateModal.modal?.name === 'payTable'}
+			<GameRules view="paytable" />
+		{/if}
 		<GameVersion version="0.0.0" />
 	{/snippet}
 </Modals>

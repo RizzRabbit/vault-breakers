@@ -14,8 +14,8 @@
 	import { anchorToPivot, BitmapText, Container, Sprite, type Sizes } from 'pixi-svelte';
 
 	const context = getContext();
-	const PANEL_KEY_DESKTOP = 'Frame_FSCounter.png';
-	const PANEL_RATIO_DESKTOP = 824 / 622;
+	const PANEL_KEY_DESKTOP = 'vb_vault_meter_frame';
+	const PANEL_RATIO_DESKTOP = 992 / 623;
 	const panelKey = PANEL_KEY_DESKTOP;
 	const panelWidth = $derived(SYMBOL_SIZE * 2);
 	const panelSizes = $derived({
@@ -23,15 +23,12 @@
 		height: panelWidth / PANEL_RATIO_DESKTOP,
 	});
 	const scale = 1;
-	const position = $derived({
-		x:
-			context.stateGameDerived.boardLayout().x -
-			context.stateGameDerived.boardLayout().width * 0.5 -
-			panelSizes.width -
-			SYMBOL_SIZE * 0.7,
-		y:
-			context.stateGameDerived.boardLayout().y -
-			context.stateGameDerived.boardLayout().height * 0.5,
+	// portrait: panel sits above the board, left of centre (next to the Vault Meter) (side slots are off-screen there)
+	const position = $derived.by(() => {
+		const b = context.stateGameDerived.boardLayout();
+		if (context.stateLayoutDerived.layoutType() === 'portrait')
+			return { x: b.x - panelSizes.width - SYMBOL_SIZE * 0.1, y: b.y - b.height * 0.5 - panelSizes.height - SYMBOL_SIZE * 0.75 };
+		return { x: b.x - b.width * 0.5 - panelSizes.width - SYMBOL_SIZE * 0.7, y: b.y - b.height * 0.5 };
 	});
 
 	const fontSize = SYMBOL_SIZE * 0.275;

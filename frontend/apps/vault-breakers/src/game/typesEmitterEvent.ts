@@ -3,7 +3,6 @@ import type { EmitterEventBoardFrame } from '../components/BoardFrame.svelte';
 import type { EmitterEventClusterWinAmounts } from '../components/ClusterWinAmounts.svelte';
 import type { EmitterEventTumbleBoard } from '../components/TumbleBoard.svelte';
 import type { EmitterEventTumbleWinAmount } from '../components/TumbleWinAmount.svelte';
-import type { EmitterEventGlobalMultiplier } from '../components/GlobalMultiplier.svelte';
 import type { EmitterEventFreeSpinIntro } from '../components/FreeSpinIntro.svelte';
 import type { EmitterEventFreeSpinCounter } from '../components/FreeSpinCounter.svelte';
 import type { EmitterEventFreeSpinOutro } from '../components/FreeSpinOutro.svelte';
@@ -12,6 +11,14 @@ import type { EmitterEventSound } from '../components/Sound.svelte';
 import type { EmitterEventMultiplierGrid } from '../components/MultiplierGrid.svelte';
 import type { EmitterEventVaultMeter } from '../components/VaultMeter.svelte';
 import type { EmitterEventTransition } from '../components/Transition.svelte';
+import type { EmitterEventMaxWin } from '../components/MaxWin.svelte';
+import type { EmitterEventVaultFly } from '../components/VaultFly.svelte';
+
+// legacy global-multiplier events (still broadcast by the handlers; no listener in Vault Breakers)
+type EmitterEventGlobalMultiplier =
+	| { type: 'globalMultiplierShow' }
+	| { type: 'globalMultiplierHide' }
+	| { type: 'globalMultiplierUpdate'; multiplier: number };
 
 export type EmitterEventGame =
 	| EmitterEventBoard
@@ -19,7 +26,6 @@ export type EmitterEventGame =
 	| EmitterEventClusterWinAmounts
 	| EmitterEventTumbleBoard
 	| EmitterEventTumbleWinAmount
-	| EmitterEventGlobalMultiplier
 	| EmitterEventWin
 	| EmitterEventFreeSpinIntro
 	| EmitterEventFreeSpinCounter
@@ -27,4 +33,7 @@ export type EmitterEventGame =
 	| EmitterEventSound
 	| EmitterEventMultiplierGrid
 	| EmitterEventTransition
-	| EmitterEventVaultMeter;
+	| EmitterEventVaultMeter
+	| EmitterEventMaxWin
+	| EmitterEventVaultFly
+	| EmitterEventGlobalMultiplier;

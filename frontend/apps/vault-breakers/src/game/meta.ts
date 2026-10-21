@@ -15,9 +15,10 @@ const SYMBOL_COLORS: Record<string, string> = {
 export const symbolImage = (name: string) =>
 	svg(name === 'S' ? 'VAULT' : name === 'W' ? 'WILD' : (config.symbols as any)[name].label.split(' ')[0].slice(0, 7), SYMBOL_COLORS[name] ?? '#444');
 
-const bonusIcon = svg('BUY', '#7a2bbd');
-const superIcon = svg('SUPER', '#b8860b');
-const anteIcon = svg('ANTE', '#2b6cbd');
+// Vault Breakers buy-menu icons (static/assets/sprites/vaultBreakers/icon_*.png)
+const bonusIcon = new URL('../../assets/sprites/vaultBreakers/icon_bonus.png', import.meta.url).href;
+const superIcon = new URL('../../assets/sprites/vaultBreakers/icon_super.png', import.meta.url).href;
+const anteIcon = new URL('../../assets/sprites/vaultBreakers/icon_ante.png', import.meta.url).href;
 const fs = config.freeSpins;
 const maxWin = config.maxWin.toLocaleString('en-US');
 

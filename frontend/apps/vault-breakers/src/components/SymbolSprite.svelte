@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Sprite } from 'pixi-svelte';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, untrack } from 'svelte';
 
 	import { getSymbolInfo } from '../game/utils';
 	import { SYMBOL_SIZE } from '../game/constants';
@@ -17,16 +17,28 @@
 	const props: Props = $props();
 
 	// Static Vault Breakers art. Win = scale pulse + additive glow, explosion = pop and fade,
-	// land = small bounce. oncomplete fires when the effect ends (instantly for static states).
-	const DURATION: Partial<Record<SymbolState, number>> = { win: 700, explosion: 380, land: 220 };
+	// land = small bounce. oncomplete is called exactly once per (state, symbol) run: if a new run
+	// starts (same position re-animated) or the sprite unmounts before the effect ends, the pending
+	// callback is flushed immediately instead of being dropped.
+	const DURATION: Partial<Record<SymbolState, number>> = { win: 450, explosion: 300, land: 180 };
 
 	let scale = $state(1);
 	let alpha = $state(1);
 	let glow = $state(0);
 	let raf = 0;
+	let pending: (() => void) | undefined;
+
+	const flush = () => {
+		const done = pending;
+		pending = undefined;
+		done?.();
+	};
 
 	const run = (state: SymbolState | undefined, done?: () => void) => {
 		cancelAnimationFrame(raf);
+		// same callback re-armed: keep it pending (called once at the end); otherwise flush the old one
+		if (pending !== done) flush();
+		else pending = undefined;
 		scale = 1;
 		alpha = 1;
 		glow = 0;
@@ -35,6 +47,7 @@
 			done?.();
 			return;
 		}
+		pending = done;
 		const start = performance.now();
 		const step = (now: number) => {
 			const t = Math.min(1, (now - start) / duration);
@@ -55,20 +68,22 @@
 					scale = 1;
 					glow = 0;
 				}
-				done?.();
+				flush();
 			}
 		};
 		raf = requestAnimationFrame(step);
 	};
 
 	$effect(() => {
-		props.symbolInfo;
 		const state = props.state;
 		const done = props.oncomplete;
-		run(state, done);
+		untrack(() => run(state, done));
 	});
 
-	onDestroy(() => cancelAnimationFrame(raf));
+	onDestroy(() => {
+		cancelAnimationFrame(raf);
+		flush();
+	});
 
 	const width = $derived(SYMBOL_SIZE * props.symbolInfo.sizeRatios.width * scale);
 	const height = $derived(SYMBOL_SIZE * props.symbolInfo.sizeRatios.height * scale);

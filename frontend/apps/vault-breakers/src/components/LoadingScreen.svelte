@@ -28,13 +28,13 @@
 			{#if !context.stateApp.loaded}
 				<LoadingProgress y={250} width={1967 * 0.2} height={346 * 0.2}>
 					{#snippet background(sizes)}
-						<Sprite key="progressBarBackground.png" {...sizes} />
+						<Sprite key="vb_progress_bg" {...sizes} />
 					{/snippet}
 					{#snippet progress(sizes)}
-						<Sprite key="progressBar.png" {...sizes} />
+						<Sprite key="vb_progress_bar" {...sizes} />
 					{/snippet}
 					{#snippet frame(sizes)}
-						<Sprite key="progressBarFrame.png" {...sizes} />
+						<Sprite key="vb_progress_frame" {...sizes} />
 					{/snippet}
 				</LoadingProgress>
 			{/if}

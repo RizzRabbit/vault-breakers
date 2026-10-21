@@ -109,6 +109,14 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	vaultMeterUpgrade: async (bookEvent: BookEventOfType<'vaultMeterUpgrade'>) => {
 		eventEmitter.broadcast({ type: 'multiplierGridShow' });
+		// fly the new/upgraded multiplier from the meter to its spot, then commit it to the grid
+		await eventEmitter.broadcastAsync({
+			type: 'vaultFly',
+			reel: bookEvent.position.reel,
+			row: bookEvent.position.row,
+			oldMultiplier: bookEvent.oldMultiplier,
+			newMultiplier: bookEvent.newMultiplier,
+		});
 		eventEmitter.broadcast({ type: 'multiplierGridUpdate', grid: bookEvent.gridMultipliers });
 		// NOTE: position here is a 0-based grid index (same layout as gridMultipliers),
 		// unlike winInfo/tumbleBoard positions whose row includes the top padding row.
@@ -123,6 +131,8 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	wincap: async (bookEvent: BookEventOfType<'wincap'>) => {
 		stateBet.winBookEventAmount = capWin(bookEvent.amount);
+		// shown at round end: in freeSpinEnd (cut-short free spins) or finalWin (base game)
+		stateGame.wincapAmount = bookEvent.amount;
 	},
 	setTotalWin: async (bookEvent: BookEventOfType<'setTotalWin'>) => {
 		stateBet.winBookEventAmount = capWin(bookEvent.amount);
@@ -214,6 +224,10 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	freeSpinEnd: async (bookEvent: BookEventOfType<'freeSpinEnd'>) => {
 		const winLevelData = winLevelMap[bookEvent.winLevel as WinLevel];
+		if (stateGame.wincapAmount !== null) {
+			await eventEmitter.broadcastAsync({ type: 'maxWinShow', amount: stateGame.wincapAmount });
+			stateGame.wincapAmount = null;
+		}
 
 		await eventEmitter.broadcastAsync({ type: 'uiHide' });
 		stateGame.gameType = 'basegame';
@@ -277,6 +291,10 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		eventEmitter.broadcast({ type: 'multiplierGridUpdate', grid: bookEvent.gridMultipliers });
 	},
 	finalWin: async (bookEvent: BookEventOfType<'finalWin'>) => {
+		if (stateGame.wincapAmount !== null) {
+			await eventEmitter.broadcastAsync({ type: 'maxWinShow', amount: stateGame.wincapAmount });
+			stateGame.wincapAmount = null;
+		}
 		eventEmitter.broadcast({ type: 'multiplierGridClear' });
 		eventEmitter.broadcast({ type: 'multiplierGridHide' });
 		eventEmitter.broadcast({ type: 'globalMultiplierHide' });

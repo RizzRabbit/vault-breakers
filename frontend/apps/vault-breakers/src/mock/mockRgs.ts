@@ -34,6 +34,8 @@ const pick = (mode: string) => {
 	// ?book=<file> (e.g. base_shared, ante_fs, super_wincap) forces any fixture by name
 	if (forced() && forced() !== 'wincap' && forced() !== 'unmarked' && byName(forced()!)) return byName(forced()!);
 	if (forced() === 'unmarked') return byName('synthetic_unmarked_upgrade');
+	// ?book=maxgrid: SYNTHETIC copy of the unmarked fixture with every spot at x128 after the upgrade (Vault Meter MAX test)
+	if (forced() === 'maxgrid') return byName('synthetic_maxgrid');
 	if (forced() === 'wincap') return byName(`${books[key] ? key : 'base'}_wincap`);
 	const l = books[key] ?? books.base;
 	counters[key] = (counters[key] ?? -1) + 1;
@@ -118,6 +120,12 @@ export const registerMockRgs = () => {
 			},
 			openBuyMenu: () => {
 				stateModal.modal = { name: 'buyBonus' };
+			},
+			openPaytable: () => {
+				stateModal.modal = { name: 'payTable' };
+			},
+			openRules: () => {
+				stateModal.modal = { name: 'gameRules' };
 			},
 		};
 	}

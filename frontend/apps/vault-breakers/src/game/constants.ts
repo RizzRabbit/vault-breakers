@@ -35,7 +35,7 @@ export const PORTRAIT_MAIN_SIZES = {
 	height: PORTRAIT_HEIGHT,
 };
 
-export const HIGH_SYMBOLS = ['H1', 'H2', 'H3', 'H4', 'H5'];
+export const HIGH_SYMBOLS = ['H1', 'H2', 'H3', 'H4'];
 
 export const INITIAL_SYMBOL_STATE: SymbolState = 'static';
 
@@ -93,7 +93,6 @@ export const SYMBOL_INFO_MAP = {
 	H2: symbolStates('h2'),
 	H3: symbolStates('h3'),
 	H4: symbolStates('h4'),
-	H5: symbolStates('h4'),
 	L1: symbolStates('l1', 0.84),
 	L2: symbolStates('l2', 0.84),
 	L3: symbolStates('l3', 0.84),

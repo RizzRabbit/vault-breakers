@@ -7,21 +7,17 @@
 
 <script lang="ts">
 	import { CanvasSizeRectangle } from 'components-layout';
-	import { stateUrlDerived } from 'state-shared';
 	import { FadeContainer } from 'components-pixi';
 	import { waitForResolve } from 'utils-shared/wait';
-	import { BitmapText, SpineProvider, SpineSlot, SpineTrack, Sprite } from 'pixi-svelte';
+	import { BitmapText } from 'pixi-svelte';
 
 	import { getContext } from '../game/context';
 	import PressToContinue from './PressToContinue.svelte';
 	import FreeSpinAnimation from './FreeSpinAnimation.svelte';
 
-	type AnimationName = 'intro' | 'idle';
-
 	const context = getContext();
 
 	let show = $state(false);
-	let animationName = $state<AnimationName>('intro');
 	let freeSpinsFromEvent = $state(0);
 	let oncomplete = $state(() => {});
 
@@ -44,36 +40,24 @@
 
 	<FreeSpinAnimation>
 		{#snippet children({ sizes })}
-			<Sprite
-				anchor={{ x: 0.5, y: 1.2 }}
-				width={500 * 2.2}
-				height={156 * 2.2}
-				key="freespins_{stateUrlDerived.lang()}.png"
+			<BitmapText
+				anchor={0.5}
+				y={-sizes.height * 0.24}
+				text="FREE SPINS"
+				style={{ fontFamily: 'gold', fontSize: sizes.height * 0.2 }}
 			/>
-
-			<SpineProvider key="fsIntroNumber" width={sizes.width * 0.4}>
-				<SpineTrack
-					trackIndex={0}
-					{animationName}
-					loop={animationName === 'idle'}
-					listener={{
-						complete: () => (animationName = 'idle'),
-					}}
-				/>
-				<SpineSlot slotName="slot_number">
-					<BitmapText
-						anchor={{ x: 0.5, y: 0.5 }}
-						text={freeSpinsFromEvent}
-						style={{
-							fontFamily: 'gold',
-							fontSize: sizes.width * 0.15,
-							fontWeight: 'bold',
-						}}
-					/>
-				</SpineSlot>
-			</SpineProvider>
-
-			<Sprite anchor={{ x: 0.5, y: -3 }} width={183 * 2.2} height={42 * 2.2} key="freespins.png" />
+			<BitmapText
+				anchor={0.5}
+				y={sizes.height * 0.04}
+				text={`${freeSpinsFromEvent}`}
+				style={{ fontFamily: 'silver', fontSize: sizes.height * 0.3 }}
+			/>
+			<BitmapText
+				anchor={0.5}
+				y={sizes.height * 0.27}
+				text="THE VAULT IS OPEN"
+				style={{ fontFamily: 'gold', fontSize: sizes.height * 0.1 }}
+			/>
 		{/snippet}
 	</FreeSpinAnimation>
 
