@@ -131,5 +131,39 @@
   "base": "~91.5% RTP at base scale 1.9 over 1.2M spins (2.0 expected ~94-95%), hit 1 in 3.2, FS 1 in 213",
   "buy_100x": "~97.2% over 24k buys, +-3% noise"
  },
- "note": "Prototype weights; final 96.2% fit via SDK optimizer."
+ "note": "Prototype starting points; optimizer does final 96.2% fit per mode.",
+ "version": 2,
+ "modes": {
+  "base": {
+   "cost": 1,
+   "base_pay_scale": 2.0,
+   "freespin_pay_scale": 3.25,
+   "scatter_weight": 1.05
+  },
+  "ante": {
+   "cost": 1.25,
+   "base_pay_scale": 2.0,
+   "freespin_pay_scale": 3.25,
+   "scatter_weight": 1.26,
+   "note": "scatter weight x1.2 vs base; FS ~1 in 140. Doubling scatter weight gives ~130% RTP, do not use"
+  },
+  "bonus_buy": {
+   "cost": 100,
+   "freespin_pay_scale": 3.25,
+   "spins": 10
+  },
+  "super_buy": {
+   "cost": 400,
+   "freespin_pay_scale": 2.95,
+   "spins": 10,
+   "start_all_spots": 2
+  }
+ },
+ "vault_meter": "FS only: +1 per tumble; at 10/20/30 one random marked spot doubles (max 128); if none marked, random spot set to x2. Resets each FS round.",
+ "sim_results_v2": {
+  "base": "~96.4% (360k spins), FS 1 in 208",
+  "ante_at_x1.15": "~93.6% (480k), FS 1 in 143 -> raised to x1.2",
+  "bonus_buy": "~97.4% (12k)",
+  "super_buy_at_2.95": "~98.6% (6k, noisy)"
+ }
 }

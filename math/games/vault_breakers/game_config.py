@@ -112,6 +112,8 @@ class GameConfig(Config):
         self.base_pay_scale = 2.0
         self.freegame_pay_scale = 3.25
         self.freegame_pay_ratio = self.freegame_pay_scale / self.base_pay_scale
+        # Per-mode free-spin pay scale (handoff v2): super buy pays FS at 2.95
+        self.mode_freegame_pay_scale = {"base": 3.25, "ante": 3.25, "bonus": 3.25, "super": 2.95}
 
         self.include_padding = True
         self.special_symbols = {"wild": ["W"], "scatter": ["S"]}
@@ -137,7 +139,7 @@ class GameConfig(Config):
         self.vault_meter_thresholds = [10, 20, 30]
 
         # Reels
-        reels = {"BR0": "BR0.csv", "BR1": "BR1.csv", "FR0": "FR0.csv"}  # BR1 = ante base reels (scatter x1.4)
+        reels = {"BR0": "BR0.csv", "BR1": "BR1.csv", "FR0": "FR0.csv"}  # BR1 = ante base reels (~1.2x BR0 scatter count)
         self.reels = {}
         for r, f in reels.items():
             self.reels[r] = self.read_reels_csv(os.path.join(self.reels_path, f))
@@ -156,7 +158,7 @@ class GameConfig(Config):
                 distributions=[
                     Distribution(
                         criteria="wincap",
-                        quota=0.001,
+                        quota=0.0001,
                         win_criteria=mode_maxwins["base"],
                         conditions={
                             "reel_weights": {
@@ -183,7 +185,7 @@ class GameConfig(Config):
                     ),
                     Distribution(
                         criteria="0",
-                        quota=0.4,
+                        quota=0.3999,
                         win_criteria=0.0,
                         conditions={
                             "reel_weights": {self.basegame_type: {"BR0": 1}},
@@ -213,7 +215,7 @@ class GameConfig(Config):
                 distributions=[
                     Distribution(
                         criteria="wincap",
-                        quota=0.001,
+                        quota=0.0002,
                         win_criteria=mode_maxwins["bonus"],
                         conditions={
                             "reel_weights": {
@@ -227,7 +229,7 @@ class GameConfig(Config):
                     ),
                     Distribution(
                         criteria="freegame",
-                        quota=0.999,
+                        quota=0.9998,
                         conditions={
                             "reel_weights": {
                                 self.basegame_type: {"BR0": 1},

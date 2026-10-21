@@ -416,7 +416,7 @@ Free spins only. Emitted right after the `vaultMeterUpdate` that reaches 10, 20 
 - `gridMultipliers`: the full grid after the upgrade, in the same layout as `updateGrid`
 
 ### Bet modes
-`base` (1x), `ante` (1.25x, base game on BR1 reels with 1.4x scatter frequency, set by `ANTE_SCATTER_MULT` in `generate_reels.py`), `bonus` (100x buy, 10 free spins), and `super` (400x buy, 10 free spins). In `super`, an `updateGrid` event with every spot at 2 is emitted at the start of free spins.
+`base` (1x), `ante` (1.25x, base game on BR1 reels with ~1.2x the BR0 scatter count (85 vs 70), set by `ANTE_SCATTER_MULT` in `generate_reels.py`), `bonus` (100x buy, 10 free spins), and `super` (400x buy, 10 free spins). In `super`, an `updateGrid` event with every spot at 2 is emitted at the start of free spins.
 
 ## Event Sequences
 

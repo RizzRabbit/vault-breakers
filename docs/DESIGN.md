@@ -14,9 +14,8 @@
 - Scatter (Vault): triggers free spins; does not pay in clusters
 
 ## Spot multipliers
-- First win on a spot marks it (no multiplier yet).
-- Each further win on a marked spot sets/doubles its multiplier: x2, x4, ... up to x128.
-- A cluster pays base amount x (sum of multipliers on its spots); if no spot has a multiplier, x1.
+- First win on a spot marks it. Each further win on a marked spot doubles its multiplier: x2, x4, ... up to x128.
+- Cluster multiplier = sum of spot values across the cluster, where an unmarked spot adds 0, a marked-only spot adds 1, and a multiplied spot adds its multiplier. If the sum is 0 (no marked spots), the cluster pays x1.
 - Base game: marks and multipliers reset every spin.
 - Free spins: marks and multipliers persist for the whole round.
 
@@ -25,15 +24,15 @@
 - 3+ scatters during free spins: +5 spins.
 
 ## Vault Meter (free spins only)
-- Each tumble in free spins adds 1 to the meter.
-- At 10 / 20 / 30 one random marked spot jumps one tier (x2->x4 etc., max x128). If no spot is marked, a random spot becomes x2.
+- Each tumble (cascade after a win) in free spins adds 1 to the meter; the opening drop of a spin does not count.
+- At 10 / 20 / 30 one random marked spot jumps one tier (x2->x4 etc., max x128). If no marked spot can be upgraded (none marked, or all marked spots at x128), a random unmarked spot becomes x2.
 - Meter persists for the whole free spins round.
 
 ## Bet modes (v1)
 - base: cost 1x
 - bonus: buy free spins, cost 100x
-- super: buy free spins with every spot pre-set to x2, cost 400x
-- ante: cost 1.25x per spin, increased scatter chance in base (about 1.4x, tuned so ante RTP is 96.2%)
+- super: buy free spins with every spot pre-set to x2, cost 400x (may use its own lower free-spin pay scale for RTP tuning)
+- ante: cost 1.25x per spin, increased scatter chance in base (free spins target about 1 in 140; scatter weight about 1.2x base, adjusted as needed to hit that rate, then RTP rebalanced to 96.2%)
 
 ## Targets
 - RTP 96.2% in each mode

@@ -38,3 +38,4 @@ math/games/*/configs/
 *.log
 *.tmp
 .cache/
+math/optimization_program/target/

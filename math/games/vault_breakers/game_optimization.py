@@ -28,7 +28,7 @@ class OptimizationSetup:
                     "freegame": ConstructConditions(
                         rtp=0.45, hr=200, search_conditions={"symbol": "scatter"}
                     ).return_dict(),
-                    "basegame": ConstructConditions(hr=3.2, rtp=0.502).return_dict(),
+                    "basegame": ConstructConditions(hr=3.5, rtp=0.502).return_dict(),
                 },
                 "scaling": ConstructScaling(
                     [
@@ -112,6 +112,9 @@ class OptimizationSetup:
 
         self.game_config.opt_params["ante"] = deepcopy(self.game_config.opt_params["base"])
         self.game_config.opt_params["super"] = deepcopy(self.game_config.opt_params["bonus"])
-        # NOTE: ante/super condition splits are placeholders pending the new Slot Expert handoff.
+        # Ante: BR1 reels (~1.2x scatters) -> FS target ~1 in 140, larger FS share of RTP.
+        ante_c = self.game_config.opt_params["ante"]["conditions"]
+        ante_c["freegame"] = ConstructConditions(rtp=0.55, hr=140, search_conditions={"symbol": "scatter"}).return_dict()
+        ante_c["basegame"] = ConstructConditions(hr=3.5, rtp=0.402).return_dict()
 
         verify_optimization_input(self.game_config, self.game_config.opt_params)

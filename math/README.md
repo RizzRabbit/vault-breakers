@@ -46,8 +46,11 @@ math/
 │   ├── handoff.json     # Paytable and symbol weights from math designer
 │   └── sim.py           # Reference simulator
 ├── samples/             # Sample book outputs (generated)
-│   ├── base_sample.json
-│   └── bonus_sample.json
+│   ├── base_win_tumbles_multipliers.json
+│   ├── base_fs_trigger.json
+│   ├── ante_fs_trigger.json
+│   ├── bonus_round.json
+│   └── super_round.json
 ├── reels/               # Reel strip files
 │   ├── BR0.csv         # Base game reels
 │   └── FR0.csv         # Free spin reels

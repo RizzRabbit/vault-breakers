@@ -39,9 +39,11 @@ class GameCalculations(Executables):
                     board_mult = max(board_mult, 1)
                     
                     sym_win = config.paytable[(syms_in_cluster, sym)] * (
-                        config.freegame_pay_ratio if self.gametype == config.freegame_type else 1.0
+                        (config.mode_freegame_pay_scale.get(getattr(self, "betmode", "base"), config.freegame_pay_scale) / config.base_pay_scale)
+                        if self.gametype == config.freegame_type
+                        else 1.0
                     )
-                    symwin_mult = round(sym_win * board_mult * global_multiplier, 2)
+                    symwin_mult = round(sym_win * board_mult * global_multiplier, 1)  # RGS: payouts in 0.1x steps
                     total_win += symwin_mult
                     
                     json_positions = [{"reel": p[0], "row": p[1]} for p in cluster]
