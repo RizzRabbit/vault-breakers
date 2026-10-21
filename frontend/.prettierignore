@@ -1,0 +1,42 @@
+# See .gitignore
+
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# turbo
+.turbo
+
+# svelte-kit
+.svelte-kit
+build
+out/
+
+# storybook
+build-storybook.log
+storybook-static
+
+# spine/atlas json
+**/src/game/assets/**/*.json
+packages/**/assets/**/*.json
+packages/shared-assets/src/**/*.json

@@ -1,0 +1,21 @@
+{
+	"name": "utils-bet",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"format": "prettier --write --ignore-path=../../.prettierignore .",
+		"lint": "eslint \"src\""
+	},
+	"type": "module",
+	"devDependencies": {
+		"eslint": "9.21.0",
+		"eslint-config-custom": "workspace:*",
+		"config-ts": "workspace:*"
+	},
+	"dependencies": {
+		"envs": "workspace:*",
+		"rgs-requests": "workspace:*",
+		"pixi-svelte": "workspace:*"
+	}
+}

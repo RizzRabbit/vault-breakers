@@ -1,0 +1,24 @@
+{
+	"name": "utils-shared",
+	"version": "0.0.0",
+	"main": "./index.ts",
+	"types": "./index.ts",
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"format": "prettier --write --ignore-path=../../.prettierignore .",
+		"lint": "eslint *.ts*"
+	},
+	"devDependencies": {
+		"eslint": "9.21.0",
+		"config-ts": "workspace:*",
+		"eslint-config-custom": "workspace:*"
+	},
+	"dependencies": {
+		"lodash": "4.17.16",
+		"@types/lodash": "4.17.16",
+		"@lingui/core": "5.2.0",
+		"state-shared": "workspace:*",
+		"constants-shared": "workspace:*"
+	}
+}

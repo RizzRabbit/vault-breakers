@@ -1,0 +1,43 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["**/.env.*local", "**/.env"],
+	"globalEnv": ["NODE_ENV", "PUBLIC_CHROMATIC", "PUBLIC_SITE_MODE", "PUBLIC_SENTRY_DSN"],
+	"tasks": {
+		"dev": {
+			"cache": false,
+			"persistent": true,
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".svelte-kit/**", ".vercel/**"]
+		},
+		"preview": {
+			"outputs": []
+		},
+		"storybook": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
+		"real-build-storybook": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
+		"lint": {
+			"outputs": []
+		},
+		"format": {
+			"outputs": []
+		},
+		"e2e": {
+			"outputs": []
+		},
+		"e2e-smoke": {
+			"outputs": []
+		},
+		"e2e-mobile": {
+			"outputs": []
+		}
+	}
+}

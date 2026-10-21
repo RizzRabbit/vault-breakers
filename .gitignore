@@ -39,3 +39,6 @@ math/games/*/configs/
 *.tmp
 .cache/
 math/optimization_program/target/
+
+.svelte-kit/
+.turbo/

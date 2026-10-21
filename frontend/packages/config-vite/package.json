@@ -1,0 +1,22 @@
+{
+	"type": "module",
+	"name": "config-vite",
+	"version": "0.0.0",
+	"main": "./index.js",
+	"types": "./index.js",
+	"license": "MIT",
+	"scripts": {
+		"format": "prettier --write --ignore-path=../../.prettierignore .",
+		"lint": "eslint *.js*"
+	},
+	"devDependencies": {
+		"eslint": "9.21.0",
+		"eslint-config-custom": "workspace:*"
+	},
+	"dependencies": {
+		"svelte": "5.20.5",
+		"vite": "6.2.0",
+		"@sveltejs/kit": "2.17.3",
+		"@lingui/vite-plugin": "5.2.0"
+	}
+}

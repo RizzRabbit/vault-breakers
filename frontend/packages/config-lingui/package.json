@@ -1,0 +1,12 @@
+{
+	"name": "config-lingui",
+	"version": "0.0.1",
+	"type": "module",
+	"main": "./index.ts",
+	"license": "MIT",
+	"scripts": {
+	},
+	"dependencies": {
+		"@lingui/conf": "5.2.0"
+	}
+}

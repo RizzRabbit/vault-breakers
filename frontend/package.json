@@ -1,0 +1,36 @@
+{
+  "name": "vault-breakers-frontend",
+  "version": "0.0.0",
+  "private": true,
+	"license": "MIT",
+  "scripts": {
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "dev": "turbo run dev --filter=vault-breakers...",
+    "build": "turbo run build --filter=vault-breakers...",
+    "preview": "turbo run preview",
+    "real-build-storybook": "turbo run real-build-storybook",
+    "storybook": "turbo run storybook",
+    "publish-packages": "turbo run build lint test && changeset version && changeset publish",
+    "e2e": "turbo run e2e",
+    "e2e-smoke": "turbo run e2e-smoke",
+    "e2e-mobile": "turbo run e2e-mobile"
+  },
+  "dependencies": {
+    "eslint": "9.21.0",
+    "eslint-config-custom": "workspace:*",
+    "prettier": "3.5.2",
+    "prettier-plugin-svelte": "3.3.3",
+    "turbo": "2.4.4"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "packageManager": "pnpm@10.5.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "svelte-preprocess"
+    ]
+  }
+}
