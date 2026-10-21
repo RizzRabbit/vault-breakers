@@ -13,7 +13,7 @@
 - In the base game, spots reset every spin. In Free Spins, they stay for the whole round.
 
 ## Free Spins
-- Wins in Free Spins pay {{FS_MULT_BASE}}x (Base), {{FS_MULT_ANTE}}x (Ante), {{FS_MULT_BONUS}}x (Bonus Buy) and {{FS_MULT_SUPER}}x (Super Buy) the paytable.
+- All wins in Free Spins pay 2x the paytable, in every bet mode.
 - 3, 4 or 5+ VAULTs award 10, 12 or 15 Free Spins.
 - 3+ VAULTs during Free Spins add 5 more spins. There's no limit on retriggers.
 
