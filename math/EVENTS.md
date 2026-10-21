@@ -169,7 +169,7 @@ The last event in every book.
 - `base` (1×)
 - `ante` (1.25×): base game on BR1 reels, ~1.2× the BR0 scatter count (85 vs 70), set by `ANTE_SCATTER_MULT` in `generate_reels.py`
 - `bonus` (100× buy): 10 free spins
-- `super` (400× buy): 10 free spins with every spot starting at x2 (an extra `updateGrid` follows `freeSpinTrigger`) and a free-spin pay scale of 2.95
+- `super` (400× buy): 10 free spins with every spot starting at x2 (an extra `updateGrid` follows `freeSpinTrigger`) (free spins pay at the same scale as every other mode)
 
 All modes target 96.2% RTP and cap wins at 10,000×.
 
@@ -192,4 +192,4 @@ base spin events → `freeSpinTrigger` → then for each spin: `updateFreeSpin` 
 cluster_win = paytable_value × clusterMult × globalMult   (rounded to 0.1×)
 clusterMult = sum of spot values under the cluster (unmarked 0, marked 1, then 2..128), or 1 if that sum is 0
 ```
-`paytable_value` is the handoff value × 2.0 in the base game. In free spins it's × 3.25, or × 2.95 in `super`.
+`paytable_value` is the handoff value × 2.0 in the base game. In free spins it's × 3.25 in every mode, i.e. 1.625× the base game value.

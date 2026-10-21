@@ -154,7 +154,8 @@
   },
   "super_buy": {
    "cost": 400,
-   "freespin_pay_scale": 2.95,
+   "freespin_pay_scale": 3.25,
+   "note_scale": "user decision 2026-10-21: super uses the same FS pay scale as other modes (was 2.95)",
    "spins": 10,
    "start_all_spots": 2
   }

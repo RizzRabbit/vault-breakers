@@ -241,6 +241,9 @@ def tumble_board_event(gamestate):
             else:
                 exploding.append({"reel": pos["reel"], "row": pos["row"]})
 
+    # De-duplicate: a wild shared by several clusters explodes once.
+    seen = set()
+    exploding = [p for p in exploding if not ((p["reel"], p["row"]) in seen or seen.add((p["reel"], p["row"])))]
     exploding = sorted(exploding, key=lambda x: x["reel"])
 
     new_symbols = [[] for _ in range(gamestate.config.num_reels)]

@@ -112,8 +112,8 @@ class GameConfig(Config):
         self.base_pay_scale = 2.0
         self.freegame_pay_scale = 3.25
         self.freegame_pay_ratio = self.freegame_pay_scale / self.base_pay_scale
-        # Per-mode free-spin pay scale (handoff v2): super buy pays FS at 2.95
-        self.mode_freegame_pay_scale = {"base": 3.25, "ante": 3.25, "bonus": 3.25, "super": 2.95}
+        # Free-spin pay scale 3.25 in every mode (super uses the same FS scale; its only difference is x2 start spots)
+        self.mode_freegame_pay_scale = {"base": 3.25, "ante": 3.25, "bonus": 3.25, "super": 3.25}
 
         self.include_padding = True
         self.special_symbols = {"wild": ["W"], "scatter": ["S"]}

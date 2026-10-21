@@ -36,7 +36,7 @@ RGS mode names (exact, lowercase): `base`, `ante`, `bonus`, `super`.
 | `base` | 1× | Standard play (reels BR0) |
 | `ante` | 1.25× | Base game on reels BR1 (~1.2× BR0 scatter count, 85 vs 70); FS ~1 in 140 |
 | `bonus` | 100× | Buy: starts directly in 10 free spins |
-| `super` | 400× | Buy: 10 free spins with every spot starting at x2; FS pay scale 2.95 |
+| `super` | 400× | Buy: 10 free spins with every spot starting at x2 (same FS pay scale as other modes) |
 
 All four modes target 96.2% RTP with a 10,000× win cap.
 
@@ -158,7 +158,7 @@ The optimizer reweights the simulated books to hit 96.2% RTP in every mode.
 The game uses different pay scales for base and free spin modes:
 
 - **Base Game** (base, ante): 2.0× multiplier on paytable values
-- **Free Spins**: 3.25× (base, ante, bonus); 2.95× in `super`
+- **Free Spins**: 3.25× in every mode (= 1.625× the base-scaled paytable)
 
 These scales are applied in `game_config.py` when constructing the paytable from the base values in `design/handoff.json`.
 
