@@ -34,13 +34,15 @@ authenticate / play / end-round / bet-event / replay locally from the books in `
 starting with a $1,000 balance. Books are served in order per mode. `&book=wincap` forces the
 10,000x book on any round.
 
-| Mode  | Book | Origin |
-|-------|------|--------|
-| BASE  | `base_sample.json`  | copied from `math/samples/` |
-| BONUS | `bonus_sample.json` | copied from `math/samples/` |
-| ANTE  | `ante_mock.json`    | **synthetic**: base sample relabelled (no ante sample from math yet) |
-| SUPER | `super_mock.json`   | **synthetic**: bonus sample + super-buy x2 `updateGrid` + Vault Meter events |
-| any (`&book=wincap`) | `wincap_mock.json` | **synthetic**: bonus sample truncated and capped at 10,000x |
+| Mode | Books (`src/mock/books/`) | Origin |
+|------|------|--------|
+| base | `base_win`, `base_zero`, `base_fs`, `base_wincap` | real, `books_base.jsonl.zst` (math 6ec4aaf) |
+| ante | `ante_win`, `ante_zero`, `ante_fs`, `ante_wincap` | real, `books_ante.jsonl.zst` |
+| bonus | `bonus_fs`, `bonus_fs2`, `bonus_wincap` | real, `books_bonus.jsonl.zst` |
+| super | `super_fs`, `super_fs2`, `super_wincap` | real, `books_super.jsonl.zst` |
+| any (`&book=unmarked`) | `synthetic_unmarked_upgrade` | **synthetic**: real bonus book with its `vaultMeterUpgrade` moved to an unmarked spot (0 -> x2) |
+
+`&book=wincap` serves the real 10,000x book for the active mode.
 
 The client never decides outcomes; everything shown comes from books (mock or RGS).
 
@@ -93,18 +95,10 @@ row 6 are padding, visible rows are 1–5. `gridMultipliers` is `[reel][row]` 5�
 | `freeSpinEnd` | `amount`, `winLevel` |
 | `finalWin` | `amount` |
 | `wincap` | `amount` |
-| `vaultMeterUpdate` (provisional) | `meter`, `nextThreshold` (10/20/30 or null) |
-| `vaultMeterUpgrade` (provisional) | `meter`, `position {reel,row}` (**0-based grid index**), `oldMultiplier`, `newMultiplier`, `gridMultipliers` |
+| `vaultMeterUpdate` | `meter`, `nextThreshold` (10/20/30 or null) |
+| `vaultMeterUpgrade` | `meter`, `position {reel,row}` (**0-based grid index**), `oldMultiplier`, `newMultiplier`, `gridMultipliers` |
 
-For robustness the client also accepts the names currently written in `math/EVENTS.md`
-(`setTumbleWin`, `updateFreeSpin.currentFs/totalFs`, `freeSpinEnd.totalWin`, `enterBonus`).
-
-### Provisional events
-
-`vaultMeterUpdate` / `vaultMeterUpgrade` were agreed with the backend and are documented in
-`math/EVENTS.md` (#15, #16), but no real sample book contains them yet. The UI is exercised by
-the synthetic `super_mock.json` (meter pre-seeded at 3 so the 10 threshold is reached).
-Replace with real `super` books from the math SDK when available.
+Field names follow the emitted books and math/EVENTS.md (c7249c1): `updateTumbleWin`, `updateFreeSpin.amount/total`, `freeSpinEnd.amount`; buy rounds start with `freeSpinTrigger` (no `enterBonus`).
 
 ## Tests
 
@@ -117,6 +111,6 @@ buy (via buy menu + confirm) and super buy all played end to end with no console
 - Art and sounds are the SDK sample's mining theme as placeholders (H1–H4 → Gold Bar, Diamond,
   Ruby, Emerald in the paytable text only). Symbol art, vault theme and logo still to do.
 - The bottom board row sits partly behind the bet bar on 16:9 desktop; layout needs a pass.
-- No real `ante`, `super` or wincap books yet (synthetic fixtures above).
+- Mock books are real published books (math 6ec4aaf) in `src/mock/books/`; the only synthetic one is `synthetic_unmarked_upgrade.json` (`?book=unmarked`). Event names/fields follow the emitted books: `updateTumbleWin`, `updateFreeSpin` `amount`/`total`, `freeSpinEnd` `amount`; no `enterBonus`.
 - `pnpm build` uses `scripts-build.mjs` to exit once the static site is written, because
   `vite build` otherwise hangs (a sass-embedded child process keeps Node alive).

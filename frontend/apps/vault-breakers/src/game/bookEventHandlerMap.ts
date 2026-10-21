@@ -58,7 +58,10 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	winInfo: async (bookEvent: BookEventOfType<'winInfo'>) => {
 		const promise1 = async () => {
 			eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_winlevel_small' });
-			await animateSymbols({ positions: _.flatten(bookEvent.wins.map((win) => win.positions)) });
+			// a wild can belong to several clusters; animating the same symbol twice never resolves
+			await animateSymbols({
+				positions: _.uniqBy(_.flatten(bookEvent.wins.map((win) => win.positions)), (p) => `${p.reel}:${p.row}`),
+			});
 		};
 
 		const promise2 = async () => {
@@ -89,14 +92,6 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			});
 		}
 	},
-	// Aliases for the names documented in math/EVENTS.md (the sample books use updateTumbleWin)
-	setTumbleWin: async (bookEvent: BookEventOfType<'setTumbleWin'>) => {
-		if (bookEvent.amount > 0) {
-			eventEmitter.broadcast({ type: 'tumbleWinAmountShow' });
-			eventEmitter.broadcast({ type: 'tumbleWinAmountUpdate', amount: bookEvent.amount, animate: false });
-		}
-	},
-	enterBonus: async () => {},
 	// Vault Meter (free spins only; math/EVENTS.md 15-16)
 	vaultMeterUpdate: async (bookEvent: BookEventOfType<'vaultMeterUpdate'>) => {
 		eventEmitter.broadcast({ type: 'vaultMeterUpdate', meter: bookEvent.meter, nextThreshold: bookEvent.nextThreshold });
@@ -192,9 +187,8 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		eventEmitter.broadcast({ type: 'freeSpinCounterShow' });
 		eventEmitter.broadcast({
 			type: 'freeSpinCounterUpdate',
-			// published books use amount/total; EVENTS.md documents currentFs/totalFs
-			current: bookEvent.amount ?? bookEvent.currentFs,
-			total: bookEvent.total ?? bookEvent.totalFs,
+			current: bookEvent.amount,
+			total: bookEvent.total,
 		});
 	},
 	updateGlobalMult: async (bookEvent: BookEventOfType<'updateGlobalMult'>) => {
@@ -219,7 +213,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		winLevelSoundsPlay({ winLevelData });
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinOutroCountUp',
-			amount: bookEvent.amount ?? bookEvent.totalWin ?? 0,
+			amount: bookEvent.amount,
 			winLevelData,
 		});
 		winLevelSoundsStop();

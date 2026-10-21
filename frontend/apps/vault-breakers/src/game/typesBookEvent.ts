@@ -52,8 +52,6 @@ type BookEventUpdateFreeSpin = {
 	type: 'updateFreeSpin';
 	amount: number;
 	total: number;
-	currentFs?: number;
-	totalFs?: number;
 };
 
 type BookEventUpdateGlobalMult = {
@@ -66,7 +64,6 @@ type BookEventFreeSpinEnd = {
 	index: number;
 	type: 'freeSpinEnd';
 	amount: number;
-	totalWin?: number;
 	winLevel: number;
 };
 
@@ -111,8 +108,6 @@ type BookEventCreateBonusSnapshot = {
 	bookEvents: BookEvent[];
 };
 
-type BookEventSetTumbleWinAlias = { index: number; type: 'setTumbleWin'; amount: number };
-type BookEventEnterBonus = { index: number; type: 'enterBonus'; cost: number };
 type BookEventWincap = { index: number; type: 'wincap'; amount: number };
 
 // Vault Meter events (math 6ec4aaf, (math/EVENTS.md #15, #16)
@@ -130,8 +125,6 @@ type BookEventVaultMeterUpgrade = {
 export type BookEvent =
 	| BookEventVaultMeterUpdate
 	| BookEventVaultMeterUpgrade
-	| BookEventSetTumbleWinAlias
-	| BookEventEnterBonus
 	| BookEventWincap
 	| BookEventReveal
 	| BookEventWinInfo

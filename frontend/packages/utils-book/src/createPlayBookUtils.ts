@@ -17,6 +17,7 @@ export function createPlayBookUtils<TBookEventHandlerMap extends BookEventHandle
 
 	const playBookEvent = async (bookEvent: TBookEvent, bookEventContext: TBookEventContext) => {
 		const bookEventHandler = bookEventHandlerMap?.[bookEvent.type];
+		(globalThis as any).__VB_LAST_EVENT__ = (bookEvent as any).index;
 		if (bookEventHandler) {
 			if (debug) console.log(bookEvent);
 			await bookEventHandler(bookEvent, bookEventContext);
