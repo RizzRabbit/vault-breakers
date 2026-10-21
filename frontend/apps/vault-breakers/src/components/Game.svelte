@@ -4,7 +4,7 @@
 	import { EnablePixiExtension } from 'components-pixi';
 	import { EnableHotkey } from 'components-shared';
 	import { MainContainer } from 'components-layout';
-	import { App, Text, REM } from 'pixi-svelte';
+	import { App, REM } from 'pixi-svelte';
 	import { stateModal } from 'state-shared';
 
 	import { UI } from 'components-ui-pixi';
@@ -18,6 +18,7 @@
 	import Sound from './Sound.svelte';
 	import Background from './Background.svelte';
 	import LoadingScreen from './LoadingScreen.svelte';
+	import StudioSplash from './StudioSplash.svelte';
 	import BoardFrame from './BoardFrame.svelte';
 	import MultiplierGrid from './MultiplierGrid.svelte';
 	import Board from './Board.svelte';
@@ -110,6 +111,8 @@
 
 	{/if}
 </App>
+
+<StudioSplash />
 
 <Modals>
 	{#snippet version()}
