@@ -85,3 +85,7 @@ Sources:
 | Test in play modal (incl. social mode) | owner: user | [CORE] |
 | Submit review with blurb + description tag | owner: user | [CORE] |
 | Exact dashboard click path | unconfirmed | not documented |
+
+## Bet levels
+
+Stake Engine's docs do not require fixed bet levels such as $0.01/$0.02/$0.05; that claim is third-party only. Bet levels are supplied by the RGS at runtime: `/wallet/authenticate` returns `config.minBet`, `maxBet`, `stepBet`, `defaultBetLevel` and `betLevels` (integer units, 1,000,000 = 1.00), set per operator and jurisdiction (https://raw.githubusercontent.com/StakeEngine/ts-client/refs/heads/main/dist/types.d.ts; https://stakeengine.org/docs/rgs). Our frontend already builds its bet options from that response (`vb-frontend/frontend/packages/components-shared/src/components/Authenticate.svelte:63`; schema at `packages/rgs-fetcher/src/schema.ts:205-213`). The hardcoded list in `apps/vault-breakers/src/mock/mockRgs.ts:46-50` is only for local mocks. Action: none in code; the game must accept whatever levels the RGS sends. Open question for the user to confirm with Stake if needed.
