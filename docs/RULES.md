@@ -29,6 +29,6 @@
 - Super Buy: 400x bet. Starts Free Spins with every spot already at x2.
 
 ## Max win and RTP
-- Max win is {{MAX_WIN}}x the bet. When it's reached, the round ends right away and pays the max win.
-- Theoretical RTP: Base {{RTP_BASE}}%, Ante {{RTP_ANTE}}%, Bonus Buy {{RTP_BONUS}}%, Super Buy {{RTP_SUPER}}%.
+- Max win is 10,000x the bet. When it's reached, the round ends right away and pays the max win.
+- Theoretical RTP: Base 96.20%, Ante 96.20%, Bonus Buy 96.20%, Super Buy 96.20%.
 - Malfunction voids all pays and plays.
