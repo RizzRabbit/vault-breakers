@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import config from './config';
 
 import { recordBookEvent, checkIsMultipleRevealEvents, type BookEventHandlerMap } from 'utils-book';
 import { stateBet } from 'state-shared';
@@ -34,13 +35,26 @@ const winLevelSoundsStop = () => {
 	eventEmitter.broadcastAsync({ type: 'uiShow' });
 };
 
-const animateSymbols = async ({ positions }: { positions: Position[] }) => {
+// Books can list the same cell more than once (a wild shared by two clusters). Each cell's
+// animation resolves once, so a duplicate would wait forever: always animate unique cells.
+const uniquePositions = (positions: Position[]) => _.uniqBy(positions, (p) => `${p.reel}:${p.row}`);
+
+// Display-only guard: no on-screen win figure may exceed the 10,000x cap (book units are bet x 100).
+// Payouts always come from the RGS / book payoutMultiplier, never from these numbers.
+const MAX_WIN_BOOK_AMOUNT = config.betModes.base.max_win * 100;
+const capWin = (amount: number) => Math.min(amount, MAX_WIN_BOOK_AMOUNT);
+
+const animateSymbols = async ({ positions: rawPositions }: { positions: Position[] }) => {
+	const positions = uniquePositions(rawPositions);
 	eventEmitter.broadcast({ type: 'boardShow' });
 	await eventEmitter.broadcastAsync({
 		type: 'boardWithAnimateSymbols',
 		symbolPositions: positions,
 	});
 };
+
+// total free spins awarded so far in the current feature (for retrigger 'N MORE')
+let previousTotalFs = 0;
 
 export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContext> = {
 	reveal: async (bookEvent: BookEventOfType<'reveal'>, { bookEvents }: BookEventContext) => {
@@ -60,7 +74,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_winlevel_small' });
 			// a wild can belong to several clusters; animating the same symbol twice never resolves
 			await animateSymbols({
-				positions: _.uniqBy(_.flatten(bookEvent.wins.map((win) => win.positions)), (p) => `${p.reel}:${p.row}`),
+				positions: _.flatten(bookEvent.wins.map((win) => win.positions)),
 			});
 		};
 
@@ -72,7 +86,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 						// Vault Breakers: pay = base x sum(spot multipliers) x global
 						win: win.meta.winWithoutMult,
 						mult: Math.max(1, win.meta.clusterMult) * win.meta.globalMult,
-						result: win.win,
+						result: capWin(win.win),
 						reel: win.meta.overlay.reel,
 						row: win.meta.overlay.row,
 					};
@@ -87,7 +101,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			eventEmitter.broadcast({ type: 'tumbleWinAmountShow' });
 			eventEmitter.broadcast({
 				type: 'tumbleWinAmountUpdate',
-				amount: bookEvent.amount,
+				amount: capWin(bookEvent.amount),
 				animate: false,
 			});
 		}
@@ -98,6 +112,14 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	vaultMeterUpgrade: async (bookEvent: BookEventOfType<'vaultMeterUpgrade'>) => {
 		eventEmitter.broadcast({ type: 'multiplierGridShow' });
+		// fly the new/upgraded multiplier from the meter to its spot, then commit it to the grid
+		await eventEmitter.broadcastAsync({
+			type: 'vaultFly',
+			reel: bookEvent.position.reel,
+			row: bookEvent.position.row,
+			oldMultiplier: bookEvent.oldMultiplier,
+			newMultiplier: bookEvent.newMultiplier,
+		});
 		eventEmitter.broadcast({ type: 'multiplierGridUpdate', grid: bookEvent.gridMultipliers });
 		// NOTE: position here is a 0-based grid index (same layout as gridMultipliers),
 		// unlike winInfo/tumbleBoard positions whose row includes the top padding row.
@@ -111,13 +133,22 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		});
 	},
 	wincap: async (bookEvent: BookEventOfType<'wincap'>) => {
-		stateBet.winBookEventAmount = bookEvent.amount;
+		stateBet.winBookEventAmount = capWin(bookEvent.amount);
+		// shown at round end: in freeSpinEnd (cut-short free spins) or finalWin (base game)
+		stateGame.wincapAmount = bookEvent.amount;
 	},
 	setTotalWin: async (bookEvent: BookEventOfType<'setTotalWin'>) => {
-		stateBet.winBookEventAmount = bookEvent.amount;
+		stateBet.winBookEventAmount = capWin(bookEvent.amount);
 	},
 	freeSpinTrigger: async (bookEvent: BookEventOfType<'freeSpinTrigger'>) => {
 		eventEmitter.broadcast({ type: 'vaultMeterReset' });
+		// tier: read from the event in every mode; missing = 'regular'
+		const tier = bookEvent.fsType ?? 'regular';
+		const startValues = (bookEvent.startGrid ?? []).flat().filter((m) => m > 1);
+		stateGame.fsTier = tier;
+		stateGame.fsStartMult = startValues.length ? Math.min(...startValues) : 0;
+		// original tier stingers (code-synthesised, see static/assets/audio)
+		if (tier !== 'regular') eventEmitter.broadcast({ type: 'soundOnce', name: tier === 'epic' ? 'sfx_tier_epic' : 'sfx_tier_super' });
 		// animate scatters
 		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_scatter_win_v2' });
 		await animateSymbols({ positions: bookEvent.positions });
@@ -131,7 +162,10 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinIntroUpdate',
 			totalFreeSpins: bookEvent.totalFs,
+			tier: stateGame.fsTier,
+			startMultiplier: stateGame.fsStartMult,
 		});
+		previousTotalFs = bookEvent.totalFs;
 		stateGame.gameType = 'freegame';
 		eventEmitter.broadcast({ type: 'freeSpinIntroHide' });
 		eventEmitter.broadcast({ type: 'vaultMeterShow' });
@@ -165,7 +199,12 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinIntroUpdate',
 			totalFreeSpins: bookEvent.totalFs,
+			tier: stateGame.fsTier, // a retrigger keeps the tier
+			// spins added = new total minus previous total (from the event, not hardcoded)
+			extraSpins:
+				previousTotalFs > 0 && bookEvent.totalFs > previousTotalFs ? bookEvent.totalFs - previousTotalFs : undefined,
 		});
+		previousTotalFs = bookEvent.totalFs;
 		stateGame.gameType = 'freegame';
 		eventEmitter.broadcast({ type: 'freeSpinIntroHide' });
 		eventEmitter.broadcast({ type: 'vaultMeterShow' });
@@ -203,6 +242,12 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	freeSpinEnd: async (bookEvent: BookEventOfType<'freeSpinEnd'>) => {
 		const winLevelData = winLevelMap[bookEvent.winLevel as WinLevel];
+		if (stateGame.wincapAmount !== null) {
+			// hide the bet bar so TAP TO CONTINUE never sits on its buttons (the outro below keeps it hidden)
+			await eventEmitter.broadcastAsync({ type: 'uiHide' });
+			await eventEmitter.broadcastAsync({ type: 'maxWinShow', amount: stateGame.wincapAmount });
+			stateGame.wincapAmount = null;
+		}
 
 		await eventEmitter.broadcastAsync({ type: 'uiHide' });
 		stateGame.gameType = 'basegame';
@@ -213,8 +258,9 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		winLevelSoundsPlay({ winLevelData });
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinOutroCountUp',
-			amount: bookEvent.amount,
+			amount: capWin(bookEvent.amount),
 			winLevelData,
+			tier: stateGame.fsTier,
 		});
 		winLevelSoundsStop();
 		eventEmitter.broadcast({ type: 'freeSpinOutroHide' });
@@ -234,7 +280,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_multiplier_explosion_b' });
 		await eventEmitter.broadcastAsync({
 			type: 'tumbleBoardExplode',
-			explodingPositions: bookEvent.explodingSymbols,
+			explodingPositions: uniquePositions(bookEvent.explodingSymbols),
 		});
 		eventEmitter.broadcast({ type: 'tumbleBoardRemoveExploded' });
 		await eventEmitter.broadcastAsync({ type: 'tumbleBoardSlideDown' });
@@ -255,7 +301,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		winLevelSoundsPlay({ winLevelData });
 		await eventEmitter.broadcastAsync({
 			type: 'winUpdate',
-			amount: bookEvent.amount,
+			amount: capWin(bookEvent.amount),
 			winLevelData,
 		});
 		winLevelSoundsStop();
@@ -266,6 +312,13 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		eventEmitter.broadcast({ type: 'multiplierGridUpdate', grid: bookEvent.gridMultipliers });
 	},
 	finalWin: async (bookEvent: BookEventOfType<'finalWin'>) => {
+		if (stateGame.wincapAmount !== null) {
+			// hide the bet bar while MAX WIN REACHED shows its TAP TO CONTINUE, then bring it back
+			await eventEmitter.broadcastAsync({ type: 'uiHide' });
+			await eventEmitter.broadcastAsync({ type: 'maxWinShow', amount: stateGame.wincapAmount });
+			stateGame.wincapAmount = null;
+			await eventEmitter.broadcastAsync({ type: 'uiShow' });
+		}
 		eventEmitter.broadcast({ type: 'multiplierGridClear' });
 		eventEmitter.broadcast({ type: 'multiplierGridHide' });
 		eventEmitter.broadcast({ type: 'globalMultiplierHide' });

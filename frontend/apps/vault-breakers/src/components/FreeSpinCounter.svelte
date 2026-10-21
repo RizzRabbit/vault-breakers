@@ -11,28 +11,24 @@
 
 	import { getContext } from '../game/context';
 	import { SYMBOL_SIZE } from '../game/constants';
+	import { CONSOLE_PANEL, consoleSlot } from '../game/consoleLayout';
+	// current free-spin tier shown in the console counter
+	const TIER_FILL = { regular: 0xffffff, super: 0x9ff7ff, epic: 0xff5a4a } as const;
 	import { anchorToPivot, BitmapText, Container, Sprite, type Sizes } from 'pixi-svelte';
 
 	const context = getContext();
-	const PANEL_KEY_DESKTOP = 'Frame_FSCounter.png';
-	const PANEL_RATIO_DESKTOP = 824 / 622;
+	const PANEL_KEY_DESKTOP = 'vb_vault_meter_frame';
+	const PANEL_RATIO_DESKTOP = 992 / 623;
 	const panelKey = PANEL_KEY_DESKTOP;
-	const panelWidth = $derived(SYMBOL_SIZE * 2);
+	const panelWidth = CONSOLE_PANEL.width;
 	const panelSizes = $derived({
 		width: panelWidth,
 		height: panelWidth / PANEL_RATIO_DESKTOP,
 	});
-	const scale = 1;
-	const position = $derived({
-		x:
-			context.stateGameDerived.boardLayout().x -
-			context.stateGameDerived.boardLayout().width * 0.5 -
-			panelSizes.width -
-			SYMBOL_SIZE * 0.7,
-		y:
-			context.stateGameDerived.boardLayout().y -
-			context.stateGameDerived.boardLayout().height * 0.5,
-	});
+		// heist console slot 0 (see game/consoleLayout.ts)
+	const slot = $derived(consoleSlot(0));
+	const position = $derived({ x: slot.x, y: slot.y });
+	const scale = $derived(slot.scale);
 
 	const fontSize = SYMBOL_SIZE * 0.275;
 
@@ -70,9 +66,9 @@
 			})}
 		>
 			<BitmapText
-				text={'FREE SPIN'}
+				text={`${context.stateGame.fsTier.toUpperCase()} SPINS`}
 				style={{
-					fontFamily: 'gold',
+					fontFamily: 'gold', fill: TIER_FILL[context.stateGame.fsTier],
 					fontSize,
 					wordWrap: false,
 				}}
@@ -83,7 +79,7 @@
 				{...counterPosition}
 				anchor={{ x: 0.5, y: 0 }}
 				style={{
-					fontFamily: 'gold',
+					fontFamily: 'gold', fill: 0xffffff,
 					fontSize,
 				}}
 				onresize={(sizes) => (counterSizes = sizes)}

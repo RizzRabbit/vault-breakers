@@ -86,11 +86,20 @@ export const stateGame = $state({
 	tumbleBoardBase: [] as TumbleSymbol[][],
 	multiplierBoard: [] as (MultiplierSymbol | undefined)[][],
 	scatterCounter: 0,
+	// free-spin tier of the current feature + its starting spot multiplier (from the book)
+	fsTier: 'regular' as 'regular' | 'super' | 'epic',
+	fsStartMult: 0,
+	// set by the wincap book event; consumed by the MAX WIN REACHED screen at round end
+	wincapAmount: null as number | null,
 });
 
+// desktop/landscape: lift the board so its bottom row clears the bet bar
+const BOARD_LIFT = { desktop: 0.075, landscape: 0.06, tablet: 0, portrait: 0 } as const;
 const boardLayout = () => ({
 	x: stateLayoutDerived.mainLayout().width * 0.5,
-	y: stateLayoutDerived.mainLayout().height * 0.5,
+	y:
+		stateLayoutDerived.mainLayout().height *
+		(0.5 - BOARD_LIFT[stateLayoutDerived.layoutType()]),
 	anchor: { x: 0.5, y: 0.5 },
 	pivot: { x: BOARD_SIZES.width / 2, y: BOARD_SIZES.height / 2 },
 	...BOARD_SIZES,

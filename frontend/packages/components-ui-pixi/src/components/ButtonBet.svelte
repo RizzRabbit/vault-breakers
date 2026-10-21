@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { uiSkin } from '../skin';
 	import { Container, Text } from 'pixi-svelte';
 	import { Button, type ButtonProps } from 'components-pixi';
 	import { OnHotkey } from 'components-shared';
@@ -20,7 +21,7 @@
 		<Button {...props} {sizes} {onpress} {disabled}>
 			{#snippet children({ center, hovered })}
 				<Container {...center}>
-					<UiSprite
+					<UiSprite uiHover={hovered}
 						key="bet"
 						width={sizes.width}
 						height={sizes.height}
@@ -40,10 +41,10 @@
 							align: 'center',
 							wordWrap: true,
 							wordWrapWidth: 200,
-							fontFamily: 'proxima-nova',
+							fontFamily: uiSkin.fontFamily ?? 'proxima-nova',
 							fontWeight: '600',
 							fontSize: UI_BASE_FONT_SIZE * 0.9,
-							fill: 0xffffff,
+							fill: uiSkin.buttonText ?? 0xffffff,
 						}}
 					/>
 				</Container>

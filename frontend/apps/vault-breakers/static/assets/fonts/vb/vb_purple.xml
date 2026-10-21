@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<font>
+  <info face="purple" size="177" bold="0" italic="0" charset="" unicode="" stretchH="177" smooth="1" aa="1" padding="0,0,0,0" spacing="1,0" outline="0"/>
+  <common lineHeight="177" base="177" scaleW="1327" scaleH="179" pages="1" packed="0"/>
+  <pages>
+    <page id="0" file="vb_purple.png"/>
+  </pages>
+  <chars count="12">
+    <char id="32" x="0" y="0" width="75.0" height="1" xoffset="0" yoffset="0" xadvance="75.0" yadvance="1"/>
+    <char id="48" x="1" y="1" width="125" height="177" xoffset="-16" yoffset="0" xadvance="92" yadvance="177"/>
+    <char id="49" x="128" y="1" width="102" height="177" xoffset="-16" yoffset="0" xadvance="69" yadvance="177"/>
+    <char id="50" x="232" y="1" width="120" height="177" xoffset="-16" yoffset="0" xadvance="87" yadvance="177"/>
+    <char id="51" x="354" y="1" width="120" height="177" xoffset="-16" yoffset="0" xadvance="87" yadvance="177"/>
+    <char id="52" x="476" y="1" width="121" height="177" xoffset="-16" yoffset="0" xadvance="88" yadvance="177"/>
+    <char id="53" x="599" y="1" width="119" height="177" xoffset="-16" yoffset="0" xadvance="86" yadvance="177"/>
+    <char id="54" x="720" y="1" width="123" height="177" xoffset="-16" yoffset="0" xadvance="90" yadvance="177"/>
+    <char id="55" x="845" y="1" width="110" height="177" xoffset="-16" yoffset="0" xadvance="77" yadvance="177"/>
+    <char id="56" x="957" y="1" width="121" height="177" xoffset="-16" yoffset="0" xadvance="88" yadvance="177"/>
+    <char id="57" x="1080" y="1" width="123" height="177" xoffset="-16" yoffset="0" xadvance="90" yadvance="177"/>
+    <char id="88" x="1205" y="1" width="120" height="177" xoffset="-16" yoffset="0" xadvance="87" yadvance="177"/>
+  </chars>
+</font>

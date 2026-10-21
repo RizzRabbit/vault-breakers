@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { uiSkin } from '../skin';
 	import { cubicInOut } from 'svelte/easing';
 
 	import { stateUi } from 'state-shared';
@@ -76,7 +77,7 @@
 				fontFamily: 'proxima-nova',
 				fontWeight: '600',
 				fontSize: UI_BASE_FONT_SIZE * 0.9,
-				fill: 0xffffff,
+				fill: uiSkin.buttonText ?? 0xffffff,
 			}}
 			rotation={rotationTween.current}
 		/>

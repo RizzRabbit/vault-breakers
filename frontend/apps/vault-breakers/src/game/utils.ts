@@ -18,6 +18,12 @@ export const playBet = async (bet: Bet) => {
 	const log = ((globalThis as any).__VB_ROUNDS__ ??= []);
 	const entry = { mode: (bet as any).mode, events: bet.state.length, done: false };
 	log.push(entry);
+	// free-spin tiers: attach each trigger's starting spot grid (first updateGrid after it) from the book
+	bet.state.forEach((e: any, i: number) => {
+		if (e.type !== 'freeSpinTrigger' || e.startGrid) return;
+		const next = bet.state.slice(i + 1).find((x: any) => x.type === 'updateGrid' || x.type === 'reveal') as any;
+		e.startGrid = e.gridMultipliers ?? (next?.type === 'updateGrid' ? next.gridMultipliers : undefined);
+	});
 	await playBookEvents(bet.state);
 	entry.done = true;
 	eventEmitter.broadcast({ type: 'stopButtonEnable' });

@@ -1,14 +1,10 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import { onMount } from 'svelte';
+	import { Tween } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
 
-	import {
-		anchorToPivot,
-		Container,
-		SpineProvider,
-		SpineSlot,
-		SpineTrack,
-		type Sizes,
-	} from 'pixi-svelte';
+	import { Container, Sprite, Rectangle, type Sizes } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
 
 	import { getContext } from '../game/context';
@@ -16,50 +12,59 @@
 
 	type Props = {
 		children: Snippet<[{ sizes: Sizes }]>;
+		// free-spin tier look: regular = gold plaque, super = steel-teal, epic = red x128 (pulsing)
+		tier?: 'regular' | 'super' | 'epic';
 	};
 
+	// Vault Breakers plaque panel (code-animated pop-in) used by the free-spin intro and outro.
 	const props: Props = $props();
-
-	type AnimationName = 'intro' | 'idle';
-
 	const context = getContext();
-	const BACKGROUND_RATIO = 920 / 720;
-	const BACKGROUND_WIDTH = SYMBOL_SIZE * BOARD_DIMENSIONS.y;
-	const BACKGROUND_SIZES = {
-		width: BACKGROUND_WIDTH,
-		height: BACKGROUND_WIDTH / BACKGROUND_RATIO,
-	};
-	const PANEL_SIZES = {
-		width: SYMBOL_SIZE * BOARD_DIMENSIONS.y,
-		height: SYMBOL_SIZE * BOARD_DIMENSIONS.y,
-	};
-
-	let animationName = $state<AnimationName>('intro');
+	const PLAQUE_RATIO = 1139 / 359;
+	const SIZES = { width: SYMBOL_SIZE * BOARD_DIMENSIONS.y * 1.25, height: 0 };
+	SIZES.height = (SIZES.width / PLAQUE_RATIO) * 1.6;
+	const scale = new Tween(0.4, { duration: 350, easing: cubicOut });
+	onMount(() => scale.set(1));
+	const TIER = {
+		regular: { tint: 0xffffff, glow: 0x000000, glowAlpha: 0 },
+		super: { tint: 0xc8f4ff, glow: 0x00e5d4, glowAlpha: 0.45 },
+		epic: { tint: 0xff8a7a, glow: 0xf02828, glowAlpha: 0.7 },
+	} as const;
+	const look = $derived(TIER[props.tier ?? 'regular']);
+	let pulse = $state(0);
+	onMount(() => {
+		let raf = 0;
+		const tick = (now: number) => {
+			pulse = 0.5 + 0.5 * Math.sin((now / 700) * Math.PI * 2);
+			raf = requestAnimationFrame(tick);
+		};
+		raf = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(raf);
+	});
 </script>
 
 <MainContainer>
 	<Container
 		x={context.stateGameDerived.boardLayout().x}
 		y={context.stateGameDerived.boardLayout().y}
-		pivot={anchorToPivot({ anchor: 0.5, sizes: BACKGROUND_SIZES })}
+		scale={scale.current}
 	>
-		<SpineProvider
-			key="fsIntro"
-			width={PANEL_SIZES.width}
-			x={PANEL_SIZES.width * 0.5}
-			y={PANEL_SIZES.height * 0.4}
-		>
-			<SpineTrack
-				trackIndex={0}
-				{animationName}
-				loop={animationName === 'idle'}
-				listener={{
-					complete: () => (animationName = 'idle'),
-				}}
-			/>
-			<SpineSlot slotName="slot_text_placeholder">
-				{@render props.children({ sizes: BACKGROUND_SIZES })}
-			</SpineSlot>
-		</SpineProvider>
+		{#if look.glowAlpha > 0}
+			{#each [1.07, 1.03] as k, i}
+				<Rectangle
+					x={(-SIZES.width * k) / 2}
+					y={(-SIZES.height * k) / 2}
+					width={SIZES.width * k}
+					height={SIZES.height * k}
+					borderRadius={SIZES.height * 0.12}
+					backgroundColor={look.glow}
+					backgroundAlpha={look.glowAlpha * (i ? 0.35 : 0.18) * (0.6 + 0.4 * pulse)}
+					borderColor={look.glow}
+					borderWidth={6}
+					borderAlpha={look.glowAlpha * (0.5 + 0.5 * pulse)}
+				/>
+			{/each}
+		{/if}
+		<Sprite key="vb_plaque" anchor={0.5} width={SIZES.width} height={SIZES.height} tint={look.tint} />
+		{@render props.children({ sizes: SIZES })}
 	</Container>
 </MainContainer>

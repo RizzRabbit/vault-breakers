@@ -5,78 +5,60 @@
 </script>
 
 <script lang="ts">
-	import { Sprite, SpineProvider, SpineTrack } from 'pixi-svelte';
+	import { Rectangle, Sprite } from 'pixi-svelte';
+	import { onDestroy } from 'svelte';
 
 	import { getContext } from '../game/context';
 
+	// Vault Breakers steel/gold reel frame (board_frame.png: the inner opening is ~64% of the image).
 	const context = getContext();
-	const SPINE_SCALE = { width: 0.6, height: 0.6 };
-	const SPRITE_SCALE = { width: 1.07, height: 1.19 };
-	const BG_RATIO = 937 / 806;
-	const POSITION_ADJUSTMENT = 1.01;
+	const INNER_RATIO = 0.655;
 
-	type AnimationName = 'reelhouse_glow_start' | 'reelhouse_glow_idle' | 'reelhouse_glow_exit';
-
-	let animationName = $state<AnimationName | undefined>(undefined);
-	let loop = $state(false);
+	let glowOn = $state(false);
+	let glow = $state(0);
+	let raf = 0;
+	const tick = (now: number) => {
+		glow = glowOn ? 0.35 + 0.25 * Math.sin(now / 220) : Math.max(0, glow - 0.05);
+		if (glowOn || glow > 0) raf = requestAnimationFrame(tick);
+	};
 
 	context.eventEmitter.subscribeOnMount({
 		boardFrameGlowShow: () => {
-			animationName = 'reelhouse_glow_start';
-			loop = false;
+			glowOn = true;
+			cancelAnimationFrame(raf);
+			raf = requestAnimationFrame(tick);
 		},
-		boardFrameGlowHide: () => {
-			if (animationName) animationName = 'reelhouse_glow_exit';
-		},
+		boardFrameGlowHide: () => (glowOn = false),
 	});
+	onDestroy(() => cancelAnimationFrame(raf));
+
+	const layout = $derived(context.stateGameDerived.boardLayout());
+	const frameSize = $derived(layout.width / INNER_RATIO);
 </script>
 
-{#if animationName}
-	<SpineProvider
-		zIndex={-1}
-		key="reelhouse"
-		x={context.stateGameDerived.boardLayout().x * POSITION_ADJUSTMENT}
-		y={context.stateGameDerived.boardLayout().y * POSITION_ADJUSTMENT}
-		width={context.stateGameDerived.boardLayout().width * SPINE_SCALE.width}
-		height={context.stateGameDerived.boardLayout().height * SPINE_SCALE.height}
-	>
-		<SpineTrack
-			trackIndex={0}
-			{animationName}
-			{loop}
-			listener={{
-				complete: (entry) => {
-					if (entry.animation) {
-						if (entry.animation.name === 'reelhouse_glow_start') {
-							animationName = 'reelhouse_glow_idle';
-							loop = true;
-						}
+<!-- dark glass backing behind the reels -->
+<Rectangle
+	x={layout.x - layout.width / 2 - 6}
+	y={layout.y - layout.height / 2 - 6}
+	width={layout.width + 12}
+	height={layout.height + 12}
+	backgroundColor={0x0a1428}
+	backgroundAlpha={0.82}
+	borderRadius={8}
+/>
 
-						if (entry.animation.name === 'reelhouse_glow_exit') {
-							animationName = undefined;
-							loop = false;
-						}
-					}
-				},
-			}}
-		/>
-	</SpineProvider>
+<Sprite key="vb_board_frame" anchor={0.5} x={layout.x} y={layout.y} width={frameSize} height={frameSize} />
+
+{#if glow > 0}
+	<Sprite
+		key="vb_board_frame"
+		anchor={0.5}
+		x={layout.x}
+		y={layout.y}
+		width={frameSize}
+		height={frameSize}
+		alpha={glow}
+		blendMode="add"
+		tint={0x00e5d4}
+	/>
 {/if}
-
-<Sprite
-	key="frame_bg.png"
-	anchor={0.5}
-	x={context.stateGameDerived.boardLayout().x * POSITION_ADJUSTMENT}
-	y={context.stateGameDerived.boardLayout().y * POSITION_ADJUSTMENT}
-	width={context.stateGameDerived.boardLayout().width * BG_RATIO * SPRITE_SCALE.width}
-	height={context.stateGameDerived.boardLayout().width * SPRITE_SCALE.height}
-/>
-
-<Sprite
-	key="frame_edge.png"
-	anchor={0.5}
-	x={context.stateGameDerived.boardLayout().x * POSITION_ADJUSTMENT}
-	y={context.stateGameDerived.boardLayout().y * POSITION_ADJUSTMENT}
-	width={context.stateGameDerived.boardLayout().width * BG_RATIO * SPRITE_SCALE.width}
-	height={context.stateGameDerived.boardLayout().width * SPRITE_SCALE.height}
-/>

@@ -4,31 +4,30 @@
 	export type EmitterEventFreeSpinOutro =
 		| { type: 'freeSpinOutroShow' }
 		| { type: 'freeSpinOutroHide' }
-		| { type: 'freeSpinOutroCountUp'; amount: number; winLevelData: WinLevelData };
+		| { type: 'freeSpinOutroCountUp'; amount: number; winLevelData: WinLevelData; tier?: 'regular' | 'super' | 'epic' };
 </script>
 
 <script lang="ts">
-	import { Sprite, SpineProvider, SpineTrack, SpineSlot } from 'pixi-svelte';
+	import { BitmapText } from 'pixi-svelte';
 	import { FadeContainer, WinCountUpProvider, ResponsiveBitmapText } from 'components-pixi';
 	import { bookEventAmountToCurrencyString } from 'utils-shared/amount';
 	import { waitForResolve } from 'utils-shared/wait';
 	import { CanvasSizeRectangle } from 'components-layout';
 	import { OnMount } from 'components-shared';
-	import { stateUrlDerived } from 'state-shared';
 
 	import { getContext } from '../game/context';
 	import FreeSpinAnimation from './FreeSpinAnimation.svelte';
 	import PressToContinue from './PressToContinue.svelte';
 	import WinCoins from './WinCoins.svelte';
 
-	type AnimationName = 'intro' | 'idle';
-
 	const context = getContext();
 
 	let show = $state(true);
-	let animationName = $state<AnimationName>('intro');
 	let amount = $state(0);
 	let winLevelData = $state<WinLevelData>();
+	let tier = $state<'regular' | 'super' | 'epic'>('regular');
+	const DONE = { regular: 'FREE SPINS COMPLETE', super: 'SUPER FREE SPINS COMPLETE', epic: 'EPIC FREE SPINS COMPLETE' } as const;
+	const COLOR = { regular: 0xffffff, super: 0x9ff7ff, epic: 0xff5a4a } as const;
 	let oncomplete = $state(() => {});
 	let onCountUpComplete = $state(() => {});
 
@@ -38,6 +37,7 @@
 		freeSpinOutroCountUp: async (emitterEvent) => {
 			amount = emitterEvent.amount;
 			winLevelData = emitterEvent.winLevelData;
+			tier = emitterEvent.tier ?? 'regular';
 			await waitForResolve((resolve) => (oncomplete = resolve));
 		},
 	});
@@ -53,52 +53,26 @@
 
 				<CanvasSizeRectangle backgroundColor={0x000000} backgroundAlpha={0.5} />
 
-				<FreeSpinAnimation>
+				<FreeSpinAnimation {tier}>
 					{#snippet children({ sizes })}
-						{#if isBigWin}
-							<Sprite
-								anchor={{ x: 0.5, y: 1.2 }}
-								width={500 * 2.2}
-								height={156 * 2.2}
-								key="freespins_{stateUrlDerived.lang()}.png"
-							/>
-						{:else}
-							<Sprite
-								anchor={{ x: 0.5, y: 1.2 }}
-								width={500 * 4.5}
-								height={80 * 4.5}
-								key="winsmall_{stateUrlDerived.lang()}.png"
-							/>
-						{/if}
-
-						<SpineProvider key="fsOutroNumber" width={sizes.width * 0.4}>
-							<SpineTrack
-								trackIndex={0}
-								{animationName}
-								loop={animationName === 'idle'}
-								listener={{
-									complete: () => (animationName = 'idle'),
-								}}
-							/>
-							<SpineSlot slotName="slot_number">
-								<ResponsiveBitmapText
-									anchor={{ x: 0.5, y: 0.5 }}
-									style={{
-										fontFamily: 'gold',
-										fontSize: sizes.width * 0.15,
-									}}
-									text={bookEventAmountToCurrencyString(countUpAmount)}
-									maxWidth={sizes.width}
-								/>
-							</SpineSlot>
-						</SpineProvider>
-
-						<Sprite
-							y={0}
-							anchor={{ x: 0.5, y: isBigWin ? -3.2 : -2 }}
-							width={177 * (isBigWin ? 2.2 : 3)}
-							height={42 * (isBigWin ? 2.2 : 3)}
-							key="totalwin.png"
+						<BitmapText
+							anchor={0.5}
+							y={-sizes.height * 0.24}
+							text={tier === 'epic' ? 'EPIC HEIST TOTAL' : tier === 'super' ? 'SUPER HEIST TOTAL' : isBigWin ? 'VAULT CRACKED' : 'HEIST TOTAL'}
+							style={{ fontFamily: 'gold', fill: COLOR[tier], fontSize: sizes.height * (tier === 'regular' ? 0.17 : 0.13) }}
+						/>
+						<ResponsiveBitmapText
+							anchor={0.5}
+							y={sizes.height * 0.05}
+							style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: sizes.height * 0.26 }}
+							text={bookEventAmountToCurrencyString(countUpAmount)}
+							maxWidth={sizes.width * 0.8}
+						/>
+						<BitmapText
+							anchor={0.5}
+							y={sizes.height * 0.29}
+							text={DONE[tier]}
+							style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.09 }}
 						/>
 					{/snippet}
 				</FreeSpinAnimation>

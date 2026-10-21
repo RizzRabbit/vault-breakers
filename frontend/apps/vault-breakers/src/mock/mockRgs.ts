@@ -1,7 +1,11 @@
 // Offline mock RGS. Active when the URL has ?mock=true or no rgs_url is given.
 // Serves REAL books sampled from the published math library
-// (math/games/vault_breakers/library/publish_files/books_<mode>.jsonl.zst, math commit 6ec4aaf).
-// Extracted unmodified; payoutMultiplier is in bet x 100 units.
+// (vault-breakers-math-publish.zip, math commit c679564 (tiered free spins),
+// zip sha256 fd7c1401…62a6fba1). Extracted unmodified; payoutMultiplier is in bet x 100 units.
+// Fixtures: <mode>_{win,zero,shared,fs,upgrade,retrigger,wincap}, <mode>_tier_<fsType> and
+// <mode>_retrigger_<fsType> (first book of each tier; base/ante tier_super/tier_epic = math/samples 15/52), cap_<mode>_<bookId> (every 10,000x
+// book in the package: base 8, ante 8, bonus 3, super 4; cap_base_20196 is the cap-rounding case).
+// synthetic_* fixtures are derived from bonus_upgrade (marked criteria 'synthetic').
 import config from '../game/config';
 import { stateBet, stateModal } from 'state-shared';
 
@@ -9,10 +13,10 @@ type Book = { betMode: string; cost: number; id: number; payoutMultiplier: numbe
 const files = import.meta.glob('./books/*.json', { eager: true, import: 'default' }) as Record<string, Book>;
 const byName = (n: string) => files[`./books/${n}.json`];
 const ORDER: Record<string, string[]> = {
-	base: ['base_win', 'base_zero', 'base_fs'],
-	ante: ['ante_win', 'ante_zero', 'ante_fs'],
-	bonus: ['bonus_fs', 'bonus_fs2'],
-	super: ['super_fs', 'super_fs2'],
+	base: ['base_win', 'base_zero', 'base_shared', 'base_fs'],
+	ante: ['ante_win', 'ante_zero', 'ante_shared', 'ante_fs'],
+	bonus: ['bonus_fs'],
+	super: ['super_fs'],
 };
 const books: Record<string, Book[]> = Object.fromEntries(
 	Object.entries(ORDER).map(([m, names]) => [m, names.map(byName).filter(Boolean)]),
@@ -23,7 +27,7 @@ let balance = 1000 * M;
 let betID = 1;
 let pendingPayout = 0;
 
-// ?book=wincap forces the real 10,000x book for the current mode; otherwise books are
+// ?book=wincap forces the real 10,000x book for the current mode.
 // ?book=unmarked forces the SYNTHETIC unmarked-spot upgrade fixture (any mode). Otherwise books are
 // served round-robin so a test run deterministically walks every sample.
 const forced = () =>
@@ -31,7 +35,11 @@ const forced = () =>
 const counters: Record<string, number> = {};
 const pick = (mode: string) => {
 	const key = mode.toLowerCase();
+	// ?book=<file> (e.g. base_shared, ante_fs, super_wincap) forces any fixture by name
+	if (forced() && forced() !== 'wincap' && forced() !== 'unmarked' && byName(forced()!)) return byName(forced()!);
 	if (forced() === 'unmarked') return byName('synthetic_unmarked_upgrade');
+	// ?book=maxgrid: SYNTHETIC copy of the unmarked fixture with every spot at x128 after the upgrade (Vault Meter MAX test)
+	if (forced() === 'maxgrid') return byName('synthetic_maxgrid');
 	if (forced() === 'wincap') return byName(`${books[key] ? key : 'base'}_wincap`);
 	const l = books[key] ?? books.base;
 	counters[key] = (counters[key] ?? -1) + 1;
@@ -117,6 +125,14 @@ export const registerMockRgs = () => {
 			openBuyMenu: () => {
 				stateModal.modal = { name: 'buyBonus' };
 			},
+			openPaytable: () => {
+				stateModal.modal = { name: 'payTable' };
+			},
+			openRules: () => {
+				stateModal.modal = { name: 'gameRules' };
+			},
+			// read-only snapshot for e2e checks (amounts in API units)
+			snapshot: () => ({ win: stateBet.winBookEventAmount, balance: stateBet.balanceAmount, bet: stateBet.betAmount }),
 		};
 	}
 };

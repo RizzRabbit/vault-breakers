@@ -21,6 +21,7 @@
 	import MultiplierGrid from './MultiplierGrid.svelte';
 	import Board from './Board.svelte';
 	import Anticipations from './Anticipations.svelte';
+	import ScatterTierBanner from './ScatterTierBanner.svelte';
 	import ClusterWinAmounts from './ClusterWinAmounts.svelte';
 	import TumbleBoard from './TumbleBoard.svelte';
 	import TumbleWinAmount from './TumbleWinAmount.svelte';
@@ -30,6 +31,9 @@
 	import FreeSpinOutro from './FreeSpinOutro.svelte';
 	import Transition from './Transition.svelte';
 	import VaultMeter from './VaultMeter.svelte';
+	import GameRules from './GameRules.svelte';
+	import MaxWin from './MaxWin.svelte';
+	import VaultFly from './VaultFly.svelte';
 
 	const context = getContext();
 
@@ -66,17 +70,22 @@
 		</MainContainer>
 
 		<MainContainer>
-			<MultiplierGrid />
+			<MultiplierGrid layer="frames" />
 		</MainContainer>
 
 		<MainContainer>
 			<Board />
 			<Anticipations />
+			<ScatterTierBanner />
 			<TumbleWinAmount />
 		</MainContainer>
 
 		<MainContainer>
 			<TumbleBoard />
+		</MainContainer>
+
+		<MainContainer>
+			<MultiplierGrid layer="labels" />
 			<ClusterWinAmounts />
 		</MainContainer>
 
@@ -85,6 +94,8 @@
 				<UiGameName name="VAULT BREAKERS" />
 			{/snippet}
 			{#snippet logo()}
+				<!-- portrait: the clock + game name already fill the narrow header; skip the duplicate title -->
+				{#if context.stateLayoutDerived.layoutType() !== 'portrait'}
 				<Text
 					anchor={{ x: 1, y: 0 }}
 					text="VAULT BREAKERS"
@@ -96,15 +107,17 @@
 						fill: 0xffffff,
 					}}
 				/>
+				{/if}
 			{/snippet}
 		</UI>
 		<Win />
 		<FreeSpinIntro />
-		{#if ['desktop', 'landscape'].includes(context.stateLayoutDerived.layoutType())}
-			<FreeSpinCounter />
-		{/if}
+		<!-- every layout; portrait places it above the board next to the Vault Meter -->
+		<FreeSpinCounter />
 		<VaultMeter />
+		<VaultFly />
 		<FreeSpinOutro />
+		<MaxWin />
 		<Transition />
 
 	{/if}
@@ -112,6 +125,11 @@
 
 <Modals>
 	{#snippet version()}
+		{#if stateModal.modal?.name === 'gameRules'}
+			<GameRules view="rules" />
+		{:else if stateModal.modal?.name === 'payTable'}
+			<GameRules view="paytable" />
+		{/if}
 		<GameVersion version="0.0.0" />
 	{/snippet}
 </Modals>
