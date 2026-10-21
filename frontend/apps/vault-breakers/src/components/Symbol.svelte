@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SpineProvider, SpineTrack } from 'pixi-svelte';
+	import { Sprite } from 'pixi-svelte';
 
 	import SymbolSpine from './SymbolSpine.svelte';
 	import SymbolSprite from './SymbolSprite.svelte';
@@ -28,7 +28,7 @@
 </script>
 
 {#if isSprite}
-	<SymbolSprite {symbolInfo} x={props.x} y={props.y} oncomplete={props.oncomplete} />
+	<SymbolSprite {symbolInfo} state={props.state} x={props.x} y={props.y} oncomplete={props.oncomplete} />
 {:else}
 	<SymbolSpine
 		loop={props.loop}
@@ -47,7 +47,12 @@
 {/if}
 
 {#if showWinFrame}
-	<SpineProvider x={props.x} y={props.y} key="anticipation" width={SYMBOL_SIZE * 0.19}>
-		<SpineTrack trackIndex={0} animationName={'payframe'} loop />
-	</SpineProvider>
+	<Sprite
+		x={props.x}
+		y={props.y}
+		anchor={0.5}
+		key="vb_cell_frame"
+		width={SYMBOL_SIZE * 1.02}
+		height={SYMBOL_SIZE * 1.02}
+	/>
 {/if}
