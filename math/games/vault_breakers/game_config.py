@@ -133,13 +133,16 @@ class GameConfig(Config):
         # Doubling progression: x1 -> x2 -> x4 -> x8 -> x16 -> x32 -> x64 -> x128
         self.maximum_board_mult = 128
 
+        # Vault Meter (free spins only): +1 per tumble, spot upgrade at each threshold
+        self.vault_meter_thresholds = [10, 20, 30]
+
         # Reels
-        reels = {"BR0": "BR0.csv", "FR0": "FR0.csv"}
+        reels = {"BR0": "BR0.csv", "BR1": "BR1.csv", "FR0": "FR0.csv"}  # BR1 = ante base reels (scatter x1.4)
         self.reels = {}
         for r, f in reels.items():
             self.reels[r] = self.read_reels_csv(os.path.join(self.reels_path, f))
 
-        mode_maxwins = {"base": 10000, "bonus": 10000}
+        mode_maxwins = {"base": 10000, "ante": 10000, "bonus": 10000, "super": 10000}
 
         self.bet_modes = [
             BetMode(
@@ -237,4 +240,34 @@ class GameConfig(Config):
                     ),
                 ],
             ),
-        ]
+                ]
+
+        # Ante (1.25x): base game on BR1 reels (increased scatter chance).
+        # Super buy (400x): bonus-style FS entry; every spot starts at x2 (see game_override.reset_fs_spin).
+        base_bm = self.bet_modes[0]
+        bonus_bm = self.bet_modes[1]
+        self.bet_modes.append(self._clone_mode(base_bm, "ante", 1.25, False, {"BR0": "BR1"}, mode_maxwins["ante"]))
+        self.bet_modes.append(self._clone_mode(bonus_bm, "super", 400, True, {}, mode_maxwins["super"]))
+
+    def _clone_mode(self, src, name, cost, is_buy, reel_swap, maxwin):
+        from copy import deepcopy
+
+        dists = []
+        for d in src._distributions:
+            nd = deepcopy(d)
+            rw = nd._conditions.get("reel_weights", {})
+            for gt, w in rw.items():
+                rw[gt] = {reel_swap.get(k, k): v for k, v in w.items()}
+            if nd._win_criteria is not None and nd._criteria == "wincap":
+                nd._win_criteria = maxwin
+            dists.append(nd)
+        return BetMode(
+            name=name,
+            cost=cost,
+            rtp=self.rtp,
+            max_win=maxwin,
+            auto_close_disabled=False,
+            is_feature=True,
+            is_buybonus=is_buy,
+            distributions=dists,
+        )

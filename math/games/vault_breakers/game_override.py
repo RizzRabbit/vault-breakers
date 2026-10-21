@@ -1,6 +1,7 @@
 """Vault Breakers game state override"""
 
 from game_executables import GameExecutables
+from game_events import update_grid_mult_event
 
 
 class GameStateOverride(GameExecutables):
@@ -17,6 +18,13 @@ class GameStateOverride(GameExecutables):
         super().reset_fs_spin()
         # Initialize multipliers at start of FS round (persist throughout)
         self.reset_grid_mults()
+        self.vault_meter = 0
+        if getattr(self, "betmode", None) == "super":
+            # Super buy: every spot starts at x2
+            self.position_multipliers = [
+                [2 for _ in range(self.config.num_rows[reel])] for reel in range(self.config.num_reels)
+            ]
+            update_grid_mult_event(self)
 
     def draw_board(self, emit_event: bool = True, trigger_symbol: str = "scatter") -> None:
         """In unbiased 'natural' measurement mode, base boards are drawn straight from the

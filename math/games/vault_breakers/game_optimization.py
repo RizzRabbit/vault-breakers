@@ -108,4 +108,10 @@ class OptimizationSetup:
             },
         }
 
+        from copy import deepcopy
+
+        self.game_config.opt_params["ante"] = deepcopy(self.game_config.opt_params["base"])
+        self.game_config.opt_params["super"] = deepcopy(self.game_config.opt_params["bonus"])
+        # NOTE: ante/super condition splits are placeholders pending the new Slot Expert handoff.
+
         verify_optimization_input(self.game_config, self.game_config.opt_params)

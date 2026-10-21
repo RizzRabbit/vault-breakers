@@ -397,6 +397,27 @@ All events share a common structure:
 
 ---
 
+### 15. vaultMeterUpdate
+Free spins only. Emitted after every tumble in free spins; the Vault Meter goes up by 1 and keeps its value for the whole round, retriggers included.
+```json
+{"index": 42, "type": "vaultMeterUpdate", "meter": 7, "nextThreshold": 10}
+```
+- `meter`: the meter value after this tumble
+- `nextThreshold`: the next upgrade point (10, 20 or 30), or `null` once 30 has passed
+
+### 16. vaultMeterUpgrade
+Free spins only. Emitted right after the `vaultMeterUpdate` that reaches 10, 20 or 30. One random marked spot (one that is below x128) moves up one tier: marked becomes x2, x2 becomes x4, and so on, capped at x128. If no spot qualifies, a random unmarked spot becomes x2.
+```json
+{"index": 91, "type": "vaultMeterUpgrade", "meter": 10,
+ "position": {"reel": 2, "row": 1}, "oldMultiplier": 64, "newMultiplier": 128,
+ "gridMultipliers": [[0,1,2,0,0], ...]}
+```
+- `oldMultiplier`: 0 means unmarked and 1 means marked but with no multiplier yet
+- `gridMultipliers`: the full grid after the upgrade, in the same layout as `updateGrid`
+
+### Bet modes
+`base` (1x), `ante` (1.25x, base game on BR1 reels with 1.4x scatter frequency, set by `ANTE_SCATTER_MULT` in `generate_reels.py`), `bonus` (100x buy, 10 free spins), and `super` (400x buy, 10 free spins). In `super`, an `updateGrid` event with every spot at 2 is emitted at the start of free spins.
+
 ## Event Sequences
 
 ### Typical Base Game Win (No FS)

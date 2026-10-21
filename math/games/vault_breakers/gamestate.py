@@ -49,6 +49,7 @@ class GameState(GameStateOverride):
             self.update_grid_mults()
             while self.win_data["totalWin"] > 0 and not (self.wincap_triggered):
                 self.tumble_game_board()
+                self.advance_vault_meter()
                 self.get_clusters_update_wins()
                 self.emit_tumble_win_events()
                 self.update_grid_mults()

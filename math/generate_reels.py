@@ -12,6 +12,8 @@ import random
 HERE = os.path.dirname(os.path.abspath(__file__))
 REEL_DIR = os.path.join(HERE, "games", "vault_breakers", "reels")
 REEL_LEN = 1000
+# Ante bet: scatter frequency multiplier for the BR1 (ante base) reelset. Configurable.
+ANTE_SCATTER_MULT = 1.4
 NUM_REELS = 5
 
 with open(os.path.join(HERE, "design", "handoff.json"), "r", encoding="utf-8") as f:
@@ -45,3 +47,6 @@ def write(name, weights, seed):
 if __name__ == "__main__":
     write("BR0.csv", handoff["base_symbol_weights"], 42)
     write("FR0.csv", handoff["freespin_symbol_weights"], 43)
+    ante = dict(handoff["base_symbol_weights"])
+    ante["S"] = ante["S"] * ANTE_SCATTER_MULT
+    write("BR1.csv", ante, 44)

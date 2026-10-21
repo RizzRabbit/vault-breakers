@@ -2,7 +2,8 @@
 
 from game_calculations import GameCalculations
 from src.calculations.cluster import Cluster
-from game_events import update_grid_mult_event
+import random
+from game_events import update_grid_mult_event, vault_meter_update_event, vault_meter_upgrade_event
 from src.events.events import update_freespin_event
 
 
@@ -36,6 +37,30 @@ class GameExecutables(GameCalculations):
                             self.config.maximum_board_mult
                         )
             update_grid_mult_event(self)
+
+    def advance_vault_meter(self):
+        """Vault Meter (free spins only): +1 per tumble; at each threshold (10/20/30) one random
+        marked spot moves up one tier (marked -> x2 -> x4 ... cap x128). If no spot is marked
+        (or all marked spots are already capped), a random unmarked spot becomes x2."""
+        self.vault_meter += 1
+        vault_meter_update_event(self)
+        if self.vault_meter not in self.config.vault_meter_thresholds:
+            return
+        cap = self.config.maximum_board_mult
+        spots = [(r, c) for r, col in enumerate(self.position_multipliers) for c, m in enumerate(col)]
+        marked = [(r, c) for r, c in spots if 0 < self.position_multipliers[r][c] < cap]
+        if marked:
+            r, c = random.choice(marked)
+            old = self.position_multipliers[r][c]
+            new = 2 if old == 1 else min(old * 2, cap)
+        else:
+            free = [(r, c) for r, c in spots if self.position_multipliers[r][c] == 0]
+            if not free:
+                return
+            r, c = random.choice(free)
+            old, new = 0, 2
+        self.position_multipliers[r][c] = new
+        vault_meter_upgrade_event(self, r, c, old, new)
 
     def get_clusters_update_wins(self):
         """Find clusters on board and update win manager."""

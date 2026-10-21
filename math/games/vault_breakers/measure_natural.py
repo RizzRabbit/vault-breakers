@@ -13,9 +13,10 @@ def work(args):
     cfg = GameConfig()
     for bm in cfg.bet_modes:
         if bm.get_name() == mode:
-            cond = {"reel_weights": {cfg.basegame_type: {"BR0": 1}, cfg.freegame_type: {"FR0": 1}},
-                    "force_wincap": False, "force_freegame": mode == "bonus"}
-            if mode == "bonus":
+            buy = bm.get_buybonus() if hasattr(bm, "get_buybonus") else bm._is_buybonus
+            cond = {"reel_weights": {cfg.basegame_type: {"BR1" if mode == "ante" else "BR0": 1}, cfg.freegame_type: {"FR0": 1}},
+                    "force_wincap": False, "force_freegame": buy}
+            if buy:
                 cond["scatter_triggers"] = eval(__import__("os").environ.get("VB_ST", "{3: 1}"))
             bm._distributions = [Distribution(criteria="natural", quota=1.0, conditions=cond)]
     for attempt in range(20):
@@ -39,7 +40,7 @@ if __name__ == "__main__":
     chunk = n // th
     with Pool(th) as p:
         res = p.map(work, [(mode, 1 + i * chunk, chunk) for i in range(th)])
-    N = chunk * th; cost = 100 if mode == "bonus" else 1
+    N = chunk * th; cost = {bm.get_name(): bm.get_cost() for bm in GameConfig().bet_modes}[mode]
     tot, hits, trig, mx, bw, fw = [sum(r[i] for r in res) if i != 3 else max(r[3] for r in res) for i in range(6)]
     print(f"{mode} N={N} RTP={tot/N/cost*100:.2f}% (base {bw/N/cost*100:.2f}% / fs {fw/N/cost*100:.2f}%) "
           f"hit 1 in {N/max(hits,1):.2f} fs 1 in {N/max(trig,1):.1f} max {mx:.1f}x")
