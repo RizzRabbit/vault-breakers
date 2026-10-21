@@ -38,8 +38,8 @@
 
 ## Targets
 - RTP 96.2% in each mode
-- Base hit rate ~1 in 3.5 (currently tuned ~1 in 3.2, accepted)
-- Free spins trigger ~1 in 200 in base
+- Hit rate 1 in 3.44 in base and 1 in 3.42 in ante (each within 3%)
+- Free spins trigger 1 in 200 in base and 1 in 140 in ante
 - Max win 10,000x bet (hard cap; round ends immediately when reached: no further tumbles or free spins)
 
 ## Frontend notes
