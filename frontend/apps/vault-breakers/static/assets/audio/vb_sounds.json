@@ -218,10 +218,10 @@
 		]
 	},
 	"src": [
-		"./assets/audio/sounds.ogg",
-		"./assets/audio/sounds.m4a",
-		"./assets/audio/sounds.mp3",
-		"./assets/audio/sounds.ac3"
+		"./assets/audio/vb_sounds.ogg",
+		"./assets/audio/vb_sounds.m4a",
+		"./assets/audio/vb_sounds.mp3",
+		"./assets/audio/vb_sounds.ac3"
 	],
 	"config": {
 		"bgm_freespin": {

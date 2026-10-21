@@ -3,7 +3,7 @@
   <info face="gold" size="105" bold="0" italic="0" charset="" unicode="" stretchH="105" smooth="1" aa="1" padding="0,0,0,0" spacing="1,0" outline="0"/>
   <common lineHeight="105" base="105" scaleW="2048" scaleH="214" pages="1" packed="0"/>
   <pages>
-    <page id="0" file="mm_gold.webp"/>
+    <page id="0" file="vb_gold.png"/>
   </pages>
   <chars count="57">
     <char id="32" x="0" y="0" width="39.5" height="1" xoffset="0" yoffset="0" xadvance="39.5" yadvance="1"/>

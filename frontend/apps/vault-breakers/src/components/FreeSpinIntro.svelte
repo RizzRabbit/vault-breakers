@@ -44,19 +44,19 @@
 				anchor={0.5}
 				y={-sizes.height * 0.24}
 				text="FREE SPINS"
-				style={{ fontFamily: 'gold', fontSize: sizes.height * 0.2 }}
+				style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.2 }}
 			/>
 			<BitmapText
 				anchor={0.5}
 				y={sizes.height * 0.04}
 				text={`${freeSpinsFromEvent}`}
-				style={{ fontFamily: 'silver', fontSize: sizes.height * 0.3 }}
+				style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: sizes.height * 0.3 }}
 			/>
 			<BitmapText
 				anchor={0.5}
 				y={sizes.height * 0.27}
 				text="THE VAULT IS OPEN"
-				style={{ fontFamily: 'gold', fontSize: sizes.height * 0.1 }}
+				style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.1 }}
 			/>
 		{/snippet}
 	</FreeSpinAnimation>

@@ -3,13 +3,13 @@
 // FONTS: BMFont .xml (+ page). Face names used in code: gold, goldblur, silver, purple.
 // Files come from the fonts/audio drop (vb-release/art-audio-fonts, Oswald OFL); swap here.
 const FONT_FILES = {
-	gold: new URL('../../assets/fonts/goldFont/mm_gold.xml', import.meta.url).href,
-	goldblur: new URL('../../assets/fonts/goldBlur/miningfont_gold_blur.xml', import.meta.url).href,
-	silver: new URL('../../assets/fonts/silverFont/mm_silver.xml', import.meta.url).href,
-	purple: new URL('../../assets/fonts/purpleFont/mm_purple.xml', import.meta.url).href,
+	gold: new URL('../../assets/fonts/vb/vb_gold.xml', import.meta.url).href,
+	goldblur: new URL('../../assets/fonts/vb/vb_goldblur.xml', import.meta.url).href,
+	silver: new URL('../../assets/fonts/vb/vb_silver.xml', import.meta.url).href,
+	purple: new URL('../../assets/fonts/vb/vb_purple.xml', import.meta.url).href,
 };
 // AUDIO: howler sprite manifest (synthesized audio from the same drop).
-const AUDIO_MANIFEST = new URL('../../assets/audio/sounds.json', import.meta.url).href;
+const AUDIO_MANIFEST = new URL('../../assets/audio/vb_sounds.json', import.meta.url).href;
 // --------------------------------------------------------------------------------------------
 
 export default {

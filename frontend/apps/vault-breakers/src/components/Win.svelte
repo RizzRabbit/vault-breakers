@@ -70,7 +70,7 @@
 									maxWidth={2130}
 									text={bookEventAmountToCurrencyString(countUpAmount)}
 									style={{
-										fontFamily: 'gold',
+										fontFamily: 'gold', fill: 0xffffff,
 										fontSize: SYMBOL_SIZE * 3.6,
 										align: 'center',
 										fontWeight: 'bold',
@@ -85,7 +85,7 @@
 									context.stateLayoutDerived.mainLayout().scale}
 								text={bookEventAmountToCurrencyString(countUpAmount)}
 								style={{
-									fontFamily: 'gold',
+									fontFamily: 'gold', fill: 0xffffff,
 									fontSize: SYMBOL_SIZE,
 									align: 'center',
 									fontWeight: 'bold',

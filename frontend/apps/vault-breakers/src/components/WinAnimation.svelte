@@ -21,11 +21,11 @@
 	const props: Props = $props();
 	const context = getContext();
 	const TITLES = {
-		big_win_intro: 'BIG WIN',
-		super_win_intro: 'SUPER WIN',
-		mega_win_intro: 'MEGA WIN',
-		epic_win_intro: 'EPIC WIN',
-		max_win_intro: 'MAX WIN',
+		big_win_intro: 'BIG HAUL',
+		super_win_intro: 'HUGE HAUL',
+		mega_win_intro: 'MEGA HEIST',
+		epic_win_intro: 'EPIC HEIST',
+		max_win_intro: 'LEGENDARY HEIST',
 	} as const;
 	const title = $derived(TITLES[props.animationMap.intro]);
 	const width = $derived(context.stateGameDerived.boardLayout().width * 1.25);
@@ -51,7 +51,7 @@
 		anchor={0.5}
 		y={-height * 0.24}
 		text={title}
-		style={{ fontFamily: 'gold', fontSize: height * 0.22 }}
+		style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: height * 0.22 }}
 	/>
 	<Container y={height * 0.1} scale={0.3}>
 		{@render props.children()}

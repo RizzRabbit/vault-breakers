@@ -54,13 +54,13 @@
 						<BitmapText
 							anchor={0.5}
 							y={-sizes.height * 0.24}
-							text={isBigWin ? 'VAULT CRACKED' : 'TOTAL WIN'}
-							style={{ fontFamily: 'gold', fontSize: sizes.height * 0.17 }}
+							text={isBigWin ? 'VAULT CRACKED' : 'HEIST TOTAL'}
+							style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.17 }}
 						/>
 						<ResponsiveBitmapText
 							anchor={0.5}
 							y={sizes.height * 0.05}
-							style={{ fontFamily: 'silver', fontSize: sizes.height * 0.26 }}
+							style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: sizes.height * 0.26 }}
 							text={bookEventAmountToCurrencyString(countUpAmount)}
 							maxWidth={sizes.width * 0.8}
 						/>
@@ -68,7 +68,7 @@
 							anchor={0.5}
 							y={sizes.height * 0.29}
 							text="FREE SPINS COMPLETE"
-							style={{ fontFamily: 'gold', fontSize: sizes.height * 0.09 }}
+							style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.09 }}
 						/>
 					{/snippet}
 				</FreeSpinAnimation>

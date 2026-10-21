@@ -7,6 +7,7 @@
 	import { bookEventAmountToCurrencyString } from 'utils-shared/amount';
 
 	import { SYMBOL_SIZE } from '../game/constants';
+	import { CONSOLE_PANEL } from '../game/consoleLayout';
 
 	type Props = {
 		width: number;
@@ -37,10 +38,10 @@
 	});
 </script>
 
-<Container scale={scale.current}>
+<Container y={CONSOLE_PANEL.height * 0.08} scale={scale.current}>
 	<ResponsiveBitmapText
 		anchor={0.5}
-		style={{ fontFamily: 'gold', fontSize: 0.5 * SYMBOL_SIZE }}
+		style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: 0.42 * SYMBOL_SIZE }}
 		text={bookEventAmountToCurrencyString(amount.current)}
 		maxWidth={props.width * 0.85}
 	/>

@@ -62,9 +62,9 @@
 		>
 			<Sprite key="vb_s" anchor={0.5} y={-height * 0.62} width={height * 0.55} height={height * 0.55} />
 			<Sprite key="vb_plaque" anchor={0.5} {width} {height} />
-			<BitmapText anchor={0.5} y={-height * 0.24} text="MAX WIN REACHED" style={{ fontFamily: 'gold', fontSize: height * 0.17 }} />
-			<BitmapText anchor={0.5} y={height * 0.03} text={bookEventAmountToCurrencyString(amount)} style={{ fontFamily: 'silver', fontSize: height * 0.22 }} />
-			<BitmapText anchor={0.5} y={height * 0.27} text={`${config.maxWin.toLocaleString('en-US')}X BET - VAULT EMPTIED`} style={{ fontFamily: 'gold', fontSize: height * 0.08 }} />
+			<BitmapText anchor={0.5} y={-height * 0.24} text="MAX WIN REACHED" style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: height * 0.17 }} />
+			<BitmapText anchor={0.5} y={height * 0.03} text={bookEventAmountToCurrencyString(amount)} style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: height * 0.22 }} />
+			<BitmapText anchor={0.5} y={height * 0.27} text={`${config.maxWin.toLocaleString('en-US')}X BET - VAULT EMPTIED`} style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: height * 0.08 }} />
 		</Container>
 	</MainContainer>
 	{#if show}

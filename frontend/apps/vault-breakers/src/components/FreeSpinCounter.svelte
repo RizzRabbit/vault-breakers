@@ -11,25 +11,22 @@
 
 	import { getContext } from '../game/context';
 	import { SYMBOL_SIZE } from '../game/constants';
+	import { CONSOLE_PANEL, consoleSlot } from '../game/consoleLayout';
 	import { anchorToPivot, BitmapText, Container, Sprite, type Sizes } from 'pixi-svelte';
 
 	const context = getContext();
 	const PANEL_KEY_DESKTOP = 'vb_vault_meter_frame';
 	const PANEL_RATIO_DESKTOP = 992 / 623;
 	const panelKey = PANEL_KEY_DESKTOP;
-	const panelWidth = $derived(SYMBOL_SIZE * 2);
+	const panelWidth = CONSOLE_PANEL.width;
 	const panelSizes = $derived({
 		width: panelWidth,
 		height: panelWidth / PANEL_RATIO_DESKTOP,
 	});
-	const scale = 1;
-	// portrait: panel sits above the board, left of centre (next to the Vault Meter) (side slots are off-screen there)
-	const position = $derived.by(() => {
-		const b = context.stateGameDerived.boardLayout();
-		if (context.stateLayoutDerived.layoutType() === 'portrait')
-			return { x: b.x - panelSizes.width - SYMBOL_SIZE * 0.1, y: b.y - b.height * 0.5 - panelSizes.height - SYMBOL_SIZE * 0.95 };
-		return { x: b.x - b.width * 0.5 - panelSizes.width - SYMBOL_SIZE * 0.7, y: b.y - b.height * 0.5 };
-	});
+		// heist console slot 0 (see game/consoleLayout.ts)
+	const slot = $derived(consoleSlot(0));
+	const position = $derived({ x: slot.x, y: slot.y });
+	const scale = $derived(slot.scale);
 
 	const fontSize = SYMBOL_SIZE * 0.275;
 
@@ -67,9 +64,9 @@
 			})}
 		>
 			<BitmapText
-				text={'FREE SPIN'}
+				text={'FREE SPINS'}
 				style={{
-					fontFamily: 'gold',
+					fontFamily: 'gold', fill: 0xffffff,
 					fontSize,
 					wordWrap: false,
 				}}
@@ -80,7 +77,7 @@
 				{...counterPosition}
 				anchor={{ x: 0.5, y: 0 }}
 				style={{
-					fontFamily: 'gold',
+					fontFamily: 'gold', fill: 0xffffff,
 					fontSize,
 				}}
 				onresize={(sizes) => (counterSizes = sizes)}

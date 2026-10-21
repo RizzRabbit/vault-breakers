@@ -4,41 +4,24 @@
 	import { Container } from 'pixi-svelte';
 	import { FadeContainer } from 'components-pixi';
 
-	import { getContext } from '../game/context';
-	import { SYMBOL_SIZE } from '../game/constants';
-	import BoardContainer from './BoardContainer.svelte';
+	import { CONSOLE_PANEL, consoleSlot } from '../game/consoleLayout';
 
 	type Props = {
 		show: boolean;
 		children: Snippet;
 	};
 
+	// loot (tumble win) panel: heist console slot 1 (see game/consoleLayout.ts); children draw centred
 	const props: Props = $props();
-	const context = getContext();
-
-	const desktopPosition = $derived({
-		x: context.stateGameDerived.boardLayout().width * 0.5,
-		y: -SYMBOL_SIZE * 0.8 * 0.58,
-	});
-
-	const portraitPosition = $derived({
-		x:
-			context.stateGameDerived.boardLayout().width *
-			(context.stateGame.gameType === 'basegame' ? 0.5 : 0.37),
-		y: -SYMBOL_SIZE * 0.8 * 0.68,
-	});
-
-	const position = $derived(
-		context.stateLayoutDerived.isStacked() ? portraitPosition : desktopPosition,
-	);
-
-	const scale = $derived(context.stateLayoutDerived.isStacked() ? 1.28 : 1);
+	const slot = $derived(consoleSlot(1));
 </script>
 
 <FadeContainer show={props.show}>
-	<BoardContainer>
-		<Container {...position} {scale}>
-			{@render props.children()}
-		</Container>
-	</BoardContainer>
+	<Container
+		x={slot.x + (CONSOLE_PANEL.width * slot.scale) / 2}
+		y={slot.y + (CONSOLE_PANEL.height * slot.scale) / 2}
+		scale={slot.scale}
+	>
+		{@render props.children()}
+	</Container>
 </FadeContainer>

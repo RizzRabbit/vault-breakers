@@ -30,8 +30,8 @@
 		x={context.stateLayoutDerived.mainLayout().width * 0.5}
 		y={context.stateLayoutDerived.mainLayout().height - 40}
 		{alpha}
-		text="PRESS ANYWHERE TO CONTINUE"
-		style={{ fontFamily: 'gold', fontSize: 48 }}
+		text="TAP TO CONTINUE"
+		style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: 48 }}
 	/>
 </MainContainer>
 <OnHotkey hotkey="Space" onpress={() => props.onpress()} />

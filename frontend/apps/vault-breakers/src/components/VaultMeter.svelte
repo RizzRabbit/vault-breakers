@@ -16,17 +16,13 @@
 	import { getContext } from '../game/context';
 	import { SYMBOL_SIZE } from '../game/constants';
 	import config from '../game/config';
+	import { CONSOLE_PANEL, consoleSlot } from '../game/consoleLayout';
 
 	const context = getContext();
-	const PANEL_RATIO = 992 / 623;
-	const panelSizes = { width: SYMBOL_SIZE * 2.4, height: (SYMBOL_SIZE * 2.4) / PANEL_RATIO };
-	// portrait: panel sits above the board, right of centre (side slots are off-screen there)
-	const position = $derived.by(() => {
-		const b = context.stateGameDerived.boardLayout();
-		if (context.stateLayoutDerived.layoutType() === 'portrait')
-			return { x: b.x + SYMBOL_SIZE * 0.1, y: b.y - b.height * 0.5 - panelSizes.height - SYMBOL_SIZE * 0.95 };
-		return { x: b.x + b.width * 0.5 + SYMBOL_SIZE * 0.7, y: b.y - b.height * 0.5 };
-	});
+	const panelSizes = CONSOLE_PANEL;
+	// heist console slot 2 (see game/consoleLayout.ts)
+	const slot = $derived(consoleSlot(2));
+	const position = $derived({ x: slot.x, y: slot.y });
 
 	const fontSize = SYMBOL_SIZE * 0.2;
 	const tickFont = SYMBOL_SIZE * 0.13;
@@ -72,21 +68,21 @@
 </script>
 
 <MainContainer>
-	<FadeContainer {show} {...position}>
+	<FadeContainer {show} {...position} scale={slot.scale}>
 		<Sprite key="vb_vault_meter_frame" {...panelSizes} />
 		<BitmapText
 			x={panelSizes.width / 2}
 			y={panelSizes.height * 0.27}
 			anchor={{ x: 0.5, y: 0.5 }}
 			text="VAULT METER"
-			style={{ fontFamily: 'gold', fontSize }}
+			style={{ fontFamily: 'gold', fill: 0xffffff, fontSize }}
 		/>
 		<BitmapText
 			x={panelSizes.width / 2}
 			y={panelSizes.height * 0.47}
 			anchor={{ x: 0.5, y: 0.5 }}
 			text={flash || (gridMaxed ? 'MAX' : next === null ? `${meter} MAX` : `${meter} OF ${next}`)}
-			style={{ fontFamily: flash ? 'silver' : 'gold', fontSize }}
+			style={{ fontFamily: flash ? 'silver' : 'gold', fill: 0xffffff, fontSize }}
 		/>
 		<!-- progress track with 10 / 20 / 30 tick marks -->
 		<Rectangle

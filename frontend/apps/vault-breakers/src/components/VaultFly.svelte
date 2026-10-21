@@ -15,6 +15,7 @@
 
 	import { getContext } from '../game/context';
 	import { SYMBOL_SIZE } from '../game/constants';
+	import { CONSOLE_PANEL, consoleSlot } from '../game/consoleLayout';
 
 	// Vault Meter -> spot fly-in. Starts at the meter panel, arcs to the 0-based grid cell
 	// (vaultMeterUpgrade.position), then shows '+X2 VAULT' (new spot) or 'X{n} VAULT' (step-up).
@@ -36,11 +37,9 @@
 		vaultFly: async (e) => {
 			const b = context.stateGameDerived.boardLayout();
 			// meter panel centre (see VaultMeter.svelte position + panel size)
-			const ph = (SYMBOL_SIZE * 2.4) / (992 / 623);
-			from =
-				context.stateLayoutDerived.layoutType() === 'portrait'
-					? { x: b.x + SYMBOL_SIZE * 0.1 + SYMBOL_SIZE * 1.2, y: b.y - b.height * 0.5 - SYMBOL_SIZE * 0.95 - ph / 2 }
-					: { x: b.x + b.width * 0.5 + SYMBOL_SIZE * 0.7 + SYMBOL_SIZE * 1.2, y: b.y - b.height * 0.5 + SYMBOL_SIZE * 0.75 };
+			// centre of the Vault Meter console slot
+			const m = consoleSlot(2);
+			from = { x: m.x + (CONSOLE_PANEL.width * m.scale) / 2, y: m.y + (CONSOLE_PANEL.height * m.scale) / 2 };
 			to = { x: b.x - b.width * 0.5 + (e.reel + 0.5) * SYMBOL_SIZE, y: b.y - b.height * 0.5 + (e.row + 0.5) * SYMBOL_SIZE };
 			mult = e.newMultiplier;
 			label = e.oldMultiplier <= 1 ? `+X${e.newMultiplier} VAULT` : `X${e.newMultiplier} VAULT`;
@@ -83,7 +82,7 @@
 				x={to.x}
 				y={to.y - SYMBOL_SIZE * 0.62}
 				text={label}
-				style={{ fontFamily: 'silver', fontSize: SYMBOL_SIZE * 0.3 }}
+				style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: SYMBOL_SIZE * 0.3 }}
 			/>
 		{/if}
 	</MainContainer>
