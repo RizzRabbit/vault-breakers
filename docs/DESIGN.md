@@ -23,7 +23,6 @@
 ## Free spins
 - 3 / 4 / 5+ scatters award 10 / 12 / 15 free spins.
 - 3+ scatters during free spins: +5 spins. No retrigger limit.
-- Free spins pay 2x the base paytable in every mode (base, ante, bonus, super).
 
 ## Vault Meter (free spins only)
 - Each tumble (cascade after a win) in free spins adds 1 to the meter; the opening drop of a spin does not count.
@@ -33,7 +32,7 @@
 ## Bet modes (v1)
 - base: cost 1x
 - bonus: buy free spins, cost 100x
-- super: buy free spins with every spot pre-set to x2, cost 400x (free spins pay 2x the paytable like every mode; RTP is tuned by weights)
+- super: buy free spins with every spot pre-set to x2, cost 400x (may use its own lower free-spin pay scale for RTP tuning)
 - ante: cost 1.25x per spin, increased scatter chance in base (free spins target about 1 in 140; scatter weight about 1.2x base, adjusted as needed to hit that rate, then RTP rebalanced to 96.2%)
 
 ## Targets
