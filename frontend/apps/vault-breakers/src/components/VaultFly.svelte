@@ -39,7 +39,7 @@
 			const ph = (SYMBOL_SIZE * 2.4) / (992 / 623);
 			from =
 				context.stateLayoutDerived.layoutType() === 'portrait'
-					? { x: b.x + SYMBOL_SIZE * 0.1 + SYMBOL_SIZE * 1.2, y: b.y - b.height * 0.5 - SYMBOL_SIZE * 0.75 - ph / 2 }
+					? { x: b.x + SYMBOL_SIZE * 0.1 + SYMBOL_SIZE * 1.2, y: b.y - b.height * 0.5 - SYMBOL_SIZE * 0.95 - ph / 2 }
 					: { x: b.x + b.width * 0.5 + SYMBOL_SIZE * 0.7 + SYMBOL_SIZE * 1.2, y: b.y - b.height * 0.5 + SYMBOL_SIZE * 0.75 };
 			to = { x: b.x - b.width * 0.5 + (e.reel + 0.5) * SYMBOL_SIZE, y: b.y - b.height * 0.5 + (e.row + 0.5) * SYMBOL_SIZE };
 			mult = e.newMultiplier;

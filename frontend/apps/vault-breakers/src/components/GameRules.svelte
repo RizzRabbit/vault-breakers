@@ -61,6 +61,10 @@
 </div>
 
 <style>
+	/* override the shared ModalPayTable placeholder heading ("ADD YOUR PAY TABLE") that sits right before our content */
+	:global(span:has(+ .vb-info)) {
+		display: none;
+	}
 	.vb-info {
 		max-width: 52rem;
 		text-align: left;

@@ -9,7 +9,7 @@ export const RULES_VALUES = GAME_NUMBERS;
 
 // One paytable for every mode. Optional free-spin pay line: empty = hidden. Set e.g.
 // 'Free Spins pay 2x these values.' to switch it on (shown under the paytable and in the rules).
-export const FS_PAY_NOTE = 'Free spin wins pay {{FS_MULT}}x the paytable.';
+export const FS_PAY_NOTE = 'Free spins pay the same paytable as the base game.';
 export const PAYTABLE_SIZES = ['5', '6', '7', '8', '9-10', '11-12', '13-15', '16+'] as const;
 // payouts in x bet, by cluster size (keys = math symbol IDs)
 export const PAYTABLE: { id: string; name: string; pays: number[] }[] = [
@@ -50,9 +50,9 @@ export const RULES_MD = `
 
 ## Bet options
 - Base: 1x bet.
-- Ante: 1.25x bet. VAULTs land more often, so Free Spins trigger about 1 in 140 spins instead of about 1 in 200.
-- Bonus Buy: 100x bet. Starts Free Spins right away.
-- Super Buy: 400x bet. Starts Free Spins with every spot already at x2.
+- Ante: {{ANTE_COST}}x bet. VAULTs land more often, so Free Spins trigger about 1 in 140 spins instead of about 1 in 200.
+- Bonus Buy: {{BONUS_COST}}x bet. Starts Free Spins right away.
+- Super Buy: {{SUPER_COST}}x bet. Starts Free Spins with every spot already at x2.
 
 ## Max win and RTP
 - Max win is {{MAX_WIN}}x the bet. When it's reached, the round ends right away and pays the max win.

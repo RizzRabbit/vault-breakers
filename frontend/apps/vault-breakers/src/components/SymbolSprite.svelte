@@ -48,6 +48,9 @@
 			return;
 		}
 		pending = done;
+		// mock/e2e only: record win-highlight starts to check ordering against step-ups
+		const g = globalThis as any;
+		if (state === 'win' && g.__VB_MOCK_RGS__) (g.__VB_WINS__ ??= []).push({ event: g.__VB_LAST_EVENT__, t: performance.now() + duration });
 		const start = performance.now();
 		const step = (now: number) => {
 			const t = Math.min(1, (now - start) / duration);

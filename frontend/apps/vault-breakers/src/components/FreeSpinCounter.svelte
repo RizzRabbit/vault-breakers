@@ -27,7 +27,7 @@
 	const position = $derived.by(() => {
 		const b = context.stateGameDerived.boardLayout();
 		if (context.stateLayoutDerived.layoutType() === 'portrait')
-			return { x: b.x - panelSizes.width - SYMBOL_SIZE * 0.1, y: b.y - b.height * 0.5 - panelSizes.height - SYMBOL_SIZE * 0.75 };
+			return { x: b.x - panelSizes.width - SYMBOL_SIZE * 0.1, y: b.y - b.height * 0.5 - panelSizes.height - SYMBOL_SIZE * 0.95 };
 		return { x: b.x - b.width * 0.5 - panelSizes.width - SYMBOL_SIZE * 0.7, y: b.y - b.height * 0.5 };
 	});
 

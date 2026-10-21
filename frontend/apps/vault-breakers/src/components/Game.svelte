@@ -92,6 +92,8 @@
 				<UiGameName name="VAULT BREAKERS" />
 			{/snippet}
 			{#snippet logo()}
+				<!-- portrait: the clock + game name already fill the narrow header; skip the duplicate title -->
+				{#if context.stateLayoutDerived.layoutType() !== 'portrait'}
 				<Text
 					anchor={{ x: 1, y: 0 }}
 					text="VAULT BREAKERS"
@@ -103,13 +105,13 @@
 						fill: 0xffffff,
 					}}
 				/>
+				{/if}
 			{/snippet}
 		</UI>
 		<Win />
 		<FreeSpinIntro />
-		{#if ['desktop', 'landscape'].includes(context.stateLayoutDerived.layoutType())}
-			<FreeSpinCounter />
-		{/if}
+		<!-- every layout; portrait places it above the board next to the Vault Meter -->
+		<FreeSpinCounter />
 		<VaultMeter />
 		<VaultFly />
 		<FreeSpinOutro />

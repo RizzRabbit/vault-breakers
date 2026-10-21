@@ -65,7 +65,12 @@
 				}),
 			);
 			grid = emitterEvent.grid;
-			if (changed.size && props.layer === 'labels') startPop(changed);
+			if (changed.size && props.layer === 'labels') {
+				startPop(changed);
+				// mock/e2e only: lets the harness verify one step-up per spot per tumble
+				const g = globalThis as any;
+				if (g.__VB_MOCK_RGS__) (g.__VB_POPS__ ??= []).push({ event: g.__VB_LAST_EVENT__, t: performance.now(), cells: [...changed] });
+			}
 		},
 		multiplierGridClear: () => (grid = DEFAULT_GRID),
 		multiplierGridHighlight: (e) => {
