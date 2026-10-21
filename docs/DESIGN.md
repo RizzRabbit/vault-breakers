@@ -21,8 +21,12 @@
 - Free spins: marks and multipliers persist for the whole round.
 
 ## Free spins
-- 3 / 4 / 5+ scatters award 10 / 12 / 15 free spins.
-- 3+ scatters during free spins: +5 spins. No retrigger limit.
+- Free spins trigger only from base and ante spins. Every tier awards 10 spins; the scatter count picks the tier:
+  - 3 scatters: Regular, all spots start unmarked.
+  - 4 scatters: Super, every spot starts at x2. No minimum pay.
+  - 5+ scatters: Epic, every spot starts at x4. An Epic round always pays at least 200x the base bet from its free spins alone, not counting the triggering spin, in ante too (the math redraws only the Epic free-spin round until it does).
+- freeSpinTrigger carries fsType: regular | super | epic.
+- 3+ scatters during free spins: +5 spins, same tier. No retrigger limit. The tier never changes mid-round.
 - Free spins pay from the same paytable as the base game in every mode (base, ante, bonus, super), with no pay boost. Bigger free-spin wins come from the free-spin reels and the spot multipliers.
 
 ## Vault Meter (free spins only)
@@ -32,8 +36,9 @@
 
 ## Bet modes (v1)
 - base: cost 1x
-- bonus: buy free spins, cost 100x
-- super: buy free spins with every spot pre-set to x2, cost 400x (same free-spin pay as other modes; the x2 starting spots are its only extra)
+- bonus: buy Regular free spins, cost 100x
+- super: buy Super free spins, cost 400x. Same round as a 4-scatter Super (every spot starts at x2, same pay).
+- Epic cannot be bought.
 - ante: cost 1.25x per spin, increased scatter chance in base (free spins target about 1 in 140; scatter weight about 1.2x base, adjusted as needed to hit that rate, then RTP rebalanced to 96.2%)
 
 ## Targets

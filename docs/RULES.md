@@ -14,8 +14,11 @@
 
 ## Free Spins
 - Free Spins pay from the same paytable as the base game, in every bet mode. Spot multipliers apply on top.
-- 3, 4 or 5+ VAULTs award 10, 12 or 15 Free Spins.
-- 3+ VAULTs during Free Spins add 5 more spins. There's no limit on retriggers.
+- Free Spins can only be triggered from Base and Ante spins, and every type gives 10 spins:
+  - 3 VAULTs: Free Spins. All spots start empty.
+  - 4 VAULTs: Super Free Spins. Every spot starts at x2.
+  - 5 or more VAULTs: Epic Free Spins. Every spot starts at x4, and the Free Spins pay at least 200x your base bet.
+- 3+ VAULTs during Free Spins add 5 more spins of the same type. There's no limit on retriggers.
 
 ## Vault Meter (Free Spins only)
 - Each tumble after a win adds 1 to the meter. The first drop of each spin doesn't count.
@@ -25,8 +28,9 @@
 ## Bet options
 - Base: 1x bet.
 - Ante: 1.25x bet. VAULTs land more often, so Free Spins trigger about 1 in 140 spins instead of about 1 in 200.
-- Bonus Buy: 100x bet. Starts Free Spins right away.
-- Super Buy: 400x bet. Starts Free Spins with every spot already at x2.
+- Bonus Buy: 100x bet. Always starts regular Free Spins right away.
+- Super Buy: 400x bet. Starts Super Free Spins right away, with every spot at x2.
+- Epic Free Spins can't be bought.
 
 ## Max win and RTP
 - Max win is 10,000x the bet. When it's reached, the round ends right away and pays the max win.
