@@ -68,9 +68,9 @@ class OptimizationSetup:
             "bonus": {
                 "conditions": {
                     "wincap": ConstructConditions(
-                        rtp=0.01, av_win=wincaps["bonus"], search_conditions=wincaps["bonus"]
+                        rtp=0.005, av_win=wincaps["bonus"], search_conditions=wincaps["bonus"]
                     ).return_dict(),
-                    "freegame": ConstructConditions(rtp=0.952, hr="x").return_dict(),
+                    "freegame": ConstructConditions(rtp=0.957, hr="x").return_dict(),
                 },
                 "scaling": ConstructScaling(
                     [
@@ -112,6 +112,13 @@ class OptimizationSetup:
 
         self.game_config.opt_params["ante"] = deepcopy(self.game_config.opt_params["base"])
         self.game_config.opt_params["super"] = deepcopy(self.game_config.opt_params["bonus"])
+        # Volatility limits (SDK rgs_verification): etl10k = P(10000x) * 10000 <= 0.8 and
+        # etl40b <= 0.9, i.e. wincap RTP share <= 0.8 / cost. Keep a margin below the limit.
+        sup_c = self.game_config.opt_params["super"]["conditions"]
+        sup_c["wincap"] = ConstructConditions(
+            rtp=0.0015, av_win=wincaps["super"], search_conditions=wincaps["super"]
+        ).return_dict()
+        sup_c["freegame"] = ConstructConditions(rtp=0.9605, hr="x").return_dict()
         # Ante: BR1 reels (~1.2x scatters) -> FS target ~1 in 140, larger FS share of RTP.
         ante_c = self.game_config.opt_params["ante"]["conditions"]
         ante_c["freegame"] = ConstructConditions(rtp=0.55, hr=140, search_conditions={"symbol": "scatter"}).return_dict()
