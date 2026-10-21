@@ -2,7 +2,7 @@
 	export type EmitterEventFreeSpinIntro =
 		| { type: 'freeSpinIntroShow' }
 		| { type: 'freeSpinIntroHide' }
-		| { type: 'freeSpinIntroUpdate'; totalFreeSpins: number };
+		| { type: 'freeSpinIntroUpdate'; totalFreeSpins: number; extraSpins?: number };
 </script>
 
 <script lang="ts">
@@ -19,6 +19,8 @@
 
 	let show = $state(false);
 	let freeSpinsFromEvent = $state(0);
+	// retrigger: number of spins ADDED (not the new total)
+	let extraSpins = $state<number | undefined>(undefined);
 	let oncomplete = $state(() => {});
 
 	context.eventEmitter.subscribeOnMount({
@@ -30,6 +32,7 @@
 			// }
 			// freeSpinsFromEvent = emitterEvent.extraSpins ?? emitterEvent.totalFreeSpins;
 			freeSpinsFromEvent = emitterEvent.totalFreeSpins;
+			extraSpins = emitterEvent.extraSpins;
 			await waitForResolve((resolve) => (oncomplete = resolve));
 		},
 	});
@@ -43,14 +46,14 @@
 			<BitmapText
 				anchor={0.5}
 				y={-sizes.height * 0.24}
-				text="FREE SPINS"
+				text={extraSpins !== undefined ? `${extraSpins} MORE` : 'FREE SPINS'}
 				style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.2 }}
 			/>
 			<BitmapText
 				anchor={0.5}
 				y={sizes.height * 0.04}
-				text={`${freeSpinsFromEvent}`}
-				style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: sizes.height * 0.3 }}
+				text={extraSpins !== undefined ? 'FREE SPINS' : `${freeSpinsFromEvent}`}
+				style={{ fontFamily: 'silver', fill: 0xffffff, fontSize: sizes.height * (extraSpins !== undefined ? 0.22 : 0.3) }}
 			/>
 			<BitmapText
 				anchor={0.5}

@@ -53,6 +53,9 @@ const animateSymbols = async ({ positions: rawPositions }: { positions: Position
 	});
 };
 
+// total free spins awarded so far in the current feature (for retrigger 'N MORE')
+let previousTotalFs = 0;
+
 export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContext> = {
 	reveal: async (bookEvent: BookEventOfType<'reveal'>, { bookEvents }: BookEventContext) => {
 		eventEmitter.broadcast({ type: 'tumbleWinAmountReset' });
@@ -153,6 +156,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			type: 'freeSpinIntroUpdate',
 			totalFreeSpins: bookEvent.totalFs,
 		});
+		previousTotalFs = bookEvent.totalFs;
 		stateGame.gameType = 'freegame';
 		eventEmitter.broadcast({ type: 'freeSpinIntroHide' });
 		eventEmitter.broadcast({ type: 'vaultMeterShow' });
@@ -186,7 +190,11 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinIntroUpdate',
 			totalFreeSpins: bookEvent.totalFs,
+			// spins added = new total minus previous total (from the event, not hardcoded)
+			extraSpins:
+				previousTotalFs > 0 && bookEvent.totalFs > previousTotalFs ? bookEvent.totalFs - previousTotalFs : undefined,
 		});
+		previousTotalFs = bookEvent.totalFs;
 		stateGame.gameType = 'freegame';
 		eventEmitter.broadcast({ type: 'freeSpinIntroHide' });
 		eventEmitter.broadcast({ type: 'vaultMeterShow' });

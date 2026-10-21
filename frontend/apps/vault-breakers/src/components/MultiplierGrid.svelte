@@ -52,6 +52,22 @@
 		popRaf = requestAnimationFrame(tick);
 	};
 
+	// x128 spots: pulsing red glow (time-based, so it keeps its phase even at low frame rates)
+	const has128 = $derived(props.layer === 'frames' && show && grid.some((reel) => reel.some((m) => m >= 128)));
+	let glow = $state(0);
+	$effect(() => {
+		if (!has128) return;
+		let raf = 0;
+		const tick = (now: number) => {
+			glow = 0.5 + 0.5 * Math.sin((now / 900) * Math.PI * 2);
+			const g = globalThis as any;
+			if (g.__VB_MOCK_RGS__) g.__VB_GLOW__ = glow; // mock/e2e only
+			raf = requestAnimationFrame(tick);
+		};
+		raf = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(raf);
+	});
+
 	context.eventEmitter.subscribeOnMount({
 		multiplierGridShow: () => (show = true),
 		multiplierGridHide: () => (show = false),
@@ -100,6 +116,16 @@
 					{@const tier = tierOf(multiplier)}
 					<Container x={(reelIndex + 0.5) * SYMBOL_SIZE} y={(rowIndex + 0.5) * SYMBOL_SIZE}>
 						{#if props.layer === 'frames'}
+							{#if tier === 128 && multiplier > 1}
+								<Sprite
+									anchor={0.5}
+									key="vb_mult_x128"
+									width={SYMBOL_SIZE * (1.02 + 0.1 * glow)}
+									height={SYMBOL_SIZE * (1.02 + 0.1 * glow)}
+									alpha={0.15 + 0.55 * glow}
+									blendMode="add"
+								/>
+							{/if}
 							<!-- marked spot (x1) or tier frame below the symbols -->
 							<Sprite
 								anchor={0.5}
