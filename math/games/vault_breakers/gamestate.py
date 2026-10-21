@@ -17,11 +17,13 @@ class GameState(GameStateOverride):
 
             self.get_clusters_update_wins()
             self.emit_tumble_win_events()
+            self.update_grid_mults()
 
             while self.win_data["totalWin"] > 0 and not (self.wincap_triggered):
                 self.tumble_game_board()
                 self.get_clusters_update_wins()
                 self.emit_tumble_win_events()
+                self.update_grid_mults()
 
             self.set_end_tumble_event()
             self.win_manager.update_gametype_wins(self.gametype)

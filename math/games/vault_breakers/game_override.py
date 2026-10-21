@@ -18,6 +18,27 @@ class GameStateOverride(GameExecutables):
         # Initialize multipliers at start of FS round (persist throughout)
         self.reset_grid_mults()
 
+    def draw_board(self, emit_event: bool = True, trigger_symbol: str = "scatter") -> None:
+        """In unbiased 'natural' measurement mode, base boards are drawn straight from the
+        reels (scatter boards are not rejected), so FS triggers occur at their true rate."""
+        if (
+            self.criteria == "natural"
+            and self.gametype == self.config.basegame_type
+            and not self.get_current_distribution_conditions()["force_freegame"]
+        ):
+            self.create_board_reelstrips()
+            if emit_event:
+                from src.events.events import reveal_event
+
+                reveal_event(self)
+            return
+        super().draw_board(emit_event, trigger_symbol)
+
+    def check_freespin_entry(self, scatter_key: str = "scatter") -> bool:
+        if self.criteria == "natural":
+            return True
+        return super().check_freespin_entry(scatter_key)
+
     def assign_special_sym_function(self):
         """No special symbol functions needed for Vault Breakers."""
         pass
@@ -25,6 +46,11 @@ class GameStateOverride(GameExecutables):
     def check_repeat(self) -> None:
         """Checks if the spin failed a criteria constraint at any point."""
         if self.repeat is False:
+            if self.criteria == "natural":
+                # Unbiased measurement mode (see measure_natural.py): accept every outcome.
+                if self.get_current_distribution_conditions()["force_freegame"] and not (self.triggered_freegame):
+                    self.repeat = True
+                return
             win_criteria = self.get_current_betmode_distributions().get_win_criteria()
             if win_criteria is not None and self.final_win != win_criteria:
                 self.repeat = True

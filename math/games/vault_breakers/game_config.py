@@ -108,6 +108,10 @@ class GameConfig(Config):
             ((16, 25), "L4"): 15 * 2.0,
         }
         self.paytable = self.convert_range_table(pay_group)
+        # Paytable above is at base pay scale 2.0; free spins pay at scale 3.25
+        self.base_pay_scale = 2.0
+        self.freegame_pay_scale = 3.25
+        self.freegame_pay_ratio = self.freegame_pay_scale / self.base_pay_scale
 
         self.include_padding = True
         self.special_symbols = {"wild": ["W"], "scatter": ["S"]}
@@ -116,8 +120,9 @@ class GameConfig(Config):
         # Base: 3/4/5+ scatters = 10/12/15 spins
         # FS: 3+ = +5 spins
         self.freespin_triggers = {
-            self.basegame_type: {3: 10, 4: 12, 5: 15},
-            self.freegame_type: {3: 5},
+            # 5+ scatters (incl. scatters landing during tumbles) all award 15 / +5
+            self.basegame_type: {3: 10, 4: 12, **{n: 15 for n in range(5, 26)}},
+            self.freegame_type: {n: 5 for n in range(3, 26)},
         }
         self.anticipation_triggers = {
             self.basegame_type: min(self.freespin_triggers[self.basegame_type].keys()) - 1,
@@ -148,7 +153,7 @@ class GameConfig(Config):
                 distributions=[
                     Distribution(
                         criteria="wincap",
-                        quota=0.0001,
+                        quota=0.001,
                         win_criteria=mode_maxwins["base"],
                         conditions={
                             "reel_weights": {
@@ -162,7 +167,7 @@ class GameConfig(Config):
                     ),
                     Distribution(
                         criteria="freegame",
-                        quota=0.005,
+                        quota=0.1,
                         conditions={
                             "reel_weights": {
                                 self.basegame_type: {"BR0": 1},
@@ -175,7 +180,7 @@ class GameConfig(Config):
                     ),
                     Distribution(
                         criteria="0",
-                        quota=0.71,
+                        quota=0.4,
                         win_criteria=0.0,
                         conditions={
                             "reel_weights": {self.basegame_type: {"BR0": 1}},
@@ -185,7 +190,7 @@ class GameConfig(Config):
                     ),
                     Distribution(
                         criteria="basegame",
-                        quota=0.285,
+                        quota=0.499,
                         conditions={
                             "reel_weights": {self.basegame_type: {"BR0": 1}},
                             "force_wincap": False,
@@ -205,27 +210,27 @@ class GameConfig(Config):
                 distributions=[
                     Distribution(
                         criteria="wincap",
-                        quota=0.0001,
+                        quota=0.001,
                         win_criteria=mode_maxwins["bonus"],
                         conditions={
                             "reel_weights": {
                                 self.basegame_type: {"BR0": 1},
                                 self.freegame_type: {"FR0": 1},
                             },
-                            "scatter_triggers": {3: 1, 4: 1, 5: 1},
+                            "scatter_triggers": {3: 1},
                             "force_wincap": True,
                             "force_freegame": True,
                         },
                     ),
                     Distribution(
                         criteria="freegame",
-                        quota=0.9999,
+                        quota=0.999,
                         conditions={
                             "reel_weights": {
                                 self.basegame_type: {"BR0": 1},
                                 self.freegame_type: {"FR0": 1},
                             },
-                            "scatter_triggers": {3: 8, 4: 2, 5: 1},
+                            "scatter_triggers": {3: 1},  # bonus buy awards 10 FS (3-scatter entry), as in prototype_sim.py
                             "force_wincap": False,
                             "force_freegame": True,
                         },

@@ -38,8 +38,10 @@ class GameCalculations(Executables):
                     # If no multipliers active, treat as 1x
                     board_mult = max(board_mult, 1)
                     
-                    sym_win = config.paytable[(syms_in_cluster, sym)]
-                    symwin_mult = sym_win * board_mult * global_multiplier
+                    sym_win = config.paytable[(syms_in_cluster, sym)] * (
+                        config.freegame_pay_ratio if self.gametype == config.freegame_type else 1.0
+                    )
+                    symwin_mult = round(sym_win * board_mult * global_multiplier, 2)
                     total_win += symwin_mult
                     
                     json_positions = [{"reel": p[0], "row": p[1]} for p in cluster]
