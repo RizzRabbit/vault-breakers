@@ -25,10 +25,17 @@ class OptimizationSetup:
                         rtp=0.01, av_win=wincaps["base"], search_conditions=wincaps["base"]
                     ).return_dict(),
                     "0": ConstructConditions(rtp=0, av_win=0, search_conditions=0).return_dict(),
+                    # Tier hit rates from BR0 scatter counts: 1/213 + 1/3420 + 1/86000 = 1 in 200 total FS.
                     "freegame": ConstructConditions(
-                        rtp=0.45, hr=200, search_conditions={"symbol": "scatter"}
+                        rtp=0.40, hr=213, search_conditions={"fstype": "regular"}
                     ).return_dict(),
-                    "basegame": ConstructConditions(hr=3.5, rtp=0.502).return_dict(),
+                    "superfs": ConstructConditions(
+                        rtp=0.105, hr=3420, search_conditions={"fstype": "super"}
+                    ).return_dict(),
+                    "epicfs": ConstructConditions(
+                        rtp=0.0104, hr=86000, search_conditions={"fstype": "epic"}
+                    ).return_dict(),
+                    "basegame": ConstructConditions(hr=3.5, rtp=0.4366).return_dict(),
                 },
                 "scaling": ConstructScaling(
                     [
@@ -121,7 +128,10 @@ class OptimizationSetup:
         sup_c["freegame"] = ConstructConditions(rtp=0.9605, hr="x").return_dict()
         # Ante: BR1 reels (~1.2x scatters) -> FS target ~1 in 140, larger FS share of RTP.
         ante_c = self.game_config.opt_params["ante"]["conditions"]
-        ante_c["freegame"] = ConstructConditions(rtp=0.55, hr=140, search_conditions={"symbol": "scatter"}).return_dict()
-        ante_c["basegame"] = ConstructConditions(hr=3.5, rtp=0.402).return_dict()
+        # BR1 tiers: 1/151 + 1/2024 + 1/40826 = 1 in 140 total FS.
+        ante_c["freegame"] = ConstructConditions(rtp=0.45, hr=151, search_conditions={"fstype": "regular"}).return_dict()
+        ante_c["superfs"] = ConstructConditions(rtp=0.143, hr=2024, search_conditions={"fstype": "super"}).return_dict()
+        ante_c["epicfs"] = ConstructConditions(rtp=0.0175, hr=40826, search_conditions={"fstype": "epic"}).return_dict()
+        ante_c["basegame"] = ConstructConditions(hr=3.5, rtp=0.3415).return_dict()
 
         verify_optimization_input(self.game_config, self.game_config.opt_params)

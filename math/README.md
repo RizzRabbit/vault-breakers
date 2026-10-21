@@ -25,7 +25,7 @@ This directory contains the mathematical model and simulation backend for the Va
 - **Scatter (S)**: Vault symbol, triggers free spins
 
 ### Free Spins
-- **Base Game**: 3/4/5+ Scatters = 10/12/15 free spins
+- **Base Game**: 3 scatters = regular FS (unmarked), 4 = SUPER FS (all spots x2), 5+ = EPIC FS (all spots x4, round pays >= 200x); every tier is 10 free spins, retrigger (3+ scatters) +5 in the same tier
 - **During Free Spins**: 3+ Scatters = +5 additional spins
 
 ### Bet Modes
@@ -36,7 +36,7 @@ RGS mode names (exact, lowercase): `base`, `ante`, `bonus`, `super`.
 | `base` | 1× | Standard play (reels BR0) |
 | `ante` | 1.25× | Base game on reels BR1 (~1.2× BR0 scatter count, 85 vs 70); FS ~1 in 140 |
 | `bonus` | 100× | Buy: starts directly in 10 free spins |
-| `super` | 400× | Buy: 10 free spins with every spot starting at x2 (FS pays the base paytable) |
+| `super` | 400× | Buy: the SUPER round (10 free spins, every spot starts at x2; FS pays the base paytable). Epic is not buyable |
 
 All four modes target 96.2% RTP with a 10,000× win cap.
 

@@ -165,16 +165,58 @@
      "reel": 3,
      "row": 1
     }
-   ]
+   ],
+   "fsType": "regular"
   },
   {
    "index": 3,
+   "type": "updateGrid",
+   "gridMultipliers": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "index": 4,
    "type": "updateFreeSpin",
    "amount": 1,
    "total": 10
   },
   {
-   "index": 4,
+   "index": 5,
    "type": "reveal",
    "board": [
     [
@@ -313,7 +355,7 @@
    ]
   },
   {
-   "index": 5,
+   "index": 6,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -354,18 +396,18 @@
    ]
   },
   {
-   "index": 6,
+   "index": 7,
    "type": "setTotalWin",
    "amount": 0
   },
   {
-   "index": 7,
+   "index": 8,
    "type": "updateFreeSpin",
    "amount": 2,
    "total": 10
   },
   {
-   "index": 8,
+   "index": 9,
    "type": "reveal",
    "board": [
     [
@@ -504,7 +546,7 @@
    ]
   },
   {
-   "index": 9,
+   "index": 10,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -545,7 +587,7 @@
    ]
   },
   {
-   "index": 10,
+   "index": 11,
    "type": "winInfo",
    "totalWin": 160,
    "wins": [
@@ -596,12 +638,12 @@
    ]
   },
   {
-   "index": 11,
+   "index": 12,
    "type": "updateTumbleWin",
    "amount": 160
   },
   {
-   "index": 12,
+   "index": 13,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -642,7 +684,7 @@
    ]
   },
   {
-   "index": 13,
+   "index": 14,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -708,30 +750,30 @@
    ]
   },
   {
-   "index": 14,
+   "index": 15,
    "type": "vaultMeterUpdate",
    "meter": 1,
    "nextThreshold": 10
   },
   {
-   "index": 15,
+   "index": 16,
    "type": "setWin",
    "amount": 160,
    "winLevel": 3
   },
   {
-   "index": 16,
+   "index": 17,
    "type": "setTotalWin",
    "amount": 160
   },
   {
-   "index": 17,
+   "index": 18,
    "type": "updateFreeSpin",
    "amount": 3,
    "total": 10
   },
   {
-   "index": 18,
+   "index": 19,
    "type": "reveal",
    "board": [
     [
@@ -870,7 +912,7 @@
    ]
   },
   {
-   "index": 19,
+   "index": 20,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -911,18 +953,18 @@
    ]
   },
   {
-   "index": 20,
+   "index": 21,
    "type": "setTotalWin",
    "amount": 160
   },
   {
-   "index": 21,
+   "index": 22,
    "type": "updateFreeSpin",
    "amount": 4,
    "total": 10
   },
   {
-   "index": 22,
+   "index": 23,
    "type": "reveal",
    "board": [
     [
@@ -1060,7 +1102,7 @@
    ]
   },
   {
-   "index": 23,
+   "index": 24,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1101,18 +1143,18 @@
    ]
   },
   {
-   "index": 24,
+   "index": 25,
    "type": "setTotalWin",
    "amount": 160
   },
   {
-   "index": 25,
+   "index": 26,
    "type": "updateFreeSpin",
    "amount": 5,
    "total": 10
   },
   {
-   "index": 26,
+   "index": 27,
    "type": "reveal",
    "board": [
     [
@@ -1252,7 +1294,7 @@
    ]
   },
   {
-   "index": 27,
+   "index": 28,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1293,7 +1335,7 @@
    ]
   },
   {
-   "index": 28,
+   "index": 29,
    "type": "winInfo",
    "totalWin": 200,
    "wins": [
@@ -1340,12 +1382,12 @@
    ]
   },
   {
-   "index": 29,
+   "index": 30,
    "type": "updateTumbleWin",
    "amount": 200
   },
   {
-   "index": 30,
+   "index": 31,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1386,7 +1428,7 @@
    ]
   },
   {
-   "index": 31,
+   "index": 32,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -1445,30 +1487,30 @@
    ]
   },
   {
-   "index": 32,
+   "index": 33,
    "type": "vaultMeterUpdate",
    "meter": 2,
    "nextThreshold": 10
   },
   {
-   "index": 33,
+   "index": 34,
    "type": "setWin",
    "amount": 200,
    "winLevel": 4
   },
   {
-   "index": 34,
+   "index": 35,
    "type": "setTotalWin",
    "amount": 360
   },
   {
-   "index": 35,
+   "index": 36,
    "type": "updateFreeSpin",
    "amount": 6,
    "total": 10
   },
   {
-   "index": 36,
+   "index": 37,
    "type": "reveal",
    "board": [
     [
@@ -1609,7 +1651,7 @@
    ]
   },
   {
-   "index": 37,
+   "index": 38,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1650,7 +1692,7 @@
    ]
   },
   {
-   "index": 38,
+   "index": 39,
    "type": "winInfo",
    "totalWin": 300,
    "wins": [
@@ -1729,12 +1771,12 @@
    ]
   },
   {
-   "index": 39,
+   "index": 40,
    "type": "updateTumbleWin",
    "amount": 300
   },
   {
-   "index": 40,
+   "index": 41,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1775,7 +1817,7 @@
    ]
   },
   {
-   "index": 41,
+   "index": 42,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -1856,13 +1898,13 @@
    ]
   },
   {
-   "index": 42,
+   "index": 43,
    "type": "vaultMeterUpdate",
    "meter": 3,
    "nextThreshold": 10
   },
   {
-   "index": 43,
+   "index": 44,
    "type": "winInfo",
    "totalWin": 200,
    "wins": [
@@ -1905,12 +1947,12 @@
    ]
   },
   {
-   "index": 44,
+   "index": 45,
    "type": "updateTumbleWin",
    "amount": 500
   },
   {
-   "index": 45,
+   "index": 46,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1951,7 +1993,7 @@
    ]
   },
   {
-   "index": 46,
+   "index": 47,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -2002,30 +2044,30 @@
    ]
   },
   {
-   "index": 47,
+   "index": 48,
    "type": "vaultMeterUpdate",
    "meter": 4,
    "nextThreshold": 10
   },
   {
-   "index": 48,
+   "index": 49,
    "type": "setWin",
    "amount": 500,
    "winLevel": 5
   },
   {
-   "index": 49,
+   "index": 50,
    "type": "setTotalWin",
    "amount": 860
   },
   {
-   "index": 50,
+   "index": 51,
    "type": "updateFreeSpin",
    "amount": 7,
    "total": 10
   },
   {
-   "index": 51,
+   "index": 52,
    "type": "reveal",
    "board": [
     [
@@ -2165,7 +2207,7 @@
    ]
   },
   {
-   "index": 52,
+   "index": 53,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -2206,7 +2248,7 @@
    ]
   },
   {
-   "index": 53,
+   "index": 54,
    "type": "winInfo",
    "totalWin": 4000,
    "wins": [
@@ -2265,12 +2307,12 @@
    ]
   },
   {
-   "index": 54,
+   "index": 55,
    "type": "updateTumbleWin",
    "amount": 4000
   },
   {
-   "index": 55,
+   "index": 56,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -2311,7 +2353,7 @@
    ]
   },
   {
-   "index": 56,
+   "index": 57,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -2392,30 +2434,30 @@
    ]
   },
   {
-   "index": 57,
+   "index": 58,
    "type": "vaultMeterUpdate",
    "meter": 5,
    "nextThreshold": 10
   },
   {
-   "index": 58,
+   "index": 59,
    "type": "setWin",
    "amount": 4000,
    "winLevel": 7
   },
   {
-   "index": 59,
+   "index": 60,
    "type": "setTotalWin",
    "amount": 4860
   },
   {
-   "index": 60,
+   "index": 61,
    "type": "updateFreeSpin",
    "amount": 8,
    "total": 10
   },
   {
-   "index": 61,
+   "index": 62,
    "type": "reveal",
    "board": [
     [
@@ -2553,7 +2595,7 @@
    ]
   },
   {
-   "index": 62,
+   "index": 63,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -2594,7 +2636,7 @@
    ]
   },
   {
-   "index": 63,
+   "index": 64,
    "type": "winInfo",
    "totalWin": 1330,
    "wins": [
@@ -2641,12 +2683,12 @@
    ]
   },
   {
-   "index": 64,
+   "index": 65,
    "type": "updateTumbleWin",
    "amount": 1330
   },
   {
-   "index": 65,
+   "index": 66,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -2687,7 +2729,7 @@
    ]
   },
   {
-   "index": 66,
+   "index": 67,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -2745,13 +2787,13 @@
    ]
   },
   {
-   "index": 67,
+   "index": 68,
    "type": "vaultMeterUpdate",
    "meter": 6,
    "nextThreshold": 10
   },
   {
-   "index": 68,
+   "index": 69,
    "type": "winInfo",
    "totalWin": 1860,
    "wins": [
@@ -2798,12 +2840,12 @@
    ]
   },
   {
-   "index": 69,
+   "index": 70,
    "type": "updateTumbleWin",
    "amount": 3190
   },
   {
-   "index": 70,
+   "index": 71,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -2844,7 +2886,7 @@
    ]
   },
   {
-   "index": 71,
+   "index": 72,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -2904,30 +2946,30 @@
    ]
   },
   {
-   "index": 72,
+   "index": 73,
    "type": "vaultMeterUpdate",
    "meter": 7,
    "nextThreshold": 10
   },
   {
-   "index": 73,
+   "index": 74,
    "type": "setWin",
    "amount": 3190,
    "winLevel": 7
   },
   {
-   "index": 74,
+   "index": 75,
    "type": "setTotalWin",
    "amount": 8050
   },
   {
-   "index": 75,
+   "index": 76,
    "type": "updateFreeSpin",
    "amount": 9,
    "total": 10
   },
   {
-   "index": 76,
+   "index": 77,
    "type": "reveal",
    "board": [
     [
@@ -3070,7 +3112,7 @@
    ]
   },
   {
-   "index": 77,
+   "index": 78,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -3111,7 +3153,7 @@
    ]
   },
   {
-   "index": 78,
+   "index": 79,
    "type": "winInfo",
    "totalWin": 6400,
    "wins": [
@@ -3170,12 +3212,12 @@
    ]
   },
   {
-   "index": 79,
+   "index": 80,
    "type": "updateTumbleWin",
    "amount": 6400
   },
   {
-   "index": 80,
+   "index": 81,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -3216,7 +3258,7 @@
    ]
   },
   {
-   "index": 81,
+   "index": 82,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -3295,30 +3337,30 @@
    ]
   },
   {
-   "index": 82,
+   "index": 83,
    "type": "vaultMeterUpdate",
    "meter": 8,
    "nextThreshold": 10
   },
   {
-   "index": 83,
+   "index": 84,
    "type": "setWin",
    "amount": 6400,
    "winLevel": 8
   },
   {
-   "index": 84,
+   "index": 85,
    "type": "setTotalWin",
    "amount": 14450
   },
   {
-   "index": 85,
+   "index": 86,
    "type": "updateFreeSpin",
    "amount": 10,
    "total": 10
   },
   {
-   "index": 86,
+   "index": 87,
    "type": "reveal",
    "board": [
     [
@@ -3457,7 +3499,7 @@
    ]
   },
   {
-   "index": 87,
+   "index": 88,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -3498,7 +3540,7 @@
    ]
   },
   {
-   "index": 88,
+   "index": 89,
    "type": "winInfo",
    "totalWin": 4640,
    "wins": [
@@ -3549,12 +3591,12 @@
    ]
   },
   {
-   "index": 89,
+   "index": 90,
    "type": "updateTumbleWin",
    "amount": 4640
   },
   {
-   "index": 90,
+   "index": 91,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -3595,7 +3637,7 @@
    ]
   },
   {
-   "index": 91,
+   "index": 92,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -3662,13 +3704,13 @@
    ]
   },
   {
-   "index": 92,
+   "index": 93,
    "type": "vaultMeterUpdate",
    "meter": 9,
    "nextThreshold": 10
   },
   {
-   "index": 93,
+   "index": 94,
    "type": "winInfo",
    "totalWin": 5100,
    "wins": [
@@ -3711,12 +3753,12 @@
    ]
   },
   {
-   "index": 94,
+   "index": 95,
    "type": "updateTumbleWin",
    "amount": 9740
   },
   {
-   "index": 95,
+   "index": 96,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -3757,7 +3799,7 @@
    ]
   },
   {
-   "index": 96,
+   "index": 97,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -3807,13 +3849,13 @@
    ]
   },
   {
-   "index": 97,
+   "index": 98,
    "type": "vaultMeterUpdate",
    "meter": 10,
    "nextThreshold": 20
   },
   {
-   "index": 98,
+   "index": 99,
    "type": "vaultMeterUpgrade",
    "meter": 10,
    "position": {
@@ -3861,24 +3903,24 @@
    ]
   },
   {
-   "index": 99,
+   "index": 100,
    "type": "setWin",
    "amount": 9740,
    "winLevel": 8
   },
   {
-   "index": 100,
+   "index": 101,
    "type": "setTotalWin",
    "amount": 24190
   },
   {
-   "index": 101,
+   "index": 102,
    "type": "freeSpinEnd",
    "amount": 24190,
    "winLevel": 7
   },
   {
-   "index": 102,
+   "index": 103,
    "type": "finalWin",
    "amount": 24190
   }
