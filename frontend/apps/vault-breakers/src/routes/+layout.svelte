@@ -3,6 +3,9 @@
 	import { GlobalStyle } from 'components-ui-html';
 	import { Authenticate, LoaderStakeEngine, LoaderExample, LoadI18n } from 'components-shared';
 	import Game from '../components/Game.svelte';
+	import { setUiSkin } from 'components-ui-pixi';
+	import VbUiPlate from '../components/VbUiPlate.svelte';
+	import '../vb-theme.css';
 	import { setContext } from '../game/context';
 
 	import messagesMap from '../i18n/messagesMap';
@@ -23,6 +26,8 @@
 	const loaderUrl = new URL('../../loader.gif', import.meta.url).href;
 
 	setContext();
+	// Vault Breakers skin for the shared SDK UI (bet bar, buttons, buy menu)
+	setUiSkin({ plate: VbUiPlate, buttonText: 0xffd75a, labelText: 0x7ff7ec, valueText: 0xffffff });
 </script>
 
 <GlobalStyle>

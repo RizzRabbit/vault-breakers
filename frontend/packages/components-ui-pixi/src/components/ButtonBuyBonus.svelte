@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { uiSkin } from '../skin';
 	import { Text } from 'pixi-svelte';
 	import { Button, type ButtonProps } from 'components-pixi';
 	import { stateModal, stateBet, stateBetDerived } from 'state-shared';
@@ -49,7 +50,7 @@
 			pressed,
 		})}
 
-		<UiSprite
+		<UiSprite uiHover={hovered} uiPressed={pressed}
 			key="buyBonus"
 			{...center}
 			anchor={0.5}
@@ -76,10 +77,10 @@
 				align: 'center',
 				wordWrap: true,
 				wordWrapWidth: 200,
-				fontFamily: 'proxima-nova',
+				fontFamily: uiSkin.fontFamily ?? 'proxima-nova',
 				fontWeight: '600',
 				fontSize: UI_BASE_FONT_SIZE * 0.9,
-				fill: 0xffffff,
+				fill: uiSkin.buttonText ?? 0xffffff,
 			}}
 		/>
 	{/snippet}

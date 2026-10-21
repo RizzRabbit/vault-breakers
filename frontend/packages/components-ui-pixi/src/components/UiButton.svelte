@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { uiSkin } from '../skin';
 	import { Text } from 'pixi-svelte';
 	import { Button, type ButtonProps } from 'components-pixi';
 
@@ -27,7 +28,7 @@
 
 <Button {...buttonProps}>
 	{#snippet children({ center, hovered, pressed })}
-		<UiSprite
+		<UiSprite uiHover={hovered} uiPressed={pressed}
 			{...center}
 			anchor={0.5}
 			width={buttonProps.sizes.width}
@@ -54,10 +55,10 @@
 				align: 'center',
 				wordWrap: true,
 				wordWrapWidth: 200,
-				fontFamily: 'proxima-nova',
+				fontFamily: uiSkin.fontFamily ?? 'proxima-nova',
 				fontWeight: '600',
 				fontSize: UI_BASE_FONT_SIZE * 0.9,
-				fill: variant === 'dark' ? 0xffffff : 0x000000,
+				fill: uiSkin.buttonText ?? (variant === 'dark' ? 0xffffff : 0x000000),
 			}}
 		/>
 

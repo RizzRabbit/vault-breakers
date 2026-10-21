@@ -1,14 +1,25 @@
 <script lang="ts" module>
 	import { Rectangle, type RectangleProps } from 'pixi-svelte';
 
-	export type Props = RectangleProps;
+	export type Props = RectangleProps & { key?: string; uiHover?: boolean; uiPressed?: boolean };
 </script>
 
 <script lang="ts">
+	import { uiSkin } from '../skin';
+
 	const props: Props = $props();
+	const Plate = uiSkin.plate;
+	const rectProps = $derived.by(() => {
+		const { key, uiHover, uiPressed, ...rest } = props;
+		return rest;
+	});
 </script>
 
-<Rectangle borderRadius={50} {...props} />
+{#if Plate}
+	<Plate {...props} />
+{:else}
+	<Rectangle borderRadius={50} {...rectProps} />
+{/if}
 
 <!-- ADD YOUR DESIGN -->
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { uiSkin } from '../skin';
 	import { Text } from 'pixi-svelte';
 	import { WHITE } from 'constants-shared/colors';
 
@@ -15,15 +16,15 @@
 	const props: Props = $props();
 
 	const labelStyle = {
-		fontFamily: 'proxima-nova',
+		fontFamily: uiSkin.fontFamily ?? 'proxima-nova',
 		fontSize: UI_BASE_FONT_SIZE,
-		fill: WHITE,
+		fill: uiSkin.labelText ?? WHITE,
 	} as const;
 
 	const valueStyle = {
 		fontFamily: 'proxima-nova',
 		fontSize: UI_BASE_FONT_SIZE,
-		fill: WHITE,
+		fill: uiSkin.valueText ?? WHITE,
 	} as const;
 </script>
 
