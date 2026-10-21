@@ -7,10 +7,11 @@
 	import { App, Text, REM } from 'pixi-svelte';
 	import { stateModal } from 'state-shared';
 
-	import { UI, UiGameName } from 'components-ui-pixi';
+	import { UI } from 'components-ui-pixi';
 	import { GameVersion, Modals } from 'components-ui-html';
 
 	import { getContext } from '../game/context';
+	import VbLogo from './VbLogo.svelte';
 	import EnableSound from './EnableSound.svelte';
 	import EnableGameActor from './EnableGameActor.svelte';
 	import ResumeBet from './ResumeBet.svelte';
@@ -91,23 +92,10 @@
 
 		<UI>
 			{#snippet gameName()}
-				<UiGameName name="VAULT BREAKERS" />
+				<VbLogo x={REM * 3.4} y={REM * 1.25} scale={REM * 0.016} />
 			{/snippet}
 			{#snippet logo()}
-				<!-- portrait: the clock + game name already fill the narrow header; skip the duplicate title -->
-				{#if context.stateLayoutDerived.layoutType() !== 'portrait'}
-				<Text
-					anchor={{ x: 1, y: 0 }}
-					text="VAULT BREAKERS"
-					style={{
-						fontFamily: 'proxima-nova',
-						fontSize: REM * 1.5,
-						fontWeight: '600',
-						lineHeight: REM * 2,
-						fill: 0xffffff,
-					}}
-				/>
-				{/if}
+				<!-- brand mark lives in the game-name slot (VbLogo) -->
 			{/snippet}
 		</UI>
 		<Win />

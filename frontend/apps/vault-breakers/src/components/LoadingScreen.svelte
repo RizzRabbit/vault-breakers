@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Container, Sprite } from 'pixi-svelte';
+	import { Container, Sprite, Text } from 'pixi-svelte';
+	import VbLogo from './VbLogo.svelte';
 	import { FadeContainer, LoadingProgress } from 'components-pixi';
 	import { MainContainer } from 'components-layout';
 
@@ -24,7 +25,14 @@
 			x={context.stateLayoutDerived.mainLayout().width * 0.5}
 			y={context.stateLayoutDerived.mainLayout().height * 0.5}
 		>
-			<Sprite key="vb_logo" anchor={0.5} y={-40} width={560} height={560 * (442 / 938)} />
+			{@const k = Math.min(1.6, context.stateLayoutDerived.mainLayout().width / 620)}
+			<VbLogo x={-60 * k} y={-40} scale={k} />
+			<Text
+				anchor={{ x: 0.5, y: 0 }}
+				y={130}
+				text="a Rizzin Games production"
+				style={{ fontFamily: 'proxima-nova', fontSize: 30, fontStyle: 'italic', fill: 0x7ff7ec, letterSpacing: 2 }}
+			/>
 			{#if !context.stateApp.loaded}
 				<LoadingProgress y={250} width={1967 * 0.2} height={346 * 0.2}>
 					{#snippet background(sizes)}
