@@ -1,488 +1,195 @@
 # Vault Breakers Event Types
 
-This document describes all event types generated in the simulation books for Vault Breakers. Each event represents a state change or action during game play.
+This file describes every event type that Vault Breakers books emit. Field names and examples come from the books in `math/samples/` and from the emitting code (`src/events/events.py` and `games/vault_breakers/game_events.py`).
 
-## Event Structure
+## Conventions
 
-All events share a common structure:
+### Event structure
 ```json
-{
-  "index": 0,
-  "type": "eventType",
-  ...additional fields...
-}
+{"index": 0, "type": "eventType", "...": "..."}
 ```
-
-- `index`: Sequential event number within the book
-- `type`: Event type identifier (see below)
-
-## Event Types
-
-### 1. reveal
-
-**Description**: Initial board drawn from reel strips at the start of a spin or tumble.
-
-**When**: 
-- Start of each base game spin
-- Start of each free spin
-- After symbols tumble and new symbols fill in
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "reveal"
-- `board`: 2D array of symbols (5 reels × 5 rows for base grid, plus padding if enabled)
-  - Each symbol has `name` (e.g., "H1", "L2", "W", "S")
-  - Special symbols may have additional flags (e.g., `"wild": true`, `"scatter": true`)
-- `paddingPositions`: Array of reel positions used for draw
-- `gameType`: "basegame" or "freegame"
-- `anticipation`: Boolean indicating near-miss for free spins
-
-**Example**:
-```json
-{
-  "index": 0,
-  "type": "reveal",
-  "board": [
-    [{"name": "L4"}, {"name": "L3"}, {"name": "H2"}, {"name": "L1"}, {"name": "H3"}, {"name": "L2"}, {"name": "L4"}],
-    [{"name": "L2"}, {"name": "H4"}, {"name": "L1"}, {"name": "L3"}, {"name": "H1"}, {"name": "L4"}, {"name": "L3"}],
-    [{"name": "H3"}, {"name": "L1"}, {"name": "L4"}, {"name": "L2"}, {"name": "H4"}, {"name": "L3"}, {"name": "L1"}],
-    [{"name": "L3"}, {"name": "L4"}, {"name": "H1"}, {"name": "L1"}, {"name": "L2"}, {"name": "H2"}, {"name": "L4"}],
-    [{"name": "L1"}, {"name": "L4"}, {"name": "L3"}, {"name": "H3"}, {"name": "L2"}, {"name": "H4"}, {"name": "L1"}]
-  ],
-  "paddingPositions": [45, 67, 23, 89, 12],
-  "gameType": "basegame",
-  "anticipation": false
-}
-```
-
----
-
-### 2. winInfo
-
-**Description**: Details of all wins (clusters) found on the current board.
-
-**When**: After reveal, when clusters of 5+ matching symbols are detected
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "winInfo"
-- `wins`: Array of win objects, each containing:
-  - `symbol`: Symbol name that formed the cluster
-  - `clusterSize`: Number of symbols in the cluster
-  - `win`: Total win amount (in cents/units × 100)
-  - `positions`: Array of `{reel, row}` objects showing cluster positions
-  - `meta`: Metadata object with:
-    - `globalMult`: Global multiplier (typically 1)
-    - `clusterMult`: Sum of spot multipliers for this cluster
-    - `winWithoutMult`: Base paytable value before multipliers
-    - `overlay`: Central position for visual overlay `{reel, row}`
-
-**Example**:
-```json
-{
-  "index": 1,
-  "type": "winInfo",
-  "wins": [
-    {
-      "symbol": "L3",
-      "clusterSize": 6,
-      "win": 140,
-      "positions": [
-        {"reel": 0, "row": 1},
-        {"reel": 0, "row": 2},
-        {"reel": 1, "row": 1},
-        {"reel": 1, "row": 2},
-        {"reel": 2, "row": 1},
-        {"reel": 2, "row": 2}
-      ],
-      "meta": {
-        "globalMult": 1,
-        "clusterMult": 2,
-        "winWithoutMult": 70,
-        "overlay": {"reel": 1, "row": 1}
-      }
-    }
-  ]
-}
-```
-
----
-
-### 3. updateGrid
-
-**Description**: Current state of spot multipliers after wins are evaluated.
-
-**When**: After wins are processed and spot multipliers are updated
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "updateGrid"
-- `gridMultipliers`: 5×5 array of multiplier values at each position
-  - `0`: Unmarked (no wins yet)
-  - `1`: Marked (first win)
-  - `2, 4, 8, 16, 32, 64, 128`: Doubled after each subsequent win
-
-**Example**:
-```json
-{
-  "index": 2,
-  "type": "updateGrid",
-  "gridMultipliers": [
-    [0, 1, 1, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-  ]
-}
-```
-
----
-
-### 4. setTumbleWin
-
-**Description**: Sets the win amount for the current tumble.
-
-**When**: After all clusters in a tumble are evaluated
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "setTumbleWin"
-- `amount`: Win amount for this tumble (in cents × 100)
-
-**Example**:
-```json
-{
-  "index": 3,
-  "type": "setTumbleWin",
-  "amount": 140
-}
-```
-
----
-
-### 5. tumbleBoard
-
-**Description**: Symbols are removed and new symbols fall to fill gaps.
-
-**When**: After wins are evaluated, before the next reveal
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "tumbleBoard"
-
-**Example**:
-```json
-{
-  "index": 4,
-  "type": "tumbleBoard"
-}
-```
-
----
-
-### 6. setWin
-
-**Description**: Updates the cumulative win for the current spin (base or FS).
-
-**When**: After each tumble sequence completes
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "setWin"
-- `amount`: Cumulative win for this spin (in cents × 100)
-- `winLevel`: Win tier classification (e.g., "small", "medium", "big", "mega")
-
-**Example**:
-```json
-{
-  "index": 8,
-  "type": "setWin",
-  "amount": 450,
-  "winLevel": "medium"
-}
-```
-
----
-
-### 7. freeSpinTrigger
-
-**Description**: Free spins are triggered from the base game.
-
-**When**: When 3+ scatter symbols land in base game
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "freeSpinTrigger"
-- `totalFs`: Total number of free spins awarded
-- `positions`: Array of scatter positions `{reel, row}` that triggered FS
-
-**Example**:
-```json
-{
-  "index": 9,
-  "type": "freeSpinTrigger",
-  "totalFs": 10,
-  "positions": [
-    {"reel": 0, "row": 3},
-    {"reel": 2, "row": 1},
-    {"reel": 4, "row": 4}
-  ]
-}
-```
-
----
-
-### 8. updateFreeSpin
-
-**Description**: Updates the free spin counter at the start of each FS.
-
-**When**: Beginning of each free spin
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "updateFreeSpin"
-- `currentFs`: Current free spin number (1-indexed)
-- `totalFs`: Total free spins in the round
-
-**Example**:
-```json
-{
-  "index": 10,
-  "type": "updateFreeSpin",
-  "currentFs": 1,
-  "totalFs": 10
-}
-```
-
----
-
-### 9. freeSpinRetrigger
-
-**Description**: Additional free spins awarded during free spin round.
-
-**When**: When 3+ scatters land during a free spin
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "freeSpinRetrigger"
-- `totalFs`: New total number of free spins (after adding +5)
-- `positions`: Array of scatter positions that triggered retrigger
-
-**Example**:
-```json
-{
-  "index": 45,
-  "type": "freeSpinRetrigger",
-  "totalFs": 15,
-  "positions": [
-    {"reel": 1, "row": 2},
-    {"reel": 3, "row": 3},
-    {"reel": 4, "row": 1}
-  ]
-}
-```
-
----
-
-### 10. freeSpinEnd
-
-**Description**: Free spin round has ended.
-
-**When**: After all free spins are complete
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "freeSpinEnd"
-- `totalWin`: Total win from the entire FS round (in cents × 100)
-
-**Example**:
-```json
-{
-  "index": 120,
-  "type": "freeSpinEnd",
-  "totalWin": 5430
-}
-```
-
----
-
-### 11. setTotalWin
-
-**Description**: Sets the final total win for the entire game round.
-
-**When**: After all base and feature game play completes
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "setTotalWin"
-- `amount`: Final total win (in cents × 100)
-
-**Example**:
-```json
-{
-  "index": 121,
-  "type": "setTotalWin",
-  "amount": 6200
-}
-```
-
----
-
-### 12. finalWin
-
-**Description**: Final summary of the game round.
-
-**When**: Last event in every book
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "finalWin"
-- `amount`: Final win amount (in cents × 100)
-- `winLevel`: Overall win tier
-
-**Example**:
-```json
-{
-  "index": 122,
-  "type": "finalWin",
-  "amount": 6200,
-  "winLevel": "big"
-}
-```
-
----
-
-### 13. wincap
-
-**Description**: Maximum win cap has been triggered.
-
-**When**: When total win reaches or exceeds 10,000× bet
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "wincap"
-- `amount`: Capped win amount (1,000,000 for 10,000× on 1× bet)
-
-**Example**:
-```json
-{
-  "index": 78,
-  "type": "wincap",
-  "amount": 1000000
-}
-```
-
----
-
-### 14. enterBonus
-
-**Description**: Player entered bonus buy mode.
-
-**When**: Start of a bonus buy round (100× bet)
-
-**Fields**:
-- `index`: Event sequence number
-- `type`: "enterBonus"
-- `cost`: Bonus buy cost (in cents × 100)
-
-**Example**:
-```json
-{
-  "index": 0,
-  "type": "enterBonus",
-  "cost": 10000
-}
-```
-
----
-
-### 15. vaultMeterUpdate
-Free spins only. Emitted after every tumble in free spins; the Vault Meter goes up by 1 and keeps its value for the whole round, retriggers included.
-```json
-{"index": 42, "type": "vaultMeterUpdate", "meter": 7, "nextThreshold": 10}
-```
-- `meter`: the meter value after this tumble
-- `nextThreshold`: the next upgrade point (10, 20 or 30), or `null` once 30 has passed
-
-### 16. vaultMeterUpgrade
-Free spins only. Emitted right after the `vaultMeterUpdate` that reaches 10, 20 or 30. One random marked spot (one that is below x128) moves up one tier: marked becomes x2, x2 becomes x4, and so on, capped at x128. If no spot qualifies, a random unmarked spot becomes x2.
-```json
-{"index": 91, "type": "vaultMeterUpgrade", "meter": 10,
- "position": {"reel": 2, "row": 1}, "oldMultiplier": 64, "newMultiplier": 128,
- "gridMultipliers": [[0,1,2,0,0], ...]}
-```
-- `oldMultiplier`: 0 means unmarked and 1 means marked but with no multiplier yet
-- `gridMultipliers`: the full grid after the upgrade, in the same layout as `updateGrid`
-
-### Bet modes
-`base` (1x), `ante` (1.25x, base game on BR1 reels with ~1.2x the BR0 scatter count (85 vs 70), set by `ANTE_SCATTER_MULT` in `generate_reels.py`), `bonus` (100x buy, 10 free spins), and `super` (400x buy, 10 free spins). In `super`, an `updateGrid` event with every spot at 2 is emitted at the start of free spins.
-
-## Event Sequences
-
-### Typical Base Game Win (No FS)
-1. `reveal` - Initial board
-2. `winInfo` - Clusters found
-3. `updateGrid` - Spot multipliers updated
-4. `setTumbleWin` - Tumble win amount
-5. `tumbleBoard` - Symbols removed
-6. `reveal` - New symbols fall
-7. (Repeat 2-6 until no more wins)
-8. `setWin` - Final spin win
-9. `setTotalWin` - Total win
-10. `finalWin` - Summary
-
-### Base Game with Free Spin Trigger
-1-8. (Base game events as above)
-9. `freeSpinTrigger` - FS triggered
-10. `updateFreeSpin` - FS 1 of N
-11. `updateGrid` - Multipliers initialized
-12. `reveal` - FS board
-13. `winInfo` - FS wins
-14. `updateGrid` - Multipliers updated
-15. `setTumbleWin` - FS tumble win
-16. (Tumbles continue...)
-17. `setWin` - FS spin total
-18. (Repeat 10-17 for each FS)
-19. `freeSpinEnd` - FS round complete
-20. `setTotalWin` - Grand total
-21. `finalWin` - Summary
-
-### Bonus Buy
-1. `enterBonus` - Bonus activated
-2. `updateFreeSpin` - FS 1 of N
-3. `updateGrid` - Multipliers initialized
-4. (FS events continue as above)
-
----
-
-## Notes
+- `index`: the event's sequence number within the book (0-based)
+- `type`: the event type identifier
 
 ### Amounts
-All win amounts in events are in **cents × 100** (or units × 100). For example:
-- `amount: 250` = 2.50 bet units = 2.5× win
+Every `amount`, `win` and `totalWin` value is an integer: the bet multiplier × 100. For example, `390` means a 3.9× win. Cluster wins are rounded to 0.1×, so amounts are always multiples of 10. The exception is `meta.winWithoutMult`, which is the unrounded paytable value × 100, so it can end in another digit (for example `97`).
 
-### Win Levels
-Typical win level thresholds:
-- `"no_win"`: 0×
-- `"small"`: 1-10×
-- `"medium"`: 10-50×
-- `"big"`: 50-200×
-- `"mega"`: 200-1000×
-- `"super"`: 1000-5000×
-- `"ultra"`: 5000+×
+### Coordinate systems (important)
+The `reveal` board has **7 rows per reel**: 1 padding row on top, the 5 visible rows, and 1 padding row on the bottom. The board is indexed `board[reel][row]`. Two coordinate systems are in use:
 
-### Spot Multiplier Progression
-- **Unmarked**: `0` (no wins yet on this spot)
-- **First win**: `1` (spot is marked)
-- **Subsequent wins**: Doubled each time (2, 4, 8, 16, 32, 64, 128)
+| System | Rows | Used by |
+|---|---|---|
+| **Padded board** | 0–6, visible rows are **1–5** | `winInfo.wins[].positions`, `winInfo.wins[].meta.overlay`, `tumbleBoard.explodingSymbols`, `freeSpinTrigger.positions`, `freeSpinRetrigger.positions` |
+| **Visible grid, 0-based** | 0–4 | `updateGrid.gridMultipliers[reel][row]`, `vaultMeterUpgrade.position`, `vaultMeterUpgrade.gridMultipliers` |
 
-### Cluster Pay Calculation
+To convert, use `gridRow = paddedRow - 1`. Reels are 0–4 in both systems. These were checked against the sample books: `winInfo` positions index the matching symbols in `reveal.board`, and the `gridMultipliers` cells marked after a win equal the win positions with 1 subtracted from each row.
+
+## Event types
+
+### reveal
+A new board drawn from the reel strips at the start of every base spin and every free spin. Tumbles do not emit a `reveal`; see `tumbleBoard`.
+- `board`: a 5 × 7 array (`[reel][row]`, padded). Each cell is `{"name": "H1"}`; scatters carry `"scatter": true` and wilds carry `"wild": true`.
+- `paddingPositions`: the stop position of each reel on its strip (5 ints)
+- `gameType`: `"basegame"` or `"freegame"`
+- `anticipation`: an array of 5 ints, one per reel. A value above 0 marks a reel that shows scatter anticipation (for example `[0, 0, 1, 2, 3]`).
+```json
+{"index": 0, "type": "reveal", "board": [[{"name": "L4"}, {"name": "S", "scatter": true}, ...], ...],
+ "paddingPositions": [380, 480, 889, 252, 389], "gameType": "basegame", "anticipation": [0, 0, 0, 0, 0]}
 ```
-cluster_pay = base_paytable_value × sum_of_spot_multipliers × global_multiplier
+
+### winInfo
+All clusters that pay on the current board, emitted once per winning board state.
+- `totalWin`: the win of this board state × 100
+- `wins[]`:
+  - `symbol` and `clusterSize`
+  - `win`: the cluster win × 100, after multipliers
+  - `positions`: `[{reel, row}]` in **padded-board** coordinates (wilds included)
+  - `meta.globalMult`: always 1
+  - `meta.clusterMult`: the sum of the spot values under the cluster (marked = 1, then 2, 4 … 128; unmarked = 0), or 1 if that sum is 0
+  - `meta.winWithoutMult`: the paytable value × 100, before multipliers and before rounding
+  - `meta.overlay`: `{reel, row}`, the cluster's central cell in **padded-board** coordinates
+```json
+{"index": 6, "type": "winInfo", "totalWin": 100, "wins": [{"symbol": "L2", "clusterSize": 5, "win": 100,
+  "positions": [{"reel": 2, "row": 3}, {"reel": 3, "row": 3}, {"reel": 3, "row": 2}, {"reel": 3, "row": 1}, {"reel": 3, "row": 4}],
+  "meta": {"globalMult": 1, "clusterMult": 1, "winWithoutMult": 97, "overlay": {"reel": 3, "row": 3}}}]}
 ```
 
-Where:
-- `base_paytable_value`: From paytable (already scaled 2.0× for base, 3.25× for FS)
-- `sum_of_spot_multipliers`: Sum of all multiplier values in the cluster
-- `global_multiplier`: Typically 1 (for future features)
+### updateTumbleWin
+The running win of the current spin's tumble sequence, emitted after each `winInfo`.
+- `amount`: the cumulative spin win so far × 100
+```json
+{"index": 7, "type": "updateTumbleWin", "amount": 100}
+```
+
+### updateGrid
+A snapshot of the spot multipliers.
+- `gridMultipliers`: a 5 × 5 array, `[reel][row]`, in **visible-grid 0-based** coordinates. `0` means unmarked, `1` means marked (no multiplier yet), and `2` through `128` are multipliers that double on each further win.
+
+**When it's emitted:**
+- after each winning board state, once the marks and multipliers are updated (base game and free spins)
+- after every free-spin `reveal`, showing the persistent grid
+- in `super` only, once right after `freeSpinTrigger` with every cell set to `2`
+```json
+{"index": 4, "type": "updateGrid", "gridMultipliers": [[0,0,0,0,0],[0,1,0,0,0],[1,1,1,1,0],[0,1,0,0,0],[0,0,0,0,0]]}
+```
+
+### tumbleBoard
+The winning symbols explode and new symbols drop in.
+- `explodingSymbols`: `[{reel, row}]` in **padded-board** coordinates
+- `newSymbols`: one list per reel with the symbols that drop in (`[{"name": ...}]`), ordered top to bottom; a reel with nothing new has an empty list
+```json
+{"index": 9, "type": "tumbleBoard", "newSymbols": [[], [], [{"name": "L3"}], [{"name": "L1"}, {"name": "L4"}, {"name": "L1"}, {"name": "H1"}], []],
+ "explodingSymbols": [{"reel": 2, "row": 3}, {"reel": 3, "row": 3}]}
+```
+
+### vaultMeterUpdate (free spins only)
+Emitted after every `tumbleBoard` in free spins. The meter goes up by 1 and keeps its value for the whole round, retriggers included. It starts at 0 in each new free-spins round.
+- `meter`: the meter value after this tumble
+- `nextThreshold`: the next upgrade point (10, 20 or 30), or `null` once 30 has passed
+```json
+{"index": 15, "type": "vaultMeterUpdate", "meter": 1, "nextThreshold": 10}
+```
+
+### vaultMeterUpgrade (free spins only)
+Emitted right after the `vaultMeterUpdate` that reaches 10, 20 or 30. One random marked spot below x128 moves up one tier (marked → x2 → x4 … capped at x128). If no spot qualifies, a random unmarked spot becomes x2.
+- `meter`: 10, 20 or 30
+- `position`: `{reel, row}` in **visible-grid 0-based** coordinates
+- `oldMultiplier`: the previous value (0 = unmarked, 1 = marked)
+- `newMultiplier`: the new value
+- `gridMultipliers`: the full grid after the upgrade, in the same layout as `updateGrid`
+```json
+{"index": 89, "type": "vaultMeterUpgrade", "meter": 10, "position": {"reel": 0, "row": 0},
+ "oldMultiplier": 4, "newMultiplier": 8, "gridMultipliers": [[8,0,2,1,2],[8,4,8,2,4],[8,1,16,16,2],[8,16,8,2,0],[2,2,2,4,1]]}
+```
+
+### setWin
+The spin's total win, emitted at the end of a tumble sequence **only when the spin won something** (and the win cap was not hit).
+- `amount`: the spin win × 100
+- `winLevel`: an integer from 1 to 10 on the "standard" scale, by spin win in ×: 1 = [0, 0.1), 2 = [0.1, 1), 3 = [1, 2), 4 = [2, 5), 5 = [5, 15), 6 = [15, 30), 7 = [30, 50), 8 = [50, 100), 9 = [100, 10000), 10 = 10000 or more
+```json
+{"index": 11, "type": "setWin", "amount": 100, "winLevel": 3}
+```
+
+### setTotalWin
+The running total for the whole round (base plus free spins so far), emitted at the end of every spin's tumble sequence, including spins that win nothing.
+- `amount`: the cumulative round win × 100
+```json
+{"index": 1, "type": "setTotalWin", "amount": 0}
+```
+
+### freeSpinTrigger
+Free spins are awarded. It appears after the base spin's `setTotalWin`. Bonus and super books also start with a forced base `reveal` that has 3 scatters, followed by this event.
+- `totalFs`: the number of spins awarded (3 / 4 / 5+ scatters = 10 / 12 / 15; buys always get 10)
+- `positions`: scatter `[{reel, row}]` in **padded-board** coordinates
+```json
+{"index": 2, "type": "freeSpinTrigger", "totalFs": 10, "positions": [{"reel": 0, "row": 1}, {"reel": 3, "row": 2}, {"reel": 4, "row": 5}]}
+```
+
+### updateFreeSpin
+The start of each free spin, emitted before its `reveal`.
+- `amount`: the current spin number (1-based)
+- `total`: the total spins in the round, including retriggers awarded so far
+```json
+{"index": 3, "type": "updateFreeSpin", "amount": 1, "total": 10}
+```
+
+### freeSpinRetrigger
+3 or more scatters landed during a free spin, adding +5 spins. It appears after that spin's `setTotalWin`. The code emits it, but none of the current sample books contain one.
+- `totalFs`: the new total number of spins
+- `positions`: scatter `[{reel, row}]` in **padded-board** coordinates
+```json
+{"index": 45, "type": "freeSpinRetrigger", "totalFs": 15, "positions": [{"reel": 1, "row": 2}, {"reel": 3, "row": 3}, {"reel": 4, "row": 1}]}
+```
+
+### freeSpinEnd
+The free-spins round is over.
+- `amount`: the free-spins win × 100 (capped)
+- `winLevel`: an integer from 1 to 10 on the "endFeature" scale, by free-spins win in ×: 1 = [0, 1), 2 = [1, 5), 3 = [5, 10), 4 = [10, 20), 5 = [20, 50), 6 = [50, 100), 7 = [100, 500), 8 = [500, 2000), 9 = [2000, 10000), 10 = 10000 or more
+```json
+{"index": 72, "type": "freeSpinEnd", "amount": 7510, "winLevel": 6}
+```
+
+### wincap
+The round reached 10,000× and play stops: no more tumbles or spins. The code emits it (after the `updateTumbleWin` that crosses the cap), but none of the current sample books contain one.
+- `amount`: the capped win × 100 (`1000000` = 10,000×)
+```json
+{"index": 78, "type": "wincap", "amount": 1000000}
+```
+
+### finalWin
+The last event in every book.
+- `amount`: the round's final payout × 100 (equals the book's `payoutMultiplier`)
+```json
+{"index": 73, "type": "finalWin", "amount": 7510}
+```
+
+> `enterBonus` is not emitted by Vault Breakers. Bonus and super books start with a forced base `reveal` followed by `freeSpinTrigger`.
+
+## Bet modes (RGS mode names)
+- `base` (1×)
+- `ante` (1.25×): base game on BR1 reels, ~1.2× the BR0 scatter count (85 vs 70), set by `ANTE_SCATTER_MULT` in `generate_reels.py`
+- `bonus` (100× buy): 10 free spins
+- `super` (400× buy): 10 free spins with every spot starting at x2 (an extra `updateGrid` follows `freeSpinTrigger`) and a free-spin pay scale of 2.95
+
+All modes target 96.2% RTP and cap wins at 10,000×.
+
+## Event sequences (as seen in `math/samples/`)
+
+**Base spin with a win** (`base_win_tumbles_multipliers.json`):
+`reveal` → [`winInfo` → `updateTumbleWin` → `updateGrid` → `tumbleBoard`] × N → `setWin` → `setTotalWin` → `finalWin`
+
+**A losing spin:** `reveal` → `setTotalWin` → `finalWin`
+
+**Base spin that triggers free spins** (`base_fs_trigger.json`, `ante_fs_trigger.json`):
+base spin events → `freeSpinTrigger` → then for each spin: `updateFreeSpin` → `reveal` → `updateGrid` → [`winInfo` → `updateTumbleWin` → `updateGrid` → `tumbleBoard` → `vaultMeterUpdate` (→ `vaultMeterUpgrade` at 10/20/30)] × N → `setWin` (only if the spin won) → `setTotalWin` (→ `freeSpinRetrigger`) … → `freeSpinEnd` → `finalWin`
+
+**Bonus buy** (`bonus_round.json`): a forced 3-scatter base `reveal` (which may itself pay with tumbles) → `setWin`/`setTotalWin` → `freeSpinTrigger` → free spins as above.
+
+**Super buy** (`super_round.json`): the same as bonus, except an `updateGrid` with every cell at `2` comes right after `freeSpinTrigger`.
+
+## Cluster pay
+```
+cluster_win = paytable_value × clusterMult × globalMult   (rounded to 0.1×)
+clusterMult = sum of spot values under the cluster (unmarked 0, marked 1, then 2..128), or 1 if that sum is 0
+```
+`paytable_value` is the handoff value × 2.0 in the base game. In free spins it's × 3.25, or × 2.95 in `super`.
