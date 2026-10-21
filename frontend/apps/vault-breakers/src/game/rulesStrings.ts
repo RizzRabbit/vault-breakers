@@ -68,6 +68,7 @@ export const RULES_MD = `
 - Max win is {{MAX_WIN}}x the bet. When it's reached, the round ends right away and pays the max win.
 - Theoretical RTP: Base {{RTP_BASE}}%, Ante {{RTP_ANTE}}%, Bonus Buy {{RTP_BONUS}}%, Super Buy {{RTP_SUPER}}%.
 - Malfunction voids all pays and plays.
+- Vault Breakers is a Rizzin Games production.
 `;
 
 export const fillPlaceholders = (text: string) =>
