@@ -18,7 +18,7 @@
 	import config from '../game/config';
 
 	const context = getContext();
-	const PANEL_RATIO = 824 / 622;
+	const PANEL_RATIO = 992 / 623;
 	const panelSizes = { width: SYMBOL_SIZE * 2, height: (SYMBOL_SIZE * 2) / PANEL_RATIO };
 	const position = $derived({
 		x:
@@ -59,7 +59,7 @@
 
 <MainContainer>
 	<FadeContainer {show} {...position}>
-		<Sprite key="Frame_FSCounter.png" {...panelSizes} />
+		<Sprite key="vb_vault_meter_frame" {...panelSizes} />
 		<BitmapText
 			x={panelSizes.width / 2}
 			y={panelSizes.height * 0.28}

@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts">
-	import { BitmapText, Container, Rectangle, SpineProvider, SpineTrack } from 'pixi-svelte';
+	import { BitmapText, Container, Rectangle, Sprite } from 'pixi-svelte';
 
 	import BoardContainer from './BoardContainer.svelte';
 	import { getContext } from '../game/context';
@@ -50,9 +50,12 @@
 			{#each reel as multiplier, rowIndex}
 				{#if multiplier > 0}
 					<Container x={(reelIndex + 0.5) * SYMBOL_SIZE} y={(rowIndex + 0.5) * SYMBOL_SIZE}>
-						<SpineProvider key="anticipation" width={SYMBOL_SIZE * 0.19}>
-							<SpineTrack trackIndex={0} animationName={'payframe'} loop />
-						</SpineProvider>
+						<Sprite
+							anchor={0.5}
+							key="vb_cell_frame"
+							width={SYMBOL_SIZE * 0.98}
+							height={SYMBOL_SIZE * 0.98}
+						/>
 						{#if multiplier > 1}
 							<BitmapText
 								x={-SYMBOL_SIZE * 0.05}
