@@ -1,7 +1,10 @@
 // Offline mock RGS. Active when the URL has ?mock=true or no rgs_url is given.
 // Serves REAL books sampled from the published math library
-// (math/games/vault_breakers/library/publish_files/books_<mode>.jsonl.zst, math commit 0032f25).
-// Extracted unmodified; payoutMultiplier is in bet x 100 units.
+// (vault-breakers-math-publish.zip, math commit ac60a6d on math-fix-unique-upgrade,
+// zip sha256 7e42d1f2…7b6a39). Extracted unmodified; payoutMultiplier is in bet x 100 units.
+// Fixtures: <mode>_{win,zero,shared,fs,upgrade,retrigger,wincap}, cap_<mode>_<bookId> (every 10,000x
+// book in the package: base 8, ante 8, bonus 3, super 4; cap_base_20196 is the cap-rounding case).
+// synthetic_* fixtures are derived from bonus_upgrade (marked criteria 'synthetic').
 import config from '../game/config';
 import { stateBet, stateModal } from 'state-shared';
 
@@ -127,6 +130,8 @@ export const registerMockRgs = () => {
 			openRules: () => {
 				stateModal.modal = { name: 'gameRules' };
 			},
+			// read-only snapshot for e2e checks (amounts in API units)
+			snapshot: () => ({ win: stateBet.winBookEventAmount, balance: stateBet.balanceAmount, bet: stateBet.betAmount }),
 		};
 	}
 };
