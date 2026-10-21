@@ -1,0 +1,25 @@
+{
+	"name": "config-storybook",
+	"version": "0.0.0",
+	"main": "./index.ts",
+	"types": "./index.ts",
+	"license": "MIT",
+	"scripts": {
+		"format": "prettier --write --ignore-path=../../.prettierignore .",
+		"lint": "eslint *.ts*"
+	},
+	"devDependencies": {
+		"eslint": "9.21.0",
+		"eslint-config-custom": "workspace:*",
+		"config-ts": "workspace:*",
+		"@chromatic-com/storybook": "3.2.5",
+		"@storybook/addon-svelte-csf": "5.0.5",
+    "@storybook/addon-docs": "9.0.15",
+		"storybook": "9.0.15",
+		"@storybook/builder-vite": "9.0.15",
+		"@storybook/svelte": "9.0.15",
+		"@storybook/sveltekit": "9.0.15",
+		"@sveltejs/adapter-static": "latest",
+		"vite": "6.2.0"
+	}
+}

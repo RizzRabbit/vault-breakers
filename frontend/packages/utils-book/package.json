@@ -1,0 +1,24 @@
+{
+	"name": "utils-book",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"format": "prettier --write --ignore-path=../../.prettierignore .",
+		"lint": "eslint \"src\""
+	},
+	"type": "module",
+	"devDependencies": {
+		"eslint": "9.21.0",
+		"eslint-config-custom": "workspace:*",
+		"config-ts": "workspace:*"
+	},
+	"dependencies": {
+		"lodash": "4.17.16",
+		"@types/lodash": "4.17.16",
+		"envs": "workspace:*",
+		"state-shared": "workspace:*",
+		"utils-shared": "workspace:*",
+		"rgs-requests": "workspace:*"
+	}
+}
