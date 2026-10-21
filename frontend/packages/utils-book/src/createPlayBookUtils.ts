@@ -17,7 +17,8 @@ export function createPlayBookUtils<TBookEventHandlerMap extends BookEventHandle
 
 	const playBookEvent = async (bookEvent: TBookEvent, bookEventContext: TBookEventContext) => {
 		const bookEventHandler = bookEventHandlerMap?.[bookEvent.type];
-		(globalThis as any).__VB_LAST_EVENT__ = (bookEvent as any).index;
+		// mock/e2e only: lets the headless harness see which event is playing
+		if ((globalThis as any).__VB_MOCK_RGS__) (globalThis as any).__VB_LAST_EVENT__ = (bookEvent as any).index;
 		if (bookEventHandler) {
 			if (debug) console.log(bookEvent);
 			await bookEventHandler(bookEvent, bookEventContext);

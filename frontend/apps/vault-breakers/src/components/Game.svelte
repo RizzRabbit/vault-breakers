@@ -66,10 +66,6 @@
 		</MainContainer>
 
 		<MainContainer>
-			<MultiplierGrid />
-		</MainContainer>
-
-		<MainContainer>
 			<Board />
 			<Anticipations />
 			<TumbleWinAmount />
@@ -77,6 +73,14 @@
 
 		<MainContainer>
 			<TumbleBoard />
+		</MainContainer>
+
+		<!-- spot multipliers drawn over the symbols so the x2..x128 labels stay readable -->
+		<MainContainer>
+			<MultiplierGrid />
+		</MainContainer>
+
+		<MainContainer>
 			<ClusterWinAmounts />
 		</MainContainer>
 

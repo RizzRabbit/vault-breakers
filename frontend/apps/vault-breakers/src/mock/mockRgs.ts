@@ -31,6 +31,8 @@ const forced = () =>
 const counters: Record<string, number> = {};
 const pick = (mode: string) => {
 	const key = mode.toLowerCase();
+	// ?book=dup_<mode>_<id>: real books where a shared wild appears twice in winInfo/explodingSymbols
+	if (forced()?.startsWith('dup_') && byName(forced()!)) return byName(forced()!);
 	if (forced() === 'unmarked') return byName('synthetic_unmarked_upgrade');
 	if (forced() === 'wincap') return byName(`${books[key] ? key : 'base'}_wincap`);
 	const l = books[key] ?? books.base;

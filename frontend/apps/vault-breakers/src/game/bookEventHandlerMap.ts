@@ -34,7 +34,12 @@ const winLevelSoundsStop = () => {
 	eventEmitter.broadcastAsync({ type: 'uiShow' });
 };
 
-const animateSymbols = async ({ positions }: { positions: Position[] }) => {
+// Books can list the same cell more than once (a wild shared by two clusters). Each cell's
+// animation resolves once, so a duplicate would wait forever: always animate unique cells.
+const uniquePositions = (positions: Position[]) => _.uniqBy(positions, (p) => `${p.reel}:${p.row}`);
+
+const animateSymbols = async ({ positions: rawPositions }: { positions: Position[] }) => {
+	const positions = uniquePositions(rawPositions);
 	eventEmitter.broadcast({ type: 'boardShow' });
 	await eventEmitter.broadcastAsync({
 		type: 'boardWithAnimateSymbols',
@@ -60,7 +65,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_winlevel_small' });
 			// a wild can belong to several clusters; animating the same symbol twice never resolves
 			await animateSymbols({
-				positions: _.uniqBy(_.flatten(bookEvent.wins.map((win) => win.positions)), (p) => `${p.reel}:${p.row}`),
+				positions: _.flatten(bookEvent.wins.map((win) => win.positions)),
 			});
 		};
 
@@ -234,7 +239,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_multiplier_explosion_b' });
 		await eventEmitter.broadcastAsync({
 			type: 'tumbleBoardExplode',
-			explodingPositions: bookEvent.explodingSymbols,
+			explodingPositions: uniquePositions(bookEvent.explodingSymbols),
 		});
 		eventEmitter.broadcast({ type: 'tumbleBoardRemoveExploded' });
 		await eventEmitter.broadcastAsync({ type: 'tumbleBoardSlideDown' });
