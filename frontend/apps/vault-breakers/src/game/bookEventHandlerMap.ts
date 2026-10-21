@@ -243,6 +243,8 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	freeSpinEnd: async (bookEvent: BookEventOfType<'freeSpinEnd'>) => {
 		const winLevelData = winLevelMap[bookEvent.winLevel as WinLevel];
 		if (stateGame.wincapAmount !== null) {
+			// hide the bet bar so TAP TO CONTINUE never sits on its buttons (the outro below keeps it hidden)
+			await eventEmitter.broadcastAsync({ type: 'uiHide' });
 			await eventEmitter.broadcastAsync({ type: 'maxWinShow', amount: stateGame.wincapAmount });
 			stateGame.wincapAmount = null;
 		}
@@ -311,8 +313,11 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	finalWin: async (bookEvent: BookEventOfType<'finalWin'>) => {
 		if (stateGame.wincapAmount !== null) {
+			// hide the bet bar while MAX WIN REACHED shows its TAP TO CONTINUE, then bring it back
+			await eventEmitter.broadcastAsync({ type: 'uiHide' });
 			await eventEmitter.broadcastAsync({ type: 'maxWinShow', amount: stateGame.wincapAmount });
 			stateGame.wincapAmount = null;
+			await eventEmitter.broadcastAsync({ type: 'uiShow' });
 		}
 		eventEmitter.broadcast({ type: 'multiplierGridClear' });
 		eventEmitter.broadcast({ type: 'multiplierGridHide' });
