@@ -1,0 +1,169 @@
+{
+ "game": "vault-breakers",
+ "grid": "5x5 cluster pays, min 5, tumbles",
+ "max_win": 10000,
+ "spot_mult_max": 128,
+ "cluster_size_buckets": [
+  "5",
+  "6",
+  "7",
+  "8",
+  "9-10",
+  "11-12",
+  "13-15",
+  "16+"
+ ],
+ "paytable_unscaled": {
+  "H1": [
+   1.5,
+   2,
+   3,
+   5,
+   10,
+   25,
+   60,
+   150
+  ],
+  "H2": [
+   1,
+   1.5,
+   2.5,
+   4,
+   8,
+   18,
+   45,
+   100
+  ],
+  "H3": [
+   0.8,
+   1.2,
+   2,
+   3,
+   6,
+   14,
+   35,
+   80
+  ],
+  "H4": [
+   0.6,
+   1,
+   1.5,
+   2.5,
+   5,
+   10,
+   25,
+   60
+  ],
+  "L1": [
+   0.4,
+   0.5,
+   0.8,
+   1.2,
+   2,
+   5,
+   12,
+   30
+  ],
+  "L2": [
+   0.3,
+   0.4,
+   0.6,
+   1,
+   1.6,
+   4,
+   10,
+   25
+  ],
+  "L3": [
+   0.25,
+   0.35,
+   0.5,
+   0.8,
+   1.3,
+   3,
+   8,
+   20
+  ],
+  "L4": [
+   0.2,
+   0.3,
+   0.4,
+   0.6,
+   1,
+   2.5,
+   6,
+   15
+  ]
+ },
+ "base_pay_scale": 2.0,
+ "freespin_pay_scale": 3.25,
+ "base_symbol_weights": {
+  "H1": 3,
+  "H2": 4,
+  "H3": 5,
+  "H4": 6,
+  "L1": 14,
+  "L2": 15,
+  "L3": 16,
+  "L4": 17,
+  "W": 2.5,
+  "S": 1.05
+ },
+ "freespin_symbol_weights": {
+  "H1": 3,
+  "H2": 4,
+  "H3": 5,
+  "H4": 6,
+  "L1": 14,
+  "L2": 15,
+  "L3": 16,
+  "L4": 17,
+  "W": 5.3,
+  "S": 0.8
+ },
+ "freespins": {
+  "3": 10,
+  "4": 12,
+  "5+": 15,
+  "retrigger_3_scatters": 5
+ },
+ "sim_results": {
+  "base": "~91.5% RTP at base scale 1.9 over 1.2M spins (2.0 expected ~94-95%), hit 1 in 3.2, FS 1 in 213",
+  "buy_100x": "~97.2% over 24k buys, +-3% noise"
+ },
+ "note": "Prototype starting points; optimizer does final 96.2% fit per mode.",
+ "version": 2,
+ "modes": {
+  "base": {
+   "cost": 1,
+   "base_pay_scale": 2.0,
+   "freespin_pay_scale": 3.25,
+   "scatter_weight": 1.05
+  },
+  "ante": {
+   "cost": 1.25,
+   "base_pay_scale": 2.0,
+   "freespin_pay_scale": 3.25,
+   "scatter_weight": 1.26,
+   "note": "scatter weight x1.2 vs base; FS ~1 in 140. Doubling scatter weight gives ~130% RTP, do not use"
+  },
+  "bonus_buy": {
+   "cost": 100,
+   "freespin_pay_scale": 3.25,
+   "spins": 10
+  },
+  "super_buy": {
+   "cost": 400,
+   "freespin_pay_scale": 2.95,
+   "spins": 10,
+   "start_all_spots": 2
+  }
+ },
+ "vault_meter": "FS only: +1 per tumble; at 10/20/30 one random marked spot doubles (max 128); if none marked, random spot set to x2. Resets each FS round.",
+ "sim_results_v2": {
+  "base": "~96.4% (360k spins), FS 1 in 208",
+  "ante_at_x1.15": "~93.6% (480k), FS 1 in 143 -> raised to x1.2",
+  "bonus_buy": "~97.4% (12k)",
+  "super_buy_at_2.95": "~98.6% (6k, noisy)"
+ }
+}
