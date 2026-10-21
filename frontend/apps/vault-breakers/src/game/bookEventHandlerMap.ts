@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import config from './config';
 
 import { recordBookEvent, checkIsMultipleRevealEvents, type BookEventHandlerMap } from 'utils-book';
 import { stateBet } from 'state-shared';
@@ -37,6 +38,11 @@ const winLevelSoundsStop = () => {
 // Books can list the same cell more than once (a wild shared by two clusters). Each cell's
 // animation resolves once, so a duplicate would wait forever: always animate unique cells.
 const uniquePositions = (positions: Position[]) => _.uniqBy(positions, (p) => `${p.reel}:${p.row}`);
+
+// Display-only guard: no on-screen win figure may exceed the 10,000x cap (book units are bet x 100).
+// Payouts always come from the RGS / book payoutMultiplier, never from these numbers.
+const MAX_WIN_BOOK_AMOUNT = config.betModes.base.max_win * 100;
+const capWin = (amount: number) => Math.min(amount, MAX_WIN_BOOK_AMOUNT);
 
 const animateSymbols = async ({ positions: rawPositions }: { positions: Position[] }) => {
 	const positions = uniquePositions(rawPositions);
@@ -77,7 +83,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 						// Vault Breakers: pay = base x sum(spot multipliers) x global
 						win: win.meta.winWithoutMult,
 						mult: Math.max(1, win.meta.clusterMult) * win.meta.globalMult,
-						result: win.win,
+						result: capWin(win.win),
 						reel: win.meta.overlay.reel,
 						row: win.meta.overlay.row,
 					};
@@ -92,7 +98,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			eventEmitter.broadcast({ type: 'tumbleWinAmountShow' });
 			eventEmitter.broadcast({
 				type: 'tumbleWinAmountUpdate',
-				amount: bookEvent.amount,
+				amount: capWin(bookEvent.amount),
 				animate: false,
 			});
 		}
@@ -116,10 +122,10 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		});
 	},
 	wincap: async (bookEvent: BookEventOfType<'wincap'>) => {
-		stateBet.winBookEventAmount = bookEvent.amount;
+		stateBet.winBookEventAmount = capWin(bookEvent.amount);
 	},
 	setTotalWin: async (bookEvent: BookEventOfType<'setTotalWin'>) => {
-		stateBet.winBookEventAmount = bookEvent.amount;
+		stateBet.winBookEventAmount = capWin(bookEvent.amount);
 	},
 	freeSpinTrigger: async (bookEvent: BookEventOfType<'freeSpinTrigger'>) => {
 		eventEmitter.broadcast({ type: 'vaultMeterReset' });
@@ -218,7 +224,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		winLevelSoundsPlay({ winLevelData });
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinOutroCountUp',
-			amount: bookEvent.amount,
+			amount: capWin(bookEvent.amount),
 			winLevelData,
 		});
 		winLevelSoundsStop();
@@ -260,7 +266,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		winLevelSoundsPlay({ winLevelData });
 		await eventEmitter.broadcastAsync({
 			type: 'winUpdate',
-			amount: bookEvent.amount,
+			amount: capWin(bookEvent.amount),
 			winLevelData,
 		});
 		winLevelSoundsStop();
