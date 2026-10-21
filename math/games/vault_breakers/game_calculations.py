@@ -27,8 +27,16 @@ class GameCalculations(Executables):
         """
         exploding_symbols = []
         total_win = 0
+        # Win cap: room left under the cap for this round (wins so far are already in 0.1x steps).
+        prior = getattr(getattr(self, "win_manager", None), "running_bet_win", 0.0)
+        cap_room = round(max(config.wincap - prior, 0.0), 1)
+        capped = False
         for sym in clusters:
+            if capped:
+                break
             for cluster in clusters[sym]:
+                if capped:
+                    break
                 syms_in_cluster = len(cluster)
                 if (syms_in_cluster, sym) in config.paytable:
                     # Sum all spot multipliers in the cluster (0 counts as 0, not 1)
@@ -44,7 +52,11 @@ class GameCalculations(Executables):
                         else 1.0
                     )
                     symwin_mult = round(sym_win * board_mult * global_multiplier, 1)  # RGS: payouts in 0.1x steps
-                    total_win += symwin_mult
+                    if round(total_win + symwin_mult, 1) >= cap_room:
+                        # This cluster reaches the cap: pay only the remainder, drop any later clusters.
+                        symwin_mult = round(cap_room - total_win, 1)
+                        capped = True
+                    total_win = round(total_win + symwin_mult, 1)
                     
                     json_positions = [{"reel": p[0], "row": p[1]} for p in cluster]
                     central_pos = Cluster.get_central_cluster_position(json_positions)

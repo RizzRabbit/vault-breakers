@@ -110,10 +110,10 @@ class GameConfig(Config):
         self.paytable = self.convert_range_table(pay_group)
         # Paytable above is at base pay scale 2.0; free spins pay at scale 3.25
         self.base_pay_scale = 2.0
-        self.freegame_pay_scale = 3.25
+        self.freegame_pay_scale = 2.0  # FS pays the base paytable (no FS pay boost)
         self.freegame_pay_ratio = self.freegame_pay_scale / self.base_pay_scale
         # Free-spin pay scale 3.25 in every mode (super uses the same FS scale; its only difference is x2 start spots)
-        self.mode_freegame_pay_scale = {"base": 3.25, "ante": 3.25, "bonus": 3.25, "super": 3.25}
+        self.mode_freegame_pay_scale = {"base": 2.0, "ante": 2.0, "bonus": 2.0, "super": 2.0}
 
         self.include_padding = True
         self.special_symbols = {"wild": ["W"], "scatter": ["S"]}

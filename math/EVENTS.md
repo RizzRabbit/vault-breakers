@@ -192,4 +192,4 @@ base spin events → `freeSpinTrigger` → then for each spin: `updateFreeSpin` 
 cluster_win = paytable_value × clusterMult × globalMult   (rounded to 0.1×)
 clusterMult = sum of spot values under the cluster (unmarked 0, marked 1, then 2..128), or 1 if that sum is 0
 ```
-`paytable_value` is the handoff value × 2.0 in the base game. In free spins it's × 3.25 in every mode, i.e. 1.625× the base game value.
+`paytable_value` is the handoff value × 2.0 in every mode, in both the base game and free spins: free spins pay the base paytable (no FS pay boost). Extra FS value comes from the FR0 reels (more wilds) and spot multipliers.

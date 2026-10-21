@@ -34,7 +34,7 @@ class Executables(Conditions, Tumble):
 
     def evaluate_wincap(self) -> None:
         """Indicate spin functions should stop once wincap is reached."""
-        if self.win_manager.running_bet_win >= self.config.wincap and not (self.wincap_triggered):
+        if round(self.win_manager.running_bet_win, 1) >= self.config.wincap and not (self.wincap_triggered):
             self.wincap_triggered = True
             wincap_event(self)
             return True

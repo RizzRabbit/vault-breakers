@@ -1,6 +1,6 @@
 {
  "id": 29,
- "payoutMultiplier": 87420,
+ "payoutMultiplier": 118750,
  "events": [
   {
    "index": 0,
@@ -264,7 +264,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "H2"
@@ -464,7 +465,7 @@
     ],
     [
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "H3"
@@ -546,12 +547,12 @@
   {
    "index": 10,
    "type": "winInfo",
-   "totalWin": 80,
+   "totalWin": 50,
    "wins": [
     {
      "symbol": "L3",
      "clusterSize": 5,
-     "win": 80,
+     "win": 50,
      "positions": [
       {
        "reel": 0,
@@ -577,7 +578,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 1,
-      "winWithoutMult": 81,
+      "winWithoutMult": 50,
       "overlay": {
        "reel": 1,
        "row": 5
@@ -589,7 +590,7 @@
   {
    "index": 11,
    "type": "updateTumbleWin",
-   "amount": 80
+   "amount": 50
   },
   {
    "index": 12,
@@ -692,12 +693,12 @@
   {
    "index": 15,
    "type": "winInfo",
-   "totalWin": 330,
+   "totalWin": 200,
    "wins": [
     {
      "symbol": "L2",
      "clusterSize": 6,
-     "win": 260,
+     "win": 160,
      "positions": [
       {
        "reel": 0,
@@ -727,7 +728,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 2,
-      "winWithoutMult": 130,
+      "winWithoutMult": 80,
       "overlay": {
        "reel": 1,
        "row": 3
@@ -737,7 +738,7 @@
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 70,
+     "win": 40,
      "positions": [
       {
        "reel": 2,
@@ -763,7 +764,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 1,
-      "winWithoutMult": 65,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 3,
        "row": 4
@@ -775,7 +776,7 @@
   {
    "index": 16,
    "type": "updateTumbleWin",
-   "amount": 410
+   "amount": 250
   },
   {
    "index": 17,
@@ -924,12 +925,12 @@
   {
    "index": 20,
    "type": "winInfo",
-   "totalWin": 570,
+   "totalWin": 600,
    "wins": [
     {
      "symbol": "L3",
-     "clusterSize": 6,
-     "win": 570,
+     "clusterSize": 7,
+     "win": 600,
      "positions": [
       {
        "reel": 1,
@@ -941,6 +942,10 @@
       },
       {
        "reel": 3,
+       "row": 3
+      },
+      {
+       "reel": 4,
        "row": 3
       },
       {
@@ -958,10 +963,10 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 5,
-      "winWithoutMult": 113,
+      "clusterMult": 6,
+      "winWithoutMult": 100,
       "overlay": {
-       "reel": 2,
+       "reel": 3,
        "row": 3
       }
      }
@@ -971,7 +976,7 @@
   {
    "index": 21,
    "type": "updateTumbleWin",
-   "amount": 980
+   "amount": 850
   },
   {
    "index": 22,
@@ -1008,7 +1013,7 @@
     [
      0,
      0,
-     1,
+     2,
      1,
      1
     ]
@@ -1043,7 +1048,11 @@
       "name": "L1"
      }
     ],
-    []
+    [
+     {
+      "name": "L3"
+     }
+    ]
    ],
    "explodingSymbols": [
     {
@@ -1069,6 +1078,10 @@
     {
      "reel": 3,
      "row": 1
+    },
+    {
+     "reel": 4,
+     "row": 3
     }
    ]
   },
@@ -1081,13 +1094,13 @@
   {
    "index": 25,
    "type": "setWin",
-   "amount": 980,
+   "amount": 850,
    "winLevel": 5
   },
   {
    "index": 26,
    "type": "setTotalWin",
-   "amount": 980
+   "amount": 850
   },
   {
    "index": 27,
@@ -1138,7 +1151,8 @@
       "name": "L4"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "H4"
@@ -1184,7 +1198,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "L3"
@@ -1201,7 +1216,7 @@
       "name": "L2"
      },
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "L1"
@@ -1210,7 +1225,7 @@
       "name": "L3"
      },
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "H2"
@@ -1268,7 +1283,7 @@
     [
      0,
      0,
-     1,
+     2,
      1,
      1
     ]
@@ -1277,7 +1292,7 @@
   {
    "index": 30,
    "type": "setTotalWin",
-   "amount": 980
+   "amount": 850
   },
   {
    "index": 31,
@@ -1326,7 +1341,7 @@
       "name": "H4"
      },
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "L2"
@@ -1459,7 +1474,7 @@
     [
      0,
      0,
-     1,
+     2,
      1,
      1
     ]
@@ -1468,12 +1483,12 @@
   {
    "index": 34,
    "type": "winInfo",
-   "totalWin": 200,
+   "totalWin": 120,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 200,
+     "win": 120,
      "positions": [
       {
        "reel": 2,
@@ -1499,7 +1514,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 3,
-      "winWithoutMult": 65,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 3,
        "row": 2
@@ -1511,7 +1526,7 @@
   {
    "index": 35,
    "type": "updateTumbleWin",
-   "amount": 200
+   "amount": 120
   },
   {
    "index": 36,
@@ -1548,7 +1563,7 @@
     [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
@@ -1614,13 +1629,13 @@
   {
    "index": 39,
    "type": "setWin",
-   "amount": 200,
-   "winLevel": 4
+   "amount": 120,
+   "winLevel": 3
   },
   {
    "index": 40,
    "type": "setTotalWin",
-   "amount": 1180
+   "amount": 970
   },
   {
    "index": 41,
@@ -1646,7 +1661,8 @@
       "name": "L1"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "L4"
@@ -1713,7 +1729,7 @@
       "name": "L2"
      },
      {
-      "name": "H4"
+      "name": "L1"
      },
      {
       "name": "L1"
@@ -1801,7 +1817,7 @@
     [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
@@ -1810,12 +1826,12 @@
   {
    "index": 44,
    "type": "winInfo",
-   "totalWin": 2600,
+   "totalWin": 33600,
    "wins": [
     {
      "symbol": "L1",
-     "clusterSize": 7,
-     "win": 2600,
+     "clusterSize": 13,
+     "win": 33600,
      "positions": [
       {
        "reel": 0,
@@ -1842,17 +1858,41 @@
        "row": 3
       },
       {
+       "reel": 0,
+       "row": 4
+      },
+      {
        "reel": 2,
        "row": 3
+      },
+      {
+       "reel": 3,
+       "row": 3
+      },
+      {
+       "reel": 3,
+       "row": 4
+      },
+      {
+       "reel": 3,
+       "row": 5
+      },
+      {
+       "reel": 2,
+       "row": 5
+      },
+      {
+       "reel": 1,
+       "row": 5
       }
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 10,
-      "winWithoutMult": 260,
+      "clusterMult": 14,
+      "winWithoutMult": 2400,
       "overlay": {
        "reel": 1,
-       "row": 2
+       "row": 3
       }
      }
     }
@@ -1861,7 +1901,7 @@
   {
    "index": 45,
    "type": "updateTumbleWin",
-   "amount": 2600
+   "amount": 33600
   },
   {
    "index": 46,
@@ -1871,7 +1911,7 @@
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -1879,26 +1919,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      2,
      1,
      8,
      4,
+     2
+    ],
+    [
+     1,
+     2,
+     4,
+     1,
      1
     ],
     [
-     1,
-     2,
-     2,
-     0,
-     0
-    ],
-    [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
@@ -1910,6 +1950,9 @@
    "newSymbols": [
     [
      {
+      "name": "L4"
+     },
+     {
       "name": "L1"
      },
      {
@@ -1917,6 +1960,9 @@
      }
     ],
     [
+     {
+      "name": "L3"
+     },
      {
       "name": "L1"
      },
@@ -1933,9 +1979,23 @@
      },
      {
       "name": "L3"
+     },
+     {
+      "name": "L3"
      }
     ],
-    [],
+    [
+     {
+      "name": "H2"
+     },
+     {
+      "name": "W",
+      "wild": true
+     },
+     {
+      "name": "L2"
+     }
+    ],
     []
    ],
    "explodingSymbols": [
@@ -1946,6 +2006,10 @@
     {
      "reel": 0,
      "row": 3
+    },
+    {
+     "reel": 0,
+     "row": 4
     },
     {
      "reel": 1,
@@ -1960,12 +2024,32 @@
      "row": 3
     },
     {
+     "reel": 1,
+     "row": 5
+    },
+    {
      "reel": 2,
      "row": 1
     },
     {
      "reel": 2,
      "row": 3
+    },
+    {
+     "reel": 2,
+     "row": 5
+    },
+    {
+     "reel": 3,
+     "row": 3
+    },
+    {
+     "reel": 3,
+     "row": 4
+    },
+    {
+     "reel": 3,
+     "row": 5
     }
    ]
   },
@@ -1978,13 +2062,13 @@
   {
    "index": 49,
    "type": "setWin",
-   "amount": 2600,
-   "winLevel": 6
+   "amount": 33600,
+   "winLevel": 9
   },
   {
    "index": 50,
    "type": "setTotalWin",
-   "amount": 3780
+   "amount": 34570
   },
   {
    "index": 51,
@@ -2044,7 +2128,7 @@
     ],
     [
      {
-      "name": "H4"
+      "name": "L1"
      },
      {
       "name": "L4"
@@ -2136,7 +2220,7 @@
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2144,26 +2228,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      2,
      1,
      8,
      4,
+     2
+    ],
+    [
+     1,
+     2,
+     4,
+     1,
      1
     ],
     [
-     1,
-     2,
-     2,
-     0,
-     0
-    ],
-    [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
@@ -2172,12 +2256,12 @@
   {
    "index": 54,
    "type": "winInfo",
-   "totalWin": 450,
+   "totalWin": 280,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 450,
+     "win": 280,
      "positions": [
       {
        "reel": 1,
@@ -2203,7 +2287,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 7,
-      "winWithoutMult": 65,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 3,
        "row": 1
@@ -2215,7 +2299,7 @@
   {
    "index": 55,
    "type": "updateTumbleWin",
-   "amount": 450
+   "amount": 280
   },
   {
    "index": 56,
@@ -2225,7 +2309,7 @@
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2233,26 +2317,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      4,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      2,
      4,
-     2,
-     0,
-     0
+     4,
+     1,
+     1
     ],
     [
      1,
      1,
-     1,
+     2,
      1,
      1
     ]
@@ -2319,13 +2403,13 @@
   {
    "index": 59,
    "type": "setWin",
-   "amount": 450,
+   "amount": 280,
    "winLevel": 4
   },
   {
    "index": 60,
    "type": "setTotalWin",
-   "amount": 4230
+   "amount": 34850
   },
   {
    "index": 61,
@@ -2354,7 +2438,7 @@
       "name": "H4"
      },
      {
-      "name": "L1"
+      "name": "L2"
      },
      {
       "name": "L4"
@@ -2380,7 +2464,8 @@
       "name": "L4"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      }
     ],
     [
@@ -2436,7 +2521,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "L2"
@@ -2480,7 +2566,7 @@
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2488,26 +2574,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      4,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      2,
      4,
-     2,
-     0,
-     0
+     4,
+     1,
+     1
     ],
     [
      1,
      1,
-     1,
+     2,
      1,
      1
     ]
@@ -2516,12 +2602,12 @@
   {
    "index": 64,
    "type": "winInfo",
-   "totalWin": 6820,
+   "totalWin": 4800,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 9,
-     "win": 6820,
+     "win": 4800,
      "positions": [
       {
        "reel": 0,
@@ -2562,8 +2648,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 21,
-      "winWithoutMult": 325,
+      "clusterMult": 24,
+      "winWithoutMult": 200,
       "overlay": {
        "reel": 3,
        "row": 2
@@ -2575,7 +2661,7 @@
   {
    "index": 65,
    "type": "updateTumbleWin",
-   "amount": 6820
+   "amount": 4800
   },
   {
    "index": 66,
@@ -2585,7 +2671,7 @@
      4,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2593,26 +2679,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      8,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      4,
      8,
-     4,
-     0,
-     0
+     8,
+     1,
+     1
     ],
     [
      2,
      1,
-     2,
+     4,
      2,
      1
     ]
@@ -2710,12 +2796,12 @@
   {
    "index": 69,
    "type": "winInfo",
-   "totalWin": 2210,
+   "totalWin": 1760,
    "wins": [
     {
      "symbol": "L1",
      "clusterSize": 5,
-     "win": 2210,
+     "win": 1760,
      "positions": [
       {
        "reel": 3,
@@ -2740,8 +2826,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 17,
-      "winWithoutMult": 130,
+      "clusterMult": 22,
+      "winWithoutMult": 80,
       "overlay": {
        "reel": 3,
        "row": 2
@@ -2753,7 +2839,7 @@
   {
    "index": 70,
    "type": "updateTumbleWin",
-   "amount": 9030
+   "amount": 6560
   },
   {
    "index": 71,
@@ -2763,7 +2849,7 @@
      4,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2771,26 +2857,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      8,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      8,
      16,
-     8,
-     1,
-     0
+     16,
+     2,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      2,
      1
     ]
@@ -2855,13 +2941,13 @@
   {
    "index": 74,
    "type": "setWin",
-   "amount": 9030,
+   "amount": 6560,
    "winLevel": 8
   },
   {
    "index": 75,
    "type": "setTotalWin",
-   "amount": 13260
+   "amount": 41410
   },
   {
    "index": 76,
@@ -3016,7 +3102,7 @@
      4,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -3024,26 +3110,26 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      8,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      8,
      16,
-     8,
-     1,
-     0
+     16,
+     2,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      2,
      1
     ]
@@ -3052,12 +3138,12 @@
   {
    "index": 79,
    "type": "winInfo",
-   "totalWin": 6820,
+   "totalWin": 4600,
    "wins": [
     {
      "symbol": "L2",
      "clusterSize": 8,
-     "win": 6820,
+     "win": 4600,
      "positions": [
       {
        "reel": 0,
@@ -3094,8 +3180,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 21,
-      "winWithoutMult": 325,
+      "clusterMult": 23,
+      "winWithoutMult": 200,
       "overlay": {
        "reel": 1,
        "row": 4
@@ -3107,7 +3193,7 @@
   {
    "index": 80,
    "type": "updateTumbleWin",
-   "amount": 6820
+   "amount": 4600
   },
   {
    "index": 81,
@@ -3117,7 +3203,7 @@
      4,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
@@ -3125,26 +3211,26 @@
      4,
      8,
      2,
+     4
+    ],
+    [
+     8,
+     1,
+     16,
+     8,
      2
     ],
     [
      8,
-     1,
      16,
-     8,
+     16,
+     2,
      1
     ],
     [
-     8,
-     16,
-     8,
-     1,
-     0
-    ],
-    [
      2,
      2,
-     2,
+     4,
      2,
      1
     ]
@@ -3173,7 +3259,8 @@
       "name": "L1"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      }
     ],
     [
@@ -3232,12 +3319,12 @@
   {
    "index": 84,
    "type": "winInfo",
-   "totalWin": 910,
+   "totalWin": 720,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 910,
+     "win": 720,
      "positions": [
       {
        "reel": 1,
@@ -3262,8 +3349,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 14,
-      "winWithoutMult": 65,
+      "clusterMult": 18,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 2,
        "row": 4
@@ -3275,7 +3362,7 @@
   {
    "index": 85,
    "type": "updateTumbleWin",
-   "amount": 7730
+   "amount": 5320
   },
   {
    "index": 86,
@@ -3285,7 +3372,7 @@
      4,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
@@ -3293,26 +3380,26 @@
      4,
      8,
      2,
-     4
+     8
     ],
     [
      8,
      1,
      16,
      16,
-     2
+     4
     ],
     [
      8,
      16,
-     8,
-     2,
-     0
+     16,
+     4,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
@@ -3393,7 +3480,7 @@
      8,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
@@ -3401,26 +3488,26 @@
      4,
      8,
      2,
-     4
+     8
     ],
     [
      8,
      1,
      16,
      16,
-     2
+     4
     ],
     [
      8,
      16,
-     8,
-     2,
-     0
+     16,
+     4,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
@@ -3429,12 +3516,12 @@
   {
    "index": 90,
    "type": "winInfo",
-   "totalWin": 4030,
+   "totalWin": 4900,
    "wins": [
     {
      "symbol": "L1",
-     "clusterSize": 5,
-     "win": 4030,
+     "clusterSize": 6,
+     "win": 4900,
      "positions": [
       {
        "reel": 1,
@@ -3455,12 +3542,16 @@
       {
        "reel": 3,
        "row": 4
+      },
+      {
+       "reel": 1,
+       "row": 3
       }
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 31,
-      "winWithoutMult": 130,
+      "clusterMult": 49,
+      "winWithoutMult": 100,
       "overlay": {
        "reel": 2,
        "row": 3
@@ -3472,7 +3563,7 @@
   {
    "index": 91,
    "type": "updateTumbleWin",
-   "amount": 11760
+   "amount": 10220
   },
   {
    "index": 92,
@@ -3482,34 +3573,34 @@
      8,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
      8,
      8,
+     16,
+     2,
+     8
+    ],
+    [
      8,
      2,
+     16,
+     16,
      4
     ],
     [
      8,
-     2,
-     16,
-     16,
-     2
-    ],
-    [
-     8,
      32,
-     16,
-     4,
-     0
+     32,
+     8,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
@@ -3521,6 +3612,9 @@
    "newSymbols": [
     [],
     [
+     {
+      "name": "L1"
+     },
      {
       "name": "L4"
      }
@@ -3549,6 +3643,10 @@
      "row": 2
     },
     {
+     "reel": 1,
+     "row": 3
+    },
+    {
      "reel": 2,
      "row": 2
     },
@@ -3574,23 +3672,170 @@
   },
   {
    "index": 95,
-   "type": "setWin",
-   "amount": 11760,
-   "winLevel": 9
+   "type": "winInfo",
+   "totalWin": 2320,
+   "wins": [
+    {
+     "symbol": "L4",
+     "clusterSize": 5,
+     "win": 2320,
+     "positions": [
+      {
+       "reel": 0,
+       "row": 1
+      },
+      {
+       "reel": 1,
+       "row": 1
+      },
+      {
+       "reel": 1,
+       "row": 2
+      },
+      {
+       "reel": 2,
+       "row": 2
+      },
+      {
+       "reel": 3,
+       "row": 2
+      }
+     ],
+     "meta": {
+      "globalMult": 1,
+      "clusterMult": 58,
+      "winWithoutMult": 40,
+      "overlay": {
+       "reel": 1,
+       "row": 2
+      }
+     }
+    }
+   ]
   },
   {
    "index": 96,
-   "type": "setTotalWin",
-   "amount": 25020
+   "type": "updateTumbleWin",
+   "amount": 12540
   },
   {
    "index": 97,
+   "type": "updateGrid",
+   "gridMultipliers": [
+    [
+     16,
+     0,
+     2,
+     2,
+     2
+    ],
+    [
+     16,
+     16,
+     16,
+     2,
+     8
+    ],
+    [
+     8,
+     4,
+     16,
+     16,
+     4
+    ],
+    [
+     8,
+     64,
+     32,
+     8,
+     1
+    ],
+    [
+     2,
+     2,
+     4,
+     4,
+     1
+    ]
+   ]
+  },
+  {
+   "index": 98,
+   "type": "tumbleBoard",
+   "newSymbols": [
+    [
+     {
+      "name": "L4"
+     }
+    ],
+    [
+     {
+      "name": "L2"
+     },
+     {
+      "name": "L1"
+     }
+    ],
+    [
+     {
+      "name": "L1"
+     }
+    ],
+    [
+     {
+      "name": "L3"
+     }
+    ],
+    []
+   ],
+   "explodingSymbols": [
+    {
+     "reel": 0,
+     "row": 1
+    },
+    {
+     "reel": 1,
+     "row": 1
+    },
+    {
+     "reel": 1,
+     "row": 2
+    },
+    {
+     "reel": 2,
+     "row": 2
+    },
+    {
+     "reel": 3,
+     "row": 2
+    }
+   ]
+  },
+  {
+   "index": 99,
+   "type": "vaultMeterUpdate",
+   "meter": 12,
+   "nextThreshold": 20
+  },
+  {
+   "index": 100,
+   "type": "setWin",
+   "amount": 12540,
+   "winLevel": 9
+  },
+  {
+   "index": 101,
+   "type": "setTotalWin",
+   "amount": 53950
+  },
+  {
+   "index": 102,
    "type": "updateFreeSpin",
    "amount": 9,
    "total": 10
   },
   {
-   "index": 98,
+   "index": 103,
    "type": "reveal",
    "board": [
     [
@@ -3614,7 +3859,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      }
     ],
     [
@@ -3700,7 +3946,7 @@
       "name": "H4"
      },
      {
-      "name": "L3"
+      "name": "L4"
      },
      {
       "name": "L2"
@@ -3730,55 +3976,55 @@
    ]
   },
   {
-   "index": 99,
+   "index": 104,
    "type": "updateGrid",
    "gridMultipliers": [
     [
-     8,
+     16,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
-     8,
-     8,
-     8,
+     16,
+     16,
+     16,
      2,
+     8
+    ],
+    [
+     8,
+     4,
+     16,
+     16,
      4
     ],
     [
      8,
-     2,
-     16,
-     16,
-     2
-    ],
-    [
-     8,
+     64,
      32,
-     16,
-     4,
-     0
+     8,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 100,
+   "index": 105,
    "type": "winInfo",
-   "totalWin": 62400,
+   "totalWin": 64800,
    "wins": [
     {
      "symbol": "L1",
      "clusterSize": 10,
-     "win": 62400,
+     "win": 64800,
      "positions": [
       {
        "reel": 1,
@@ -3823,8 +4069,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 96,
-      "winWithoutMult": 650,
+      "clusterMult": 162,
+      "winWithoutMult": 400,
       "overlay": {
        "reel": 2,
        "row": 3
@@ -3834,53 +4080,53 @@
    ]
   },
   {
-   "index": 101,
+   "index": 106,
    "type": "updateTumbleWin",
-   "amount": 62400
+   "amount": 64800
   },
   {
-   "index": 102,
+   "index": 107,
    "type": "updateGrid",
    "gridMultipliers": [
     [
-     8,
+     16,
      0,
      4,
-     1,
+     2,
      2
     ],
     [
+     16,
+     32,
+     32,
+     4,
+     8
+    ],
+    [
+     8,
      8,
      16,
-     16,
-     4,
+     32,
      4
     ],
     [
-     8,
-     4,
      16,
-     32,
-     2
-    ],
-    [
-     16,
+     128,
      64,
-     32,
-     4,
-     0
+     8,
+     1
     ],
     [
      4,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 103,
+   "index": 108,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -3969,30 +4215,30 @@
    ]
   },
   {
-   "index": 104,
+   "index": 109,
    "type": "vaultMeterUpdate",
-   "meter": 12,
+   "meter": 13,
    "nextThreshold": 20
   },
   {
-   "index": 105,
+   "index": 110,
    "type": "setWin",
-   "amount": 62400,
+   "amount": 64800,
    "winLevel": 9
   },
   {
-   "index": 106,
+   "index": 111,
    "type": "setTotalWin",
-   "amount": 87420
+   "amount": 118750
   },
   {
-   "index": 107,
+   "index": 112,
    "type": "updateFreeSpin",
    "amount": 10,
    "total": 10
   },
   {
-   "index": 108,
+   "index": 113,
    "type": "reveal",
    "board": [
     [
@@ -4132,64 +4378,64 @@
    ]
   },
   {
-   "index": 109,
+   "index": 114,
    "type": "updateGrid",
    "gridMultipliers": [
     [
-     8,
+     16,
      0,
      4,
-     1,
+     2,
      2
     ],
     [
+     16,
+     32,
+     32,
+     4,
+     8
+    ],
+    [
+     8,
      8,
      16,
-     16,
-     4,
+     32,
      4
     ],
     [
-     8,
-     4,
      16,
-     32,
-     2
-    ],
-    [
-     16,
+     128,
      64,
-     32,
-     4,
-     0
+     8,
+     1
     ],
     [
      4,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 110,
+   "index": 115,
    "type": "setTotalWin",
-   "amount": 87420
+   "amount": 118750
   },
   {
-   "index": 111,
+   "index": 116,
    "type": "freeSpinEnd",
-   "amount": 87420,
+   "amount": 118750,
    "winLevel": 8
   },
   {
-   "index": 112,
+   "index": 117,
    "type": "finalWin",
-   "amount": 87420
+   "amount": 118750
   }
  ],
  "criteria": "freegame",
  "baseGameWins": 0.0,
- "freeGameWins": 874.2
+ "freeGameWins": 1187.5
 }
