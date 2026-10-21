@@ -68,7 +68,7 @@ A snapshot of the spot multipliers.
 **When it's emitted:**
 - after each winning board state, once the marks and multipliers are updated (base game and free spins)
 - after every free-spin `reveal`, showing the persistent grid
-- in `super` only, once right after `freeSpinTrigger` with every cell set to `2`
+- once right after every `freeSpinTrigger` (all modes), carrying the tier's start grid: `0` for regular, `2` for super, `4` for epic
 ```json
 {"index": 4, "type": "updateGrid", "gridMultipliers": [[0,0,0,0,0],[0,1,0,0,0],[1,1,1,1,0],[0,1,0,0,0],[0,0,0,0,0]]}
 ```
@@ -119,10 +119,11 @@ The running total for the whole round (base plus free spins so far), emitted at 
 
 ### freeSpinTrigger
 Free spins are awarded. It appears after the base spin's `setTotalWin`. Bonus and super books also start with a forced base `reveal` that has 3 scatters, followed by this event.
-- `totalFs`: the number of spins awarded (3 / 4 / 5+ scatters = 10 / 12 / 15; buys always get 10)
+- `totalFs`: the number of spins awarded: always 10 (every tier, buys included)
+- `fsType`: `"regular"` | `"super"` | `"epic"`. Base/ante: 3 scatters = regular (spots unmarked), 4 = super (all spots x2), 5+ = epic (all spots x4; the free-spin round always pays at least 200x base bet). Bonus buy is always `regular`, super buy always `super`; epic is never bought.
 - `positions`: scatter `[{reel, row}]` in **padded-board** coordinates
 ```json
-{"index": 2, "type": "freeSpinTrigger", "totalFs": 10, "positions": [{"reel": 0, "row": 1}, {"reel": 3, "row": 2}, {"reel": 4, "row": 5}]}
+{"index": 2, "type": "freeSpinTrigger", "totalFs": 10, "fsType": "regular", "positions": [{"reel": 0, "row": 1}, {"reel": 3, "row": 2}, {"reel": 4, "row": 5}]}
 ```
 
 ### updateFreeSpin
@@ -135,10 +136,11 @@ The start of each free spin, emitted before its `reveal`.
 
 ### freeSpinRetrigger
 3 or more scatters landed during a free spin, adding +5 spins. It appears after that spin's `setTotalWin`. The code emits it, but none of the current sample books contain one.
-- `totalFs`: the new total number of spins
+- `totalFs`: the new total number of spins (+5 per retrigger, unlimited)
+- `fsType`: the round's tier, unchanged by retriggers
 - `positions`: scatter `[{reel, row}]` in **padded-board** coordinates
 ```json
-{"index": 45, "type": "freeSpinRetrigger", "totalFs": 15, "positions": [{"reel": 1, "row": 2}, {"reel": 3, "row": 3}, {"reel": 4, "row": 1}]}
+{"index": 45, "type": "freeSpinRetrigger", "totalFs": 15, "fsType": "regular", "positions": [{"reel": 1, "row": 2}, {"reel": 3, "row": 3}, {"reel": 4, "row": 1}]}
 ```
 
 ### freeSpinEnd
@@ -169,7 +171,7 @@ The last event in every book.
 - `base` (1×)
 - `ante` (1.25×): base game on BR1 reels, ~1.2× the BR0 scatter count (85 vs 70), set by `ANTE_SCATTER_MULT` in `generate_reels.py`
 - `bonus` (100× buy): 10 free spins
-- `super` (400× buy): 10 free spins with every spot starting at x2 (an extra `updateGrid` follows `freeSpinTrigger`) and a free-spin pay scale of 2.95
+- `super` (400× buy): 10 free spins with every spot starting at x2 (`fsType` `super`; the `updateGrid` after `freeSpinTrigger` has every cell at 2) (free spins pay at the same scale as every other mode)
 
 All modes target 96.2% RTP and cap wins at 10,000×.
 
@@ -181,15 +183,17 @@ All modes target 96.2% RTP and cap wins at 10,000×.
 **A losing spin:** `reveal` → `setTotalWin` → `finalWin`
 
 **Base spin that triggers free spins** (`base_fs_trigger.json`, `ante_fs_trigger.json`):
-base spin events → `freeSpinTrigger` → then for each spin: `updateFreeSpin` → `reveal` → `updateGrid` → [`winInfo` → `updateTumbleWin` → `updateGrid` → `tumbleBoard` → `vaultMeterUpdate` (→ `vaultMeterUpgrade` at 10/20/30)] × N → `setWin` (only if the spin won) → `setTotalWin` (→ `freeSpinRetrigger`) … → `freeSpinEnd` → `finalWin`
+base spin events → `freeSpinTrigger` → `updateGrid` (start grid) → then for each spin: `updateFreeSpin` → `reveal` → `updateGrid` → [`winInfo` → `updateTumbleWin` → `updateGrid` → `tumbleBoard` → `vaultMeterUpdate` (→ `vaultMeterUpgrade` at 10/20/30)] × N → `setWin` (only if the spin won) → `setTotalWin` (→ `freeSpinRetrigger`) … → `freeSpinEnd` → `finalWin`
 
 **Bonus buy** (`bonus_round.json`): a forced 3-scatter base `reveal` (which may itself pay with tumbles) → `setWin`/`setTotalWin` → `freeSpinTrigger` → free spins as above.
 
-**Super buy** (`super_round.json`): the same as bonus, except an `updateGrid` with every cell at `2` comes right after `freeSpinTrigger`.
+**Super buy** (`super_round.json`): the same as bonus, except `fsType` is `super` and the start `updateGrid` has every cell at `2`.
+
+**Natural super / epic** (base and ante, 4 / 5+ scatters): the same flow with `fsType` `super` / `epic` and start grid 2 / 4. Epic rounds below 200x are redrawn on the math side, so books only ever contain the final round.
 
 ## Cluster pay
 ```
 cluster_win = paytable_value × clusterMult × globalMult   (rounded to 0.1×)
 clusterMult = sum of spot values under the cluster (unmarked 0, marked 1, then 2..128), or 1 if that sum is 0
 ```
-`paytable_value` is the handoff value × 2.0 in the base game. In free spins it's × 3.25, or × 2.95 in `super`.
+`paytable_value` is the handoff value × 2.0 in every mode, in both the base game and free spins: free spins pay the base paytable (no FS pay boost). Extra FS value comes from the FR0 reels (more wilds) and spot multipliers.

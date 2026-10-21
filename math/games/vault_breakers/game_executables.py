@@ -22,20 +22,25 @@ class GameExecutables(GameCalculations):
         - First win on a spot: mark it (set to 1)
         - Each subsequent win: DOUBLE the multiplier (1 -> 2 -> 4 -> 8 -> 16 -> 32 -> 64 -> 128)
         - Cap at 128x
+        - Each winning position is upgraded at most once per tumble (unique positions)
         """
         if self.win_data["totalWin"] > 0:
+            # A spot upgrades at most once per tumble, even if a wild is shared by several clusters.
+            unique_positions = []
             for win in self.win_data["wins"]:
                 for pos in win["positions"]:
-                    reel, row = pos["reel"], pos["row"]
-                    if self.position_multipliers[reel][row] == 0:
-                        # First win on this spot: mark it with 1x
-                        self.position_multipliers[reel][row] = 1
-                    else:
-                        # Subsequent win: double the multiplier
-                        self.position_multipliers[reel][row] = min(
-                            self.position_multipliers[reel][row] * 2,
-                            self.config.maximum_board_mult
-                        )
+                    if (pos["reel"], pos["row"]) not in unique_positions:
+                        unique_positions.append((pos["reel"], pos["row"]))
+            for reel, row in unique_positions:
+                if self.position_multipliers[reel][row] == 0:
+                    # First win on this spot: mark it with 1x
+                    self.position_multipliers[reel][row] = 1
+                else:
+                    # Subsequent win: double the multiplier
+                    self.position_multipliers[reel][row] = min(
+                        self.position_multipliers[reel][row] * 2,
+                        self.config.maximum_board_mult
+                    )
             update_grid_mult_event(self)
 
     def advance_vault_meter(self):

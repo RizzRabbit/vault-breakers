@@ -28,7 +28,7 @@ class GameState(GameStateOverride):
             self.set_end_tumble_event()
             self.win_manager.update_gametype_wins(self.gametype)
 
-            if self.check_fs_condition() and self.check_freespin_entry():
+            if not self.wincap_triggered and self.check_fs_condition() and self.check_freespin_entry():
                 self.run_freespin_from_base()
 
             self.evaluate_finalwin()
@@ -39,7 +39,7 @@ class GameState(GameStateOverride):
     def run_freespin(self):
         """Run freespin round with persistent spot multipliers."""
         self.reset_fs_spin()
-        while self.fs < self.tot_fs:
+        while self.fs < self.tot_fs and not self.wincap_triggered:
             self.update_freespin()
             self.draw_board()
             update_grid_mult_event(self)
@@ -57,7 +57,7 @@ class GameState(GameStateOverride):
             self.set_end_tumble_event()
             self.win_manager.update_gametype_wins(self.gametype)
 
-            if self.check_fs_condition():
+            if self.check_fs_condition() and not self.wincap_triggered:
                 self.update_fs_retrigger_amt()
 
         self.end_freespin()

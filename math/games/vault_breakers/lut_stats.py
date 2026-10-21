@@ -8,6 +8,6 @@ for m, cost in COST.items():
     W = sum(int(r[1]) for r in lut)
     rtp = sum(int(r[1]) * int(r[2]) for r in lut) / 100 / W / cost
     hit = sum(int(r[1]) for r in lut if int(r[2]) > 0) / W
-    fs = sum(int(r[1]) for r in lut if seg[r[0]] in ("freegame", "wincap")) / W
+    fs = sum(int(r[1]) for r in lut if seg[r[0]] in ("freegame", "superfs", "epicfs", "wincap")) / W
     mx = max(int(r[2]) for r in lut if int(r[1]) > 0) / 100
     print(f"{m}: books={len(lut)} RTP={rtp*100:.3f}% hit 1 in {1/hit:.2f} FS 1 in {1/fs:.1f} max {mx:.1f}x")

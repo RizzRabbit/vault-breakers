@@ -19,12 +19,66 @@ class GameStateOverride(GameExecutables):
         # Initialize multipliers at start of FS round (persist throughout)
         self.reset_grid_mults()
         self.vault_meter = 0
-        if getattr(self, "betmode", None) == "super":
-            # Super buy: every spot starts at x2
-            self.position_multipliers = [
-                [2 for _ in range(self.config.num_rows[reel])] for reel in range(self.config.num_reels)
-            ]
-            update_grid_mult_event(self)
+        start = self.config.fs_tier_start[getattr(self, "fs_tier", "regular")]
+        self.position_multipliers = [
+            [start for _ in range(self.config.num_rows[reel])] for reel in range(self.config.num_reels)
+        ]
+        # First updateGrid after the trigger carries the tier's start gridMultipliers.
+        update_grid_mult_event(self)
+
+    def get_fs_tier(self, scatter_key: str = "scatter") -> str:
+        """bonus buy = regular, super buy = super; natural: 3 regular, 4 super, 5+ epic."""
+        bm = getattr(self, "betmode", "base")
+        if bm == "bonus":
+            return "regular"
+        if bm == "super":
+            return "super"
+        n = self.count_special_symbols(scatter_key)
+        return "regular" if n <= 3 else ("super" if n == 4 else "epic")
+
+    def _tag_fs_type(self):
+        ev = self.book.events[-1]
+        if ev.get("type") in ("freeSpinTrigger", "freeSpinRetrigger"):
+            ev["fsType"] = self.fs_tier
+
+    def update_freespin_amount(self, scatter_key: str = "scatter") -> None:
+        super().update_freespin_amount(scatter_key)
+        self._tag_fs_type()
+
+    def update_fs_retrigger_amt(self, scatter_key: str = "scatter") -> None:
+        super().update_fs_retrigger_amt(scatter_key)
+        self._tag_fs_type()
+
+    def run_freespin_from_base(self, scatter_key: str = "scatter") -> None:
+        """Tiered FS entry. Epic rounds are redrawn (FS round only) until they pay >= 200x."""
+        from copy import deepcopy
+
+        self.fs_tier = self.get_fs_tier(scatter_key)
+        self.record(
+            {
+                "kind": self.count_special_symbols(scatter_key),
+                "symbol": scatter_key,
+                "gametype": self.gametype,
+                "fstype": self.fs_tier,
+            }
+        )
+        self.update_freespin_amount(scatter_key)
+        if self.fs_tier != "epic":
+            self.run_freespin()
+            return
+        names = ["book", "win_manager", "fs", "tot_fs", "wincap_triggered", "gametype", "board",
+                 "special_syms_on_board", "win_data", "position_multipliers", "vault_meter"]
+        snap = {k: deepcopy(getattr(self, k)) for k in names if hasattr(self, k)}
+        start_win = self.win_manager.running_bet_win
+        self.epic_redraws = 0
+        while True:
+            self.run_freespin()
+            round_win = round(self.win_manager.running_bet_win - start_win, 1)
+            if self.wincap_triggered or round_win >= self.config.epic_min_win:
+                return
+            self.epic_redraws += 1
+            for k, v in snap.items():
+                setattr(self, k, deepcopy(v))
 
     def draw_board(self, emit_event: bool = True, trigger_symbol: str = "scatter") -> None:
         """In unbiased 'natural' measurement mode, base boards are drawn straight from the

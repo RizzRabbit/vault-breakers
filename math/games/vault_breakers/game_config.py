@@ -32,7 +32,7 @@ class GameConfig(Config):
 
         # Paytable from handoff.json
         # Cluster size buckets: 5, 6, 7, 8, 9-10, 11-12, 13-15, 16+
-        # Base pay scale: 2.0, Freespin pay scale: 3.25
+        # Base pay scale: 2.0, Freespin pay scale: 2.0 (FS pays the base paytable)
         pay_group = {
             # H1 - Gold Bar
             ((5, 5), "H1"): 1.5 * 2.0,
@@ -108,12 +108,12 @@ class GameConfig(Config):
             ((16, 25), "L4"): 15 * 2.0,
         }
         self.paytable = self.convert_range_table(pay_group)
-        # Paytable above is at base pay scale 2.0; free spins pay at scale 3.25
+        # Paytable above is at base pay scale 2.0; free spins pay the same paytable (scale 2.0)
         self.base_pay_scale = 2.0
-        self.freegame_pay_scale = 3.25
+        self.freegame_pay_scale = 2.0  # FS pays the base paytable (no FS pay boost)
         self.freegame_pay_ratio = self.freegame_pay_scale / self.base_pay_scale
-        # Per-mode free-spin pay scale (handoff v2): super buy pays FS at 2.95
-        self.mode_freegame_pay_scale = {"base": 3.25, "ante": 3.25, "bonus": 3.25, "super": 2.95}
+        # Free-spin pay scale 2.0 in every mode (no FS pay boost; tiers differ only by start spot values)
+        self.mode_freegame_pay_scale = {"base": 2.0, "ante": 2.0, "bonus": 2.0, "super": 2.0}
 
         self.include_padding = True
         self.special_symbols = {"wild": ["W"], "scatter": ["S"]}
@@ -122,14 +122,17 @@ class GameConfig(Config):
         # Base: 3/4/5+ scatters = 10/12/15 spins
         # FS: 3+ = +5 spins
         self.freespin_triggers = {
-            # 5+ scatters (incl. scatters landing during tumbles) all award 15 / +5
-            self.basegame_type: {3: 10, 4: 12, **{n: 15 for n in range(5, 26)}},
+            # Tiered FS: 3 = regular, 4 = super (x2 start), 5+ = epic (x4 start, >= 200x); all 10 spins, retrigger +5
+            self.basegame_type: {n: 10 for n in range(3, 26)},  # every tier awards 10
             self.freegame_type: {n: 5 for n in range(3, 26)},
         }
         self.anticipation_triggers = {
             self.basegame_type: min(self.freespin_triggers[self.basegame_type].keys()) - 1,
             self.freegame_type: min(self.freespin_triggers[self.freegame_type].keys()) - 1,
         }
+
+        self.fs_tier_start = {"regular": 0, "super": 2, "epic": 4}
+        self.epic_min_win = 200.0
 
         # Spot multiplier cap: x128
         # Doubling progression: x1 -> x2 -> x4 -> x8 -> x16 -> x32 -> x64 -> x128
@@ -172,13 +175,39 @@ class GameConfig(Config):
                     ),
                     Distribution(
                         criteria="freegame",
-                        quota=0.1,
+                        quota=0.08,
                         conditions={
                             "reel_weights": {
                                 self.basegame_type: {"BR0": 1},
                                 self.freegame_type: {"FR0": 1},
                             },
-                            "scatter_triggers": {3: 5, 4: 3, 5: 1},
+                            "scatter_triggers": {3: 1},
+                            "force_wincap": False,
+                            "force_freegame": True,
+                        },
+                    ),
+                    Distribution(
+                        criteria="superfs",
+                        quota=0.015,
+                        conditions={
+                            "reel_weights": {
+                                self.basegame_type: {"BR0": 1},
+                                self.freegame_type: {"FR0": 1},
+                            },
+                            "scatter_triggers": {4: 1},
+                            "force_wincap": False,
+                            "force_freegame": True,
+                        },
+                    ),
+                    Distribution(
+                        criteria="epicfs",
+                        quota=0.005,
+                        conditions={
+                            "reel_weights": {
+                                self.basegame_type: {"BR0": 1},
+                                self.freegame_type: {"FR0": 1},
+                            },
+                            "scatter_triggers": {5: 1},
                             "force_wincap": False,
                             "force_freegame": True,
                         },

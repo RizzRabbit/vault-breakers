@@ -1,6 +1,6 @@
 {
  "id": 29,
- "payoutMultiplier": 87420,
+ "payoutMultiplier": 118750,
  "events": [
   {
    "index": 0,
@@ -164,16 +164,58 @@
      "reel": 4,
      "row": 4
     }
-   ]
+   ],
+   "fsType": "regular"
   },
   {
    "index": 3,
+   "type": "updateGrid",
+   "gridMultipliers": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "index": 4,
    "type": "updateFreeSpin",
    "amount": 1,
    "total": 10
   },
   {
-   "index": 4,
+   "index": 5,
    "type": "reveal",
    "board": [
     [
@@ -264,7 +306,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "H2"
@@ -312,7 +355,7 @@
    ]
   },
   {
-   "index": 5,
+   "index": 6,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -353,18 +396,18 @@
    ]
   },
   {
-   "index": 6,
+   "index": 7,
    "type": "setTotalWin",
    "amount": 0
   },
   {
-   "index": 7,
+   "index": 8,
    "type": "updateFreeSpin",
    "amount": 2,
    "total": 10
   },
   {
-   "index": 8,
+   "index": 9,
    "type": "reveal",
    "board": [
     [
@@ -464,7 +507,7 @@
     ],
     [
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "H3"
@@ -503,7 +546,7 @@
    ]
   },
   {
-   "index": 9,
+   "index": 10,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -544,14 +587,14 @@
    ]
   },
   {
-   "index": 10,
+   "index": 11,
    "type": "winInfo",
-   "totalWin": 80,
+   "totalWin": 50,
    "wins": [
     {
      "symbol": "L3",
      "clusterSize": 5,
-     "win": 80,
+     "win": 50,
      "positions": [
       {
        "reel": 0,
@@ -577,7 +620,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 1,
-      "winWithoutMult": 81,
+      "winWithoutMult": 50,
       "overlay": {
        "reel": 1,
        "row": 5
@@ -587,12 +630,12 @@
    ]
   },
   {
-   "index": 11,
+   "index": 12,
    "type": "updateTumbleWin",
-   "amount": 80
+   "amount": 50
   },
   {
-   "index": 12,
+   "index": 13,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -633,7 +676,7 @@
    ]
   },
   {
-   "index": 13,
+   "index": 14,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -684,20 +727,20 @@
    ]
   },
   {
-   "index": 14,
+   "index": 15,
    "type": "vaultMeterUpdate",
    "meter": 1,
    "nextThreshold": 10
   },
   {
-   "index": 15,
+   "index": 16,
    "type": "winInfo",
-   "totalWin": 330,
+   "totalWin": 200,
    "wins": [
     {
      "symbol": "L2",
      "clusterSize": 6,
-     "win": 260,
+     "win": 160,
      "positions": [
       {
        "reel": 0,
@@ -727,7 +770,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 2,
-      "winWithoutMult": 130,
+      "winWithoutMult": 80,
       "overlay": {
        "reel": 1,
        "row": 3
@@ -737,7 +780,7 @@
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 70,
+     "win": 40,
      "positions": [
       {
        "reel": 2,
@@ -763,7 +806,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 1,
-      "winWithoutMult": 65,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 3,
        "row": 4
@@ -773,12 +816,12 @@
    ]
   },
   {
-   "index": 16,
+   "index": 17,
    "type": "updateTumbleWin",
-   "amount": 410
+   "amount": 250
   },
   {
-   "index": 17,
+   "index": 18,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -819,7 +862,7 @@
    ]
   },
   {
-   "index": 18,
+   "index": 19,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -916,20 +959,20 @@
    ]
   },
   {
-   "index": 19,
+   "index": 20,
    "type": "vaultMeterUpdate",
    "meter": 2,
    "nextThreshold": 10
   },
   {
-   "index": 20,
+   "index": 21,
    "type": "winInfo",
-   "totalWin": 570,
+   "totalWin": 600,
    "wins": [
     {
      "symbol": "L3",
-     "clusterSize": 6,
-     "win": 570,
+     "clusterSize": 7,
+     "win": 600,
      "positions": [
       {
        "reel": 1,
@@ -941,6 +984,10 @@
       },
       {
        "reel": 3,
+       "row": 3
+      },
+      {
+       "reel": 4,
        "row": 3
       },
       {
@@ -958,10 +1005,10 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 5,
-      "winWithoutMult": 113,
+      "clusterMult": 6,
+      "winWithoutMult": 100,
       "overlay": {
-       "reel": 2,
+       "reel": 3,
        "row": 3
       }
      }
@@ -969,12 +1016,12 @@
    ]
   },
   {
-   "index": 21,
+   "index": 22,
    "type": "updateTumbleWin",
-   "amount": 980
+   "amount": 850
   },
   {
-   "index": 22,
+   "index": 23,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1008,14 +1055,14 @@
     [
      0,
      0,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 23,
+   "index": 24,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -1043,7 +1090,11 @@
       "name": "L1"
      }
     ],
-    []
+    [
+     {
+      "name": "L3"
+     }
+    ]
    ],
    "explodingSymbols": [
     {
@@ -1069,34 +1120,38 @@
     {
      "reel": 3,
      "row": 1
+    },
+    {
+     "reel": 4,
+     "row": 3
     }
    ]
   },
   {
-   "index": 24,
+   "index": 25,
    "type": "vaultMeterUpdate",
    "meter": 3,
    "nextThreshold": 10
   },
   {
-   "index": 25,
+   "index": 26,
    "type": "setWin",
-   "amount": 980,
+   "amount": 850,
    "winLevel": 5
   },
   {
-   "index": 26,
+   "index": 27,
    "type": "setTotalWin",
-   "amount": 980
+   "amount": 850
   },
   {
-   "index": 27,
+   "index": 28,
    "type": "updateFreeSpin",
    "amount": 3,
    "total": 10
   },
   {
-   "index": 28,
+   "index": 29,
    "type": "reveal",
    "board": [
     [
@@ -1138,7 +1193,8 @@
       "name": "L4"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "H4"
@@ -1184,7 +1240,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "L3"
@@ -1201,7 +1258,7 @@
       "name": "L2"
      },
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "L1"
@@ -1210,7 +1267,7 @@
       "name": "L3"
      },
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "H2"
@@ -1234,7 +1291,7 @@
    ]
   },
   {
-   "index": 29,
+   "index": 30,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1268,25 +1325,25 @@
     [
      0,
      0,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 30,
+   "index": 31,
    "type": "setTotalWin",
-   "amount": 980
+   "amount": 850
   },
   {
-   "index": 31,
+   "index": 32,
    "type": "updateFreeSpin",
    "amount": 4,
    "total": 10
   },
   {
-   "index": 32,
+   "index": 33,
    "type": "reveal",
    "board": [
     [
@@ -1326,7 +1383,7 @@
       "name": "H4"
      },
      {
-      "name": "L2"
+      "name": "L3"
      },
      {
       "name": "L2"
@@ -1425,7 +1482,7 @@
    ]
   },
   {
-   "index": 33,
+   "index": 34,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1459,21 +1516,21 @@
     [
      0,
      0,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 34,
+   "index": 35,
    "type": "winInfo",
-   "totalWin": 200,
+   "totalWin": 120,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 200,
+     "win": 120,
      "positions": [
       {
        "reel": 2,
@@ -1499,7 +1556,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 3,
-      "winWithoutMult": 65,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 3,
        "row": 2
@@ -1509,12 +1566,12 @@
    ]
   },
   {
-   "index": 35,
+   "index": 36,
    "type": "updateTumbleWin",
-   "amount": 200
+   "amount": 120
   },
   {
-   "index": 36,
+   "index": 37,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1548,14 +1605,14 @@
     [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 37,
+   "index": 38,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -1606,30 +1663,30 @@
    ]
   },
   {
-   "index": 38,
+   "index": 39,
    "type": "vaultMeterUpdate",
    "meter": 4,
    "nextThreshold": 10
   },
   {
-   "index": 39,
-   "type": "setWin",
-   "amount": 200,
-   "winLevel": 4
-  },
-  {
    "index": 40,
-   "type": "setTotalWin",
-   "amount": 1180
+   "type": "setWin",
+   "amount": 120,
+   "winLevel": 3
   },
   {
    "index": 41,
+   "type": "setTotalWin",
+   "amount": 970
+  },
+  {
+   "index": 42,
    "type": "updateFreeSpin",
    "amount": 5,
    "total": 10
   },
   {
-   "index": 42,
+   "index": 43,
    "type": "reveal",
    "board": [
     [
@@ -1646,7 +1703,8 @@
       "name": "L1"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "L4"
@@ -1713,7 +1771,7 @@
       "name": "L2"
      },
      {
-      "name": "H4"
+      "name": "L1"
      },
      {
       "name": "L1"
@@ -1767,7 +1825,7 @@
    ]
   },
   {
-   "index": 43,
+   "index": 44,
    "type": "updateGrid",
    "gridMultipliers": [
     [
@@ -1801,21 +1859,21 @@
     [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 44,
+   "index": 45,
    "type": "winInfo",
-   "totalWin": 2600,
+   "totalWin": 33600,
    "wins": [
     {
      "symbol": "L1",
-     "clusterSize": 7,
-     "win": 2600,
+     "clusterSize": 13,
+     "win": 33600,
      "positions": [
       {
        "reel": 0,
@@ -1842,36 +1900,60 @@
        "row": 3
       },
       {
+       "reel": 0,
+       "row": 4
+      },
+      {
        "reel": 2,
        "row": 3
+      },
+      {
+       "reel": 3,
+       "row": 3
+      },
+      {
+       "reel": 3,
+       "row": 4
+      },
+      {
+       "reel": 3,
+       "row": 5
+      },
+      {
+       "reel": 2,
+       "row": 5
+      },
+      {
+       "reel": 1,
+       "row": 5
       }
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 10,
-      "winWithoutMult": 260,
+      "clusterMult": 14,
+      "winWithoutMult": 2400,
       "overlay": {
        "reel": 1,
-       "row": 2
+       "row": 3
       }
      }
     }
    ]
   },
   {
-   "index": 45,
+   "index": 46,
    "type": "updateTumbleWin",
-   "amount": 2600
+   "amount": 33600
   },
   {
-   "index": 46,
+   "index": 47,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -1879,36 +1961,39 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      2,
      1,
      8,
      4,
+     2
+    ],
+    [
+     1,
+     2,
+     4,
+     1,
      1
     ],
     [
-     1,
-     2,
-     2,
-     0,
-     0
-    ],
-    [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 47,
+   "index": 48,
    "type": "tumbleBoard",
    "newSymbols": [
     [
+     {
+      "name": "L4"
+     },
      {
       "name": "L1"
      },
@@ -1917,6 +2002,9 @@
      }
     ],
     [
+     {
+      "name": "L3"
+     },
      {
       "name": "L1"
      },
@@ -1933,9 +2021,23 @@
      },
      {
       "name": "L3"
+     },
+     {
+      "name": "L3"
      }
     ],
-    [],
+    [
+     {
+      "name": "H2"
+     },
+     {
+      "name": "W",
+      "wild": true
+     },
+     {
+      "name": "L2"
+     }
+    ],
     []
    ],
    "explodingSymbols": [
@@ -1946,6 +2048,10 @@
     {
      "reel": 0,
      "row": 3
+    },
+    {
+     "reel": 0,
+     "row": 4
     },
     {
      "reel": 1,
@@ -1960,40 +2066,60 @@
      "row": 3
     },
     {
+     "reel": 1,
+     "row": 5
+    },
+    {
      "reel": 2,
      "row": 1
     },
     {
      "reel": 2,
      "row": 3
+    },
+    {
+     "reel": 2,
+     "row": 5
+    },
+    {
+     "reel": 3,
+     "row": 3
+    },
+    {
+     "reel": 3,
+     "row": 4
+    },
+    {
+     "reel": 3,
+     "row": 5
     }
    ]
   },
   {
-   "index": 48,
+   "index": 49,
    "type": "vaultMeterUpdate",
    "meter": 5,
    "nextThreshold": 10
   },
   {
-   "index": 49,
-   "type": "setWin",
-   "amount": 2600,
-   "winLevel": 6
-  },
-  {
    "index": 50,
-   "type": "setTotalWin",
-   "amount": 3780
+   "type": "setWin",
+   "amount": 33600,
+   "winLevel": 9
   },
   {
    "index": 51,
+   "type": "setTotalWin",
+   "amount": 34570
+  },
+  {
+   "index": 52,
    "type": "updateFreeSpin",
    "amount": 6,
    "total": 10
   },
   {
-   "index": 52,
+   "index": 53,
    "type": "reveal",
    "board": [
     [
@@ -2044,7 +2170,7 @@
     ],
     [
      {
-      "name": "H4"
+      "name": "L1"
      },
      {
       "name": "L4"
@@ -2129,14 +2255,14 @@
    ]
   },
   {
-   "index": 53,
+   "index": 54,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2144,40 +2270,40 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      2,
      1,
      8,
      4,
+     2
+    ],
+    [
+     1,
+     2,
+     4,
+     1,
      1
     ],
     [
-     1,
-     2,
-     2,
-     0,
-     0
-    ],
-    [
      0,
      1,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 54,
+   "index": 55,
    "type": "winInfo",
-   "totalWin": 450,
+   "totalWin": 280,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 450,
+     "win": 280,
      "positions": [
       {
        "reel": 1,
@@ -2203,7 +2329,7 @@
      "meta": {
       "globalMult": 1,
       "clusterMult": 7,
-      "winWithoutMult": 65,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 3,
        "row": 1
@@ -2213,19 +2339,19 @@
    ]
   },
   {
-   "index": 55,
+   "index": 56,
    "type": "updateTumbleWin",
-   "amount": 450
+   "amount": 280
   },
   {
-   "index": 56,
+   "index": 57,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2233,33 +2359,33 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      4,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      2,
      4,
-     2,
-     0,
-     0
+     4,
+     1,
+     1
     ],
     [
      1,
      1,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 57,
+   "index": 58,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -2311,30 +2437,30 @@
    ]
   },
   {
-   "index": 58,
+   "index": 59,
    "type": "vaultMeterUpdate",
    "meter": 6,
    "nextThreshold": 10
   },
   {
-   "index": 59,
+   "index": 60,
    "type": "setWin",
-   "amount": 450,
+   "amount": 280,
    "winLevel": 4
   },
   {
-   "index": 60,
+   "index": 61,
    "type": "setTotalWin",
-   "amount": 4230
+   "amount": 34850
   },
   {
-   "index": 61,
+   "index": 62,
    "type": "updateFreeSpin",
    "amount": 7,
    "total": 10
   },
   {
-   "index": 62,
+   "index": 63,
    "type": "reveal",
    "board": [
     [
@@ -2354,7 +2480,7 @@
       "name": "H4"
      },
      {
-      "name": "L1"
+      "name": "L2"
      },
      {
       "name": "L4"
@@ -2380,7 +2506,8 @@
       "name": "L4"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      }
     ],
     [
@@ -2436,7 +2563,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      },
      {
       "name": "L2"
@@ -2473,14 +2601,14 @@
    ]
   },
   {
-   "index": 63,
+   "index": 64,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      2,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2488,40 +2616,40 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      4,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      2,
      4,
-     2,
-     0,
-     0
+     4,
+     1,
+     1
     ],
     [
      1,
      1,
-     1,
+     2,
      1,
      1
     ]
    ]
   },
   {
-   "index": 64,
+   "index": 65,
    "type": "winInfo",
-   "totalWin": 6820,
+   "totalWin": 4800,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 9,
-     "win": 6820,
+     "win": 4800,
      "positions": [
       {
        "reel": 0,
@@ -2562,8 +2690,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 21,
-      "winWithoutMult": 325,
+      "clusterMult": 24,
+      "winWithoutMult": 200,
       "overlay": {
        "reel": 3,
        "row": 2
@@ -2573,19 +2701,19 @@
    ]
   },
   {
-   "index": 65,
+   "index": 66,
    "type": "updateTumbleWin",
-   "amount": 6820
+   "amount": 4800
   },
   {
-   "index": 66,
+   "index": 67,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      4,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2593,33 +2721,33 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      8,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      4,
      8,
-     4,
-     0,
-     0
+     8,
+     1,
+     1
     ],
     [
      2,
      1,
-     2,
+     4,
      2,
      1
     ]
    ]
   },
   {
-   "index": 67,
+   "index": 68,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -2702,20 +2830,20 @@
    ]
   },
   {
-   "index": 68,
+   "index": 69,
    "type": "vaultMeterUpdate",
    "meter": 7,
    "nextThreshold": 10
   },
   {
-   "index": 69,
+   "index": 70,
    "type": "winInfo",
-   "totalWin": 2210,
+   "totalWin": 1760,
    "wins": [
     {
      "symbol": "L1",
      "clusterSize": 5,
-     "win": 2210,
+     "win": 1760,
      "positions": [
       {
        "reel": 3,
@@ -2740,8 +2868,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 17,
-      "winWithoutMult": 130,
+      "clusterMult": 22,
+      "winWithoutMult": 80,
       "overlay": {
        "reel": 3,
        "row": 2
@@ -2751,19 +2879,19 @@
    ]
   },
   {
-   "index": 70,
+   "index": 71,
    "type": "updateTumbleWin",
-   "amount": 9030
+   "amount": 6560
   },
   {
-   "index": 71,
+   "index": 72,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      4,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -2771,33 +2899,33 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      8,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      8,
      16,
-     8,
-     1,
-     0
+     16,
+     2,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      2,
      1
     ]
    ]
   },
   {
-   "index": 72,
+   "index": 73,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -2847,30 +2975,30 @@
    ]
   },
   {
-   "index": 73,
+   "index": 74,
    "type": "vaultMeterUpdate",
    "meter": 8,
    "nextThreshold": 10
   },
   {
-   "index": 74,
+   "index": 75,
    "type": "setWin",
-   "amount": 9030,
+   "amount": 6560,
    "winLevel": 8
   },
   {
-   "index": 75,
+   "index": 76,
    "type": "setTotalWin",
-   "amount": 13260
+   "amount": 41410
   },
   {
-   "index": 76,
+   "index": 77,
    "type": "updateFreeSpin",
    "amount": 8,
    "total": 10
   },
   {
-   "index": 77,
+   "index": 78,
    "type": "reveal",
    "board": [
     [
@@ -3009,14 +3137,14 @@
    ]
   },
   {
-   "index": 78,
+   "index": 79,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      4,
      0,
      1,
-     0,
+     1,
      1
     ],
     [
@@ -3024,40 +3152,40 @@
      2,
      4,
      2,
-     1
+     2
     ],
     [
      8,
      1,
      8,
      4,
-     1
+     2
     ],
     [
      8,
      16,
-     8,
-     1,
-     0
+     16,
+     2,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      2,
      1
     ]
    ]
   },
   {
-   "index": 79,
+   "index": 80,
    "type": "winInfo",
-   "totalWin": 6820,
+   "totalWin": 4600,
    "wins": [
     {
      "symbol": "L2",
      "clusterSize": 8,
-     "win": 6820,
+     "win": 4600,
      "positions": [
       {
        "reel": 0,
@@ -3094,8 +3222,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 21,
-      "winWithoutMult": 325,
+      "clusterMult": 23,
+      "winWithoutMult": 200,
       "overlay": {
        "reel": 1,
        "row": 4
@@ -3105,19 +3233,19 @@
    ]
   },
   {
-   "index": 80,
+   "index": 81,
    "type": "updateTumbleWin",
-   "amount": 6820
+   "amount": 4600
   },
   {
-   "index": 81,
+   "index": 82,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      4,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
@@ -3125,33 +3253,33 @@
      4,
      8,
      2,
+     4
+    ],
+    [
+     8,
+     1,
+     16,
+     8,
      2
     ],
     [
      8,
-     1,
      16,
-     8,
+     16,
+     2,
      1
     ],
     [
-     8,
-     16,
-     8,
-     1,
-     0
-    ],
-    [
      2,
      2,
-     2,
+     4,
      2,
      1
     ]
    ]
   },
   {
-   "index": 82,
+   "index": 83,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -3173,7 +3301,8 @@
       "name": "L1"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      }
     ],
     [
@@ -3224,20 +3353,20 @@
    ]
   },
   {
-   "index": 83,
+   "index": 84,
    "type": "vaultMeterUpdate",
    "meter": 9,
    "nextThreshold": 10
   },
   {
-   "index": 84,
+   "index": 85,
    "type": "winInfo",
-   "totalWin": 910,
+   "totalWin": 720,
    "wins": [
     {
      "symbol": "L4",
      "clusterSize": 5,
-     "win": 910,
+     "win": 720,
      "positions": [
       {
        "reel": 1,
@@ -3262,8 +3391,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 14,
-      "winWithoutMult": 65,
+      "clusterMult": 18,
+      "winWithoutMult": 40,
       "overlay": {
        "reel": 2,
        "row": 4
@@ -3273,19 +3402,19 @@
    ]
   },
   {
-   "index": 85,
+   "index": 86,
    "type": "updateTumbleWin",
-   "amount": 7730
+   "amount": 5320
   },
   {
-   "index": 86,
+   "index": 87,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      4,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
@@ -3293,33 +3422,33 @@
      4,
      8,
      2,
-     4
+     8
     ],
     [
      8,
      1,
      16,
      16,
-     2
+     4
     ],
     [
      8,
      16,
-     8,
-     2,
-     0
+     16,
+     4,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 87,
+   "index": 88,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
@@ -3373,13 +3502,13 @@
    ]
   },
   {
-   "index": 88,
+   "index": 89,
    "type": "vaultMeterUpdate",
    "meter": 10,
    "nextThreshold": 20
   },
   {
-   "index": 89,
+   "index": 90,
    "type": "vaultMeterUpgrade",
    "meter": 10,
    "position": {
@@ -3393,7 +3522,7 @@
      8,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
@@ -3401,40 +3530,40 @@
      4,
      8,
      2,
-     4
+     8
     ],
     [
      8,
      1,
      16,
      16,
-     2
+     4
     ],
     [
      8,
      16,
-     8,
-     2,
-     0
+     16,
+     4,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 90,
+   "index": 91,
    "type": "winInfo",
-   "totalWin": 4030,
+   "totalWin": 4900,
    "wins": [
     {
      "symbol": "L1",
-     "clusterSize": 5,
-     "win": 4030,
+     "clusterSize": 6,
+     "win": 4900,
      "positions": [
       {
        "reel": 1,
@@ -3455,12 +3584,16 @@
       {
        "reel": 3,
        "row": 4
+      },
+      {
+       "reel": 1,
+       "row": 3
       }
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 31,
-      "winWithoutMult": 130,
+      "clusterMult": 49,
+      "winWithoutMult": 100,
       "overlay": {
        "reel": 2,
        "row": 3
@@ -3470,57 +3603,60 @@
    ]
   },
   {
-   "index": 91,
+   "index": 92,
    "type": "updateTumbleWin",
-   "amount": 11760
+   "amount": 10220
   },
   {
-   "index": 92,
+   "index": 93,
    "type": "updateGrid",
    "gridMultipliers": [
     [
      8,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
      8,
      8,
+     16,
+     2,
+     8
+    ],
+    [
      8,
      2,
+     16,
+     16,
      4
     ],
     [
      8,
-     2,
-     16,
-     16,
-     2
-    ],
-    [
-     8,
      32,
-     16,
-     4,
-     0
+     32,
+     8,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 93,
+   "index": 94,
    "type": "tumbleBoard",
    "newSymbols": [
     [],
     [
+     {
+      "name": "L1"
+     },
      {
       "name": "L4"
      }
@@ -3549,6 +3685,10 @@
      "row": 2
     },
     {
+     "reel": 1,
+     "row": 3
+    },
+    {
      "reel": 2,
      "row": 2
     },
@@ -3567,30 +3707,177 @@
    ]
   },
   {
-   "index": 94,
+   "index": 95,
    "type": "vaultMeterUpdate",
    "meter": 11,
    "nextThreshold": 20
   },
   {
-   "index": 95,
-   "type": "setWin",
-   "amount": 11760,
-   "winLevel": 9
-  },
-  {
    "index": 96,
-   "type": "setTotalWin",
-   "amount": 25020
+   "type": "winInfo",
+   "totalWin": 2320,
+   "wins": [
+    {
+     "symbol": "L4",
+     "clusterSize": 5,
+     "win": 2320,
+     "positions": [
+      {
+       "reel": 0,
+       "row": 1
+      },
+      {
+       "reel": 1,
+       "row": 1
+      },
+      {
+       "reel": 1,
+       "row": 2
+      },
+      {
+       "reel": 2,
+       "row": 2
+      },
+      {
+       "reel": 3,
+       "row": 2
+      }
+     ],
+     "meta": {
+      "globalMult": 1,
+      "clusterMult": 58,
+      "winWithoutMult": 40,
+      "overlay": {
+       "reel": 1,
+       "row": 2
+      }
+     }
+    }
+   ]
   },
   {
    "index": 97,
+   "type": "updateTumbleWin",
+   "amount": 12540
+  },
+  {
+   "index": 98,
+   "type": "updateGrid",
+   "gridMultipliers": [
+    [
+     16,
+     0,
+     2,
+     2,
+     2
+    ],
+    [
+     16,
+     16,
+     16,
+     2,
+     8
+    ],
+    [
+     8,
+     4,
+     16,
+     16,
+     4
+    ],
+    [
+     8,
+     64,
+     32,
+     8,
+     1
+    ],
+    [
+     2,
+     2,
+     4,
+     4,
+     1
+    ]
+   ]
+  },
+  {
+   "index": 99,
+   "type": "tumbleBoard",
+   "newSymbols": [
+    [
+     {
+      "name": "L4"
+     }
+    ],
+    [
+     {
+      "name": "L2"
+     },
+     {
+      "name": "L1"
+     }
+    ],
+    [
+     {
+      "name": "L1"
+     }
+    ],
+    [
+     {
+      "name": "L3"
+     }
+    ],
+    []
+   ],
+   "explodingSymbols": [
+    {
+     "reel": 0,
+     "row": 1
+    },
+    {
+     "reel": 1,
+     "row": 1
+    },
+    {
+     "reel": 1,
+     "row": 2
+    },
+    {
+     "reel": 2,
+     "row": 2
+    },
+    {
+     "reel": 3,
+     "row": 2
+    }
+   ]
+  },
+  {
+   "index": 100,
+   "type": "vaultMeterUpdate",
+   "meter": 12,
+   "nextThreshold": 20
+  },
+  {
+   "index": 101,
+   "type": "setWin",
+   "amount": 12540,
+   "winLevel": 9
+  },
+  {
+   "index": 102,
+   "type": "setTotalWin",
+   "amount": 53950
+  },
+  {
+   "index": 103,
    "type": "updateFreeSpin",
    "amount": 9,
    "total": 10
   },
   {
-   "index": 98,
+   "index": 104,
    "type": "reveal",
    "board": [
     [
@@ -3614,7 +3901,8 @@
       "name": "L2"
      },
      {
-      "name": "L4"
+      "name": "W",
+      "wild": true
      }
     ],
     [
@@ -3700,7 +3988,7 @@
       "name": "H4"
      },
      {
-      "name": "L3"
+      "name": "L4"
      },
      {
       "name": "L2"
@@ -3730,55 +4018,55 @@
    ]
   },
   {
-   "index": 99,
+   "index": 105,
    "type": "updateGrid",
    "gridMultipliers": [
     [
-     8,
+     16,
      0,
      2,
-     1,
+     2,
      2
     ],
     [
-     8,
-     8,
-     8,
+     16,
+     16,
+     16,
      2,
+     8
+    ],
+    [
+     8,
+     4,
+     16,
+     16,
      4
     ],
     [
      8,
-     2,
-     16,
-     16,
-     2
-    ],
-    [
-     8,
+     64,
      32,
-     16,
-     4,
-     0
+     8,
+     1
     ],
     [
      2,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 100,
+   "index": 106,
    "type": "winInfo",
-   "totalWin": 62400,
+   "totalWin": 64800,
    "wins": [
     {
      "symbol": "L1",
      "clusterSize": 10,
-     "win": 62400,
+     "win": 64800,
      "positions": [
       {
        "reel": 1,
@@ -3823,8 +4111,8 @@
      ],
      "meta": {
       "globalMult": 1,
-      "clusterMult": 96,
-      "winWithoutMult": 650,
+      "clusterMult": 162,
+      "winWithoutMult": 400,
       "overlay": {
        "reel": 2,
        "row": 3
@@ -3834,53 +4122,53 @@
    ]
   },
   {
-   "index": 101,
+   "index": 107,
    "type": "updateTumbleWin",
-   "amount": 62400
+   "amount": 64800
   },
   {
-   "index": 102,
+   "index": 108,
    "type": "updateGrid",
    "gridMultipliers": [
     [
-     8,
+     16,
      0,
      4,
-     1,
+     2,
      2
     ],
     [
+     16,
+     32,
+     32,
+     4,
+     8
+    ],
+    [
+     8,
      8,
      16,
-     16,
-     4,
+     32,
      4
     ],
     [
-     8,
-     4,
      16,
-     32,
-     2
-    ],
-    [
-     16,
+     128,
      64,
-     32,
-     4,
-     0
+     8,
+     1
     ],
     [
      4,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 103,
+   "index": 109,
    "type": "tumbleBoard",
    "newSymbols": [
     [
@@ -3969,30 +4257,30 @@
    ]
   },
   {
-   "index": 104,
+   "index": 110,
    "type": "vaultMeterUpdate",
-   "meter": 12,
+   "meter": 13,
    "nextThreshold": 20
   },
   {
-   "index": 105,
+   "index": 111,
    "type": "setWin",
-   "amount": 62400,
+   "amount": 64800,
    "winLevel": 9
   },
   {
-   "index": 106,
+   "index": 112,
    "type": "setTotalWin",
-   "amount": 87420
+   "amount": 118750
   },
   {
-   "index": 107,
+   "index": 113,
    "type": "updateFreeSpin",
    "amount": 10,
    "total": 10
   },
   {
-   "index": 108,
+   "index": 114,
    "type": "reveal",
    "board": [
     [
@@ -4132,64 +4420,64 @@
    ]
   },
   {
-   "index": 109,
+   "index": 115,
    "type": "updateGrid",
    "gridMultipliers": [
     [
-     8,
+     16,
      0,
      4,
-     1,
+     2,
      2
     ],
     [
+     16,
+     32,
+     32,
+     4,
+     8
+    ],
+    [
+     8,
      8,
      16,
-     16,
-     4,
+     32,
      4
     ],
     [
-     8,
-     4,
      16,
-     32,
-     2
-    ],
-    [
-     16,
+     128,
      64,
-     32,
-     4,
-     0
+     8,
+     1
     ],
     [
      4,
      2,
-     2,
+     4,
      4,
      1
     ]
    ]
   },
   {
-   "index": 110,
+   "index": 116,
    "type": "setTotalWin",
-   "amount": 87420
+   "amount": 118750
   },
   {
-   "index": 111,
+   "index": 117,
    "type": "freeSpinEnd",
-   "amount": 87420,
+   "amount": 118750,
    "winLevel": 8
   },
   {
-   "index": 112,
+   "index": 118,
    "type": "finalWin",
-   "amount": 87420
+   "amount": 118750
   }
  ],
  "criteria": "freegame",
  "baseGameWins": 0.0,
- "freeGameWins": 874.2
+ "freeGameWins": 1187.5
 }

@@ -96,7 +96,7 @@
   ]
  },
  "base_pay_scale": 2.0,
- "freespin_pay_scale": 3.25,
+ "freespin_pay_scale": 2.0,
  "base_symbol_weights": {
   "H1": 3,
   "H2": 4,
@@ -118,14 +118,24 @@
   "L2": 15,
   "L3": 16,
   "L4": 17,
-  "W": 5.3,
+  "W": 6.5,
   "S": 0.8
  },
  "freespins": {
   "3": 10,
-  "4": 12,
-  "5+": 15,
-  "retrigger_3_scatters": 5
+  "4": 10,
+  "5+": 10,
+  "retrigger_3_scatters": 5,
+  "tiers": {
+   "3": "regular (unmarked)",
+   "4": "super (all spots x2)",
+   "5+": "epic (all spots x4, FS round >= 200x base bet via FS-only redraw)"
+  },
+  "buys": {
+   "bonus": "regular",
+   "super": "super"
+  },
+  "note": "locked 2026-10-21; epic not buyable"
  },
  "sim_results": {
   "base": "~91.5% RTP at base scale 1.9 over 1.2M spins (2.0 expected ~94-95%), hit 1 in 3.2, FS 1 in 213",
@@ -137,24 +147,25 @@
   "base": {
    "cost": 1,
    "base_pay_scale": 2.0,
-   "freespin_pay_scale": 3.25,
+   "freespin_pay_scale": 2.0,
    "scatter_weight": 1.05
   },
   "ante": {
    "cost": 1.25,
    "base_pay_scale": 2.0,
-   "freespin_pay_scale": 3.25,
+   "freespin_pay_scale": 2.0,
    "scatter_weight": 1.26,
    "note": "scatter weight x1.2 vs base; FS ~1 in 140. Doubling scatter weight gives ~130% RTP, do not use"
   },
   "bonus_buy": {
    "cost": 100,
-   "freespin_pay_scale": 3.25,
+   "freespin_pay_scale": 2.0,
    "spins": 10
   },
   "super_buy": {
    "cost": 400,
-   "freespin_pay_scale": 2.95,
+   "freespin_pay_scale": 2.0,
+   "note_scale": "user decision 2026-10-21: free spins pay the base paytable (scale 2.0) in every mode; FS value comes from FR0 reels (W 6.5) and spot multipliers",
    "spins": 10,
    "start_all_spots": 2
   }
