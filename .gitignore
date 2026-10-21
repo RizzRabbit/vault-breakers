@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+env/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Math SDK outputs (keep only samples)
+math/games/*/books/
+math/games/*/library/
+math/games/*/spreadsheets/
+math/games/*/lookup_tables/
+math/games/*/configs/
+
+# Large simulation files
+*.zst
+*.zstd
+
+# Temp files
+*.log
+*.tmp
+.cache/

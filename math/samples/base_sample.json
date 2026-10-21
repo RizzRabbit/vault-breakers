@@ -1,0 +1,259 @@
+{
+  "betMode": "base",
+  "cost": 100,
+  "totalWin": 50,
+  "events": [
+    {
+      "index": 0,
+      "type": "reveal",
+      "board": [
+        [
+          {
+            "name": "L3"
+          },
+          {
+            "name": "W",
+            "wild": true
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "H3"
+          },
+          {
+            "name": "L4"
+          },
+          {
+            "name": "H4"
+          },
+          {
+            "name": "L1"
+          }
+        ],
+        [
+          {
+            "name": "L4"
+          },
+          {
+            "name": "L2"
+          },
+          {
+            "name": "L2"
+          },
+          {
+            "name": "H2"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L2"
+          },
+          {
+            "name": "L4"
+          }
+        ],
+        [
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "H2"
+          },
+          {
+            "name": "L4"
+          },
+          {
+            "name": "L2"
+          },
+          {
+            "name": "L4"
+          }
+        ],
+        [
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L4"
+          },
+          {
+            "name": "L4"
+          },
+          {
+            "name": "L4"
+          },
+          {
+            "name": "H3"
+          }
+        ],
+        [
+          {
+            "name": "L1"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L2"
+          },
+          {
+            "name": "L1"
+          },
+          {
+            "name": "L3"
+          },
+          {
+            "name": "L2"
+          },
+          {
+            "name": "L2"
+          }
+        ]
+      ],
+      "paddingPositions": [
+        108,
+        102,
+        97,
+        8,
+        32
+      ],
+      "gameType": "basegame",
+      "anticipation": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "index": 1,
+      "type": "winInfo",
+      "totalWin": 50,
+      "wins": [
+        {
+          "symbol": "L3",
+          "clusterSize": 5,
+          "win": 50,
+          "positions": [
+            {
+              "reel": 2,
+              "row": 1
+            },
+            {
+              "reel": 3,
+              "row": 1
+            },
+            {
+              "reel": 4,
+              "row": 1
+            },
+            {
+              "reel": 3,
+              "row": 2
+            },
+            {
+              "reel": 2,
+              "row": 2
+            }
+          ],
+          "meta": {
+            "globalMult": 1,
+            "clusterMult": 1,
+            "winWithoutMult": 50,
+            "overlay": {
+              "reel": 3,
+              "row": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "type": "updateTumbleWin",
+      "amount": 50
+    },
+    {
+      "index": 3,
+      "type": "tumbleBoard",
+      "newSymbols": [
+        [],
+        [],
+        [
+          {
+            "name": "H2"
+          },
+          {
+            "name": "L4"
+          }
+        ],
+        [
+          {
+            "name": "L1"
+          },
+          {
+            "name": "L3"
+          }
+        ],
+        [
+          {
+            "name": "L1"
+          }
+        ]
+      ],
+      "explodingSymbols": [
+        {
+          "reel": 2,
+          "row": 1
+        },
+        {
+          "reel": 2,
+          "row": 2
+        },
+        {
+          "reel": 3,
+          "row": 1
+        },
+        {
+          "reel": 3,
+          "row": 2
+        },
+        {
+          "reel": 4,
+          "row": 1
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "type": "setWin",
+      "amount": 50,
+      "winLevel": 2
+    },
+    {
+      "index": 5,
+      "type": "setTotalWin",
+      "amount": 50
+    },
+    {
+      "index": 6,
+      "type": "finalWin",
+      "amount": 50
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: vault-breakers-math
+Version: 1.0.0
+Summary: Vault Breakers slot game math backend
+Author: StakeEngine
+Requires-Python: >=3.12
