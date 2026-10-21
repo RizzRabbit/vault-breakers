@@ -97,7 +97,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		}
 	},
 	enterBonus: async () => {},
-	// PROVISIONAL Vault Meter (free spins only)
+	// Vault Meter (free spins only; math/EVENTS.md 15-16)
 	vaultMeterUpdate: async (bookEvent: BookEventOfType<'vaultMeterUpdate'>) => {
 		eventEmitter.broadcast({ type: 'vaultMeterUpdate', meter: bookEvent.meter, nextThreshold: bookEvent.nextThreshold });
 	},
@@ -192,7 +192,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		eventEmitter.broadcast({ type: 'freeSpinCounterShow' });
 		eventEmitter.broadcast({
 			type: 'freeSpinCounterUpdate',
-			// math/samples use amount/total; EVENTS.md documents currentFs/totalFs
+			// published books use amount/total; EVENTS.md documents currentFs/totalFs
 			current: bookEvent.amount ?? bookEvent.currentFs,
 			total: bookEvent.total ?? bookEvent.totalFs,
 		});

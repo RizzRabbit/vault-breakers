@@ -1,6 +1,6 @@
 const DEFAULT_BET_MODE_META = {
-	BASE: {
-		mode: 'BASE',
+	base: {
+		mode: 'base',
 		costMultiplier: 1.0,
 		type: 'default',
 		parent: '',

@@ -24,14 +24,12 @@
 	import ClusterWinAmounts from './ClusterWinAmounts.svelte';
 	import TumbleBoard from './TumbleBoard.svelte';
 	import TumbleWinAmount from './TumbleWinAmount.svelte';
-	import GlobalMultiplier from './GlobalMultiplier.svelte';
 	import Win from './Win.svelte';
 	import FreeSpinIntro from './FreeSpinIntro.svelte';
 	import FreeSpinCounter from './FreeSpinCounter.svelte';
 	import FreeSpinOutro from './FreeSpinOutro.svelte';
 	import Transition from './Transition.svelte';
 	import VaultMeter from './VaultMeter.svelte';
-	import I18nTest from './I18nTest.svelte';
 
 	const context = getContext();
 
@@ -75,7 +73,6 @@
 			<Board />
 			<Anticipations />
 			<TumbleWinAmount />
-			<GlobalMultiplier />
 		</MainContainer>
 
 		<MainContainer>
@@ -110,7 +107,6 @@
 		<FreeSpinOutro />
 		<Transition />
 
-		<I18nTest />
 	{/if}
 </App>
 

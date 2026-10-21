@@ -9,7 +9,7 @@
 	import { registerMockRgs } from '../mock/mockRgs';
 	import { applyMeta } from '../game/meta';
 
-	// Offline mode: ?mock=true or no rgs_url -> serve math/samples books locally.
+	// Offline mode: ?mock=true or no rgs_url -> serve real published math books (src/mock/books) locally.
 	registerMockRgs();
 	applyMeta();
 

@@ -22,19 +22,19 @@ const fs = config.freeSpins;
 const maxWin = config.maxWin.toLocaleString('en-US');
 
 export const BET_MODE_META: BetModeMeta = {
-	BASE: {
-		mode: 'BASE', costMultiplier: config.betModes.base.cost, type: 'default', parent: '', children: '',
+	base: {
+		mode: 'base', costMultiplier: config.betModes.base.cost, type: 'default', parent: '', children: '',
 		maxWin: config.maxWin,
 		assets: { icon: bonusIcon, volatility: bonusIcon, button: bonusIcon, dialogImage: bonusIcon, dialogVolatility: bonusIcon },
 		text: { title: 'BASE', dialog: '', button: '', tickerIdle: 'PLACE YOUR BET', tickerSpin: 'GOOD LUCK' },
 	},
-	ANTE: {
-		mode: 'ANTE', costMultiplier: config.betModes.ante.cost, type: 'activate', parent: '', children: '',
+	ante: {
+		mode: 'ante', costMultiplier: config.betModes.ante.cost, type: 'activate', parent: '', children: '',
 		maxWin: config.maxWin,
 		assets: { icon: anteIcon, volatility: anteIcon, button: anteIcon, dialogImage: anteIcon, dialogVolatility: anteIcon },
 		text: {
 			title: 'ANTE BET',
-			dialog: `Costs ${config.betModes.ante.cost}x the bet per spin and raises the chance of Vault Scatters in the base game (~${config.betModes.ante.scatterChanceMultiplier}x). Stays on until turned off.`,
+			dialog: `Costs ${config.betModes.ante.cost}x the bet per spin and adds more Vault Scatters to the base game, so Free Spins trigger more often (about 1 in 140 spins instead of 1 in 200). Stays on until turned off.`,
 			description: 'More Vault Scatters in the base game.',
 			button: 'ACTIVATE',
 			betAmountLabel: 'ANTE',
@@ -42,8 +42,8 @@ export const BET_MODE_META: BetModeMeta = {
 			tickerSpin: 'GOOD LUCK',
 		},
 	},
-	BONUS: {
-		mode: 'BONUS', costMultiplier: config.betModes.bonus.cost, type: 'buy', parent: '', children: '',
+	bonus: {
+		mode: 'bonus', costMultiplier: config.betModes.bonus.cost, type: 'buy', parent: '', children: '',
 		maxWin: config.maxWin,
 		assets: { icon: bonusIcon, volatility: bonusIcon, button: bonusIcon, dialogImage: bonusIcon, dialogVolatility: bonusIcon },
 		text: {
@@ -55,8 +55,8 @@ export const BET_MODE_META: BetModeMeta = {
 			tickerSpin: 'VAULT BONUS ACTIVATED',
 		},
 	},
-	SUPER: {
-		mode: 'SUPER', costMultiplier: config.betModes.super.cost, type: 'buy', parent: '', children: '',
+	super: {
+		mode: 'super', costMultiplier: config.betModes.super.cost, type: 'buy', parent: '', children: '',
 		maxWin: config.maxWin,
 		assets: { icon: superIcon, volatility: superIcon, button: superIcon, dialogImage: superIcon, dialogVolatility: superIcon },
 		text: {

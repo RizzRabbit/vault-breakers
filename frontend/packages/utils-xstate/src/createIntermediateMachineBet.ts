@@ -8,7 +8,7 @@ import type { PrimaryMachines } from './types';
 const checkSpaceHold = fromPromise(async () => {
 	if (stateBet.isSpaceHold) {
 		if (stateBetDerived.activeBetMode()?.type === 'buy') {
-			stateBet.activeBetModeKey = 'BASE';
+			stateBet.activeBetModeKey = 'base';
 			return;
 		}
 

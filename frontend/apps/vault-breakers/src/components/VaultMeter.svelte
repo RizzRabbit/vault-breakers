@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	// PROVISIONAL (vaultMeterUpdate / vaultMeterUpgrade): see README "Provisional events".
+	// vaultMeterUpdate / vaultMeterUpgrade per math/EVENTS.md (math 6ec4aaf).
 	export type EmitterEventVaultMeter =
 		| { type: 'vaultMeterShow' }
 		| { type: 'vaultMeterHide' }
@@ -71,7 +71,7 @@
 			x={panelSizes.width / 2}
 			y={panelSizes.height * 0.6}
 			anchor={{ x: 0.5, y: 0.5 }}
-			text={flash || (next === null ? `${meter} MAX` : `${meter} / ${next}`)}
+			text={flash || (next === null ? `${meter} MAX` : `${meter} OF ${next}`)}
 			style={{ fontFamily: 'gold', fontSize }}
 		/>
 	</FadeContainer>

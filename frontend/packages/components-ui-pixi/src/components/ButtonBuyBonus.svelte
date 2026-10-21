@@ -15,7 +15,7 @@
 	const active = $derived(stateBetDerived.activeBetMode()?.type === 'activate');
 
 	const openModal = () => (stateModal.modal = { name: 'buyBonus' });
-	const disableActiveBetMode = () => (stateBet.activeBetModeKey = 'BASE');
+	const disableActiveBetMode = () => (stateBet.activeBetModeKey = 'base');
 	const onpress = () => {
 		eventEmitter.broadcast({ type: 'soundPressGeneral' });
 

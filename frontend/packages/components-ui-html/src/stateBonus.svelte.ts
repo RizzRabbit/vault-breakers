@@ -1,7 +1,7 @@
 import { stateMeta } from 'state-shared';
 
 export const stateBonus = $state({
-	selectedBetModeKey: 'BASE',
+	selectedBetModeKey: 'base',
 });
 
 export const stateBonusDerived = {

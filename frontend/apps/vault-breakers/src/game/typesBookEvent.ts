@@ -115,7 +115,7 @@ type BookEventSetTumbleWinAlias = { index: number; type: 'setTumbleWin'; amount:
 type BookEventEnterBonus = { index: number; type: 'enterBonus'; cost: number };
 type BookEventWincap = { index: number; type: 'wincap'; amount: number };
 
-// PROVISIONAL Vault Meter events (math/EVENTS.md #15, #16)
+// Vault Meter events (math 6ec4aaf, (math/EVENTS.md #15, #16)
 type BookEventVaultMeterUpdate = { index: number; type: 'vaultMeterUpdate'; meter: number; nextThreshold: number | null };
 type BookEventVaultMeterUpgrade = {
 	index: number;

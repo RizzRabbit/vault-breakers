@@ -26,7 +26,7 @@
 	let stopDisabled = $state(false);
 
 	const bet = () => {
-		if (stateBetDerived.activeBetMode()?.type === 'buy') stateBet.activeBetModeKey = 'BASE';
+		if (stateBetDerived.activeBetMode()?.type === 'buy') stateBet.activeBetModeKey = 'base';
 		context.eventEmitter.broadcast({ type: 'bet' });
 	};
 

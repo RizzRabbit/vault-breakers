@@ -26,7 +26,7 @@
 		// ui
 		soundBetMode: async ({ betModeKey }) => {
 			// Vault Breakers has no always-on feature mode; buys switch music via book events.
-			if (betModeKey === 'ANTE') sound.players.once.play({ name: 'sfx_btn_general' });
+			if (betModeKey === 'ante') sound.players.once.play({ name: 'sfx_btn_general' });
 			sound.players.music.play({ name: 'bgm_main' });
 		},
 		soundPressGeneral: () => sound.players.once.play({ name: 'sfx_btn_general' }),
@@ -43,7 +43,7 @@
 	});
 
 	onMount(() => {
-		if (['BONUS', 'SUPER'].includes(String(stateBet.activeBetModeKey).toUpperCase())) {
+		if (['bonus', 'super'].includes(String(stateBet.activeBetModeKey).toLowerCase())) {
 			// resuming an unfinished bonus/super buy round
 			sound.players.music.play({ name: 'bgm_freespin' });
 		} else {

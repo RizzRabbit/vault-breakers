@@ -25,7 +25,7 @@ export default {
 	},
 	"betModes": {
 		"base": {
-			"key": "BASE",
+			"key": "base",
 			"cost": 1.0,
 			"feature": true,
 			"buyBonus": false,
@@ -33,7 +33,7 @@ export default {
 			"max_win": 10000.0
 		},
 		"ante": {
-			"key": "ANTE",
+			"key": "ante",
 			"cost": 1.25,
 			"feature": true,
 			"buyBonus": false,
@@ -42,7 +42,7 @@ export default {
 			"scatterChanceMultiplier": 1.2
 		},
 		"bonus": {
-			"key": "BONUS",
+			"key": "bonus",
 			"cost": 100,
 			"feature": true,
 			"buyBonus": true,
@@ -50,7 +50,7 @@ export default {
 			"max_win": 10000.0
 		},
 		"super": {
-			"key": "SUPER",
+			"key": "super",
 			"cost": 400,
 			"feature": true,
 			"buyBonus": true,

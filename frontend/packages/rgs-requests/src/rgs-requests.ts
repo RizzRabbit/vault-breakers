@@ -46,6 +46,7 @@ export const requestEndEvent = async (options: {
 	eventIndex: number;
 	rgsUrl: string;
 }) => {
+	if (mock()) return mock().endEvent(options);
 	const data = await rgsFetcher.post({
 		rgsUrl: options.rgsUrl,
 		url: '/bet/event',

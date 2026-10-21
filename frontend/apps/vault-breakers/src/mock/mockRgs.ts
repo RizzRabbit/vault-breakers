@@ -1,37 +1,38 @@
 // Offline mock RGS. Active when the URL has ?mock=true or no rgs_url is given.
-// Serves the math team's sample books (math/samples/*.json) in the same response
-// shapes the Stake RGS returns for /wallet/authenticate, /wallet/play, /wallet/end-round.
-import baseSample from './base_sample.json';
-import bonusSample from './bonus_sample.json';
-// SYNTHETIC fixture for the provisional super-buy / Vault Meter UI (see README)
-import superMock from './super_mock.json';
-import anteMock from './ante_mock.json';
-import wincapMock from './wincap_mock.json';
+// Serves REAL books sampled from the published math library
+// (math/games/vault_breakers/library/publish_files/books_<mode>.jsonl.zst, math commit 6ec4aaf).
+// Extracted unmodified; payoutMultiplier is in bet x 100 units.
 import config from '../game/config';
 import { stateBet, stateModal } from 'state-shared';
+
+type Book = { betMode: string; cost: number; id: number; payoutMultiplier: number; criteria: string; events: unknown[] };
+const files = import.meta.glob('./books/*.json', { eager: true, import: 'default' }) as Record<string, Book>;
+const byName = (n: string) => files[`./books/${n}.json`];
+const ORDER: Record<string, string[]> = {
+	base: ['base_win', 'base_zero', 'base_fs'],
+	ante: ['ante_win', 'ante_zero', 'ante_fs'],
+	bonus: ['bonus_fs', 'bonus_fs2'],
+	super: ['super_fs', 'super_fs2'],
+};
+const books: Record<string, Book[]> = Object.fromEntries(
+	Object.entries(ORDER).map(([m, names]) => [m, names.map(byName).filter(Boolean)]),
+);
 
 const M = 1_000_000; // API_AMOUNT_MULTIPLIER
 let balance = 1000 * M;
 let betID = 1;
 let pendingPayout = 0;
 
-type Book = { betMode: string; cost: number; totalWin: number; events: unknown[] };
-const books: Record<string, Book[]> = {
-	base: [baseSample as Book],
-	bonus: [bonusSample as Book],
-	// no ante sample exists yet; ante base-game books share the base event schema
-	ante: [anteMock as Book],
-	super: [superMock as Book],
-};
-
-// ?book=wincap forces the synthetic 10,000x book (any buy mode); otherwise books are
+// ?book=wincap forces the real 10,000x book for the current mode; otherwise books are
+// ?book=unmarked forces the SYNTHETIC unmarked-spot upgrade fixture (any mode). Otherwise books are
 // served round-robin so a test run deterministically walks every sample.
 const forced = () =>
 	typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('book') : null;
 const counters: Record<string, number> = {};
 const pick = (mode: string) => {
-	if (forced() === 'wincap') return wincapMock as Book;
 	const key = mode.toLowerCase();
+	if (forced() === 'unmarked') return byName('synthetic_unmarked_upgrade');
+	if (forced() === 'wincap') return byName(`${books[key] ? key : 'base'}_wincap`);
 	const l = books[key] ?? books.base;
 	counters[key] = (counters[key] ?? -1) + 1;
 	return l[counters[key] % l.length];
@@ -67,11 +68,12 @@ export const mockRgs = {
 	}),
 	play: async ({ amount, mode }: { amount: number; mode: string }) => {
 		const book = pick(mode);
+		((globalThis as any).__VB_PLAYS__ ??= []).push(mode);
 		const costMult = (config.betModes as any)[mode.toLowerCase()]?.cost ?? 1;
 		const debit = amount * costMult;
 		balance -= debit;
 		// book amounts are in units of bet x 100
-		const payoutMultiplier = book.totalWin / 100;
+		const payoutMultiplier = book.payoutMultiplier / 100;
 		const payout = Math.round(amount * payoutMultiplier);
 		pendingPayout = payout;
 		return {
@@ -83,11 +85,12 @@ export const mockRgs = {
 				payoutMultiplier,
 				active: payout > 0,
 				state: book.events,
-				mode: mode.toUpperCase(),
+				mode: mode.toLowerCase(),
 				event: null,
 			},
 		};
 	},
+	endEvent: async ({ eventIndex }: { eventIndex: number }) => ({ event: `${eventIndex}` }),
 	endRound: async () => {
 		balance += pendingPayout;
 		pendingPayout = 0;
@@ -95,7 +98,7 @@ export const mockRgs = {
 	},
 	replay: async ({ mode }: { mode: string }) => {
 		const book = pick(mode);
-		return { payoutMultiplier: book.totalWin / 100, costMultiplier: book.cost / 100, state: book.events };
+		return { payoutMultiplier: book.payoutMultiplier / 100, costMultiplier: book.cost, state: book.events };
 	},
 };
 
