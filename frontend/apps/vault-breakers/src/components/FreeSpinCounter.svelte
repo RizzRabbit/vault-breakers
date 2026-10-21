@@ -12,6 +12,8 @@
 	import { getContext } from '../game/context';
 	import { SYMBOL_SIZE } from '../game/constants';
 	import { CONSOLE_PANEL, consoleSlot } from '../game/consoleLayout';
+	// current free-spin tier shown in the console counter
+	const TIER_FILL = { regular: 0xffffff, super: 0x9ff7ff, epic: 0xff5a4a } as const;
 	import { anchorToPivot, BitmapText, Container, Sprite, type Sizes } from 'pixi-svelte';
 
 	const context = getContext();
@@ -64,9 +66,9 @@
 			})}
 		>
 			<BitmapText
-				text={'FREE SPINS'}
+				text={`${context.stateGame.fsTier.toUpperCase()} SPINS`}
 				style={{
-					fontFamily: 'gold', fill: 0xffffff,
+					fontFamily: 'gold', fill: TIER_FILL[context.stateGame.fsTier],
 					fontSize,
 					wordWrap: false,
 				}}

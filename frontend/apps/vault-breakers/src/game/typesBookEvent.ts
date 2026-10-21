@@ -1,3 +1,4 @@
+export type FsTier = 'regular' | 'super' | 'epic';
 import type { BetType } from 'rgs-requests';
 
 import type { SymbolName, RawSymbol, GameType, Position } from './types';
@@ -45,6 +46,12 @@ type BookEventFreeSpinTrigger = {
 	type: 'freeSpinTrigger';
 	totalFs: number;
 	positions: Position[];
+	// scatter tier (base/ante triggers): 3 = regular, 4 = super, 5+ = epic. Missing = 'regular'.
+	fsType?: FsTier;
+	// optional starting spot multipliers on the event itself
+	gridMultipliers?: number[][];
+	// filled by playBet from the book: the first updateGrid after this trigger (start spots)
+	startGrid?: number[][];
 };
 
 type BookEventUpdateFreeSpin = {

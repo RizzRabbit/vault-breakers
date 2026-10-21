@@ -4,7 +4,7 @@
 	export type EmitterEventFreeSpinOutro =
 		| { type: 'freeSpinOutroShow' }
 		| { type: 'freeSpinOutroHide' }
-		| { type: 'freeSpinOutroCountUp'; amount: number; winLevelData: WinLevelData };
+		| { type: 'freeSpinOutroCountUp'; amount: number; winLevelData: WinLevelData; tier?: 'regular' | 'super' | 'epic' };
 </script>
 
 <script lang="ts">
@@ -25,6 +25,9 @@
 	let show = $state(true);
 	let amount = $state(0);
 	let winLevelData = $state<WinLevelData>();
+	let tier = $state<'regular' | 'super' | 'epic'>('regular');
+	const DONE = { regular: 'FREE SPINS COMPLETE', super: 'SUPER FREE SPINS COMPLETE', epic: 'EPIC FREE SPINS COMPLETE' } as const;
+	const COLOR = { regular: 0xffffff, super: 0x9ff7ff, epic: 0xff5a4a } as const;
 	let oncomplete = $state(() => {});
 	let onCountUpComplete = $state(() => {});
 
@@ -34,6 +37,7 @@
 		freeSpinOutroCountUp: async (emitterEvent) => {
 			amount = emitterEvent.amount;
 			winLevelData = emitterEvent.winLevelData;
+			tier = emitterEvent.tier ?? 'regular';
 			await waitForResolve((resolve) => (oncomplete = resolve));
 		},
 	});
@@ -49,13 +53,13 @@
 
 				<CanvasSizeRectangle backgroundColor={0x000000} backgroundAlpha={0.5} />
 
-				<FreeSpinAnimation>
+				<FreeSpinAnimation {tier}>
 					{#snippet children({ sizes })}
 						<BitmapText
 							anchor={0.5}
 							y={-sizes.height * 0.24}
-							text={isBigWin ? 'VAULT CRACKED' : 'HEIST TOTAL'}
-							style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.17 }}
+							text={tier === 'epic' ? 'EPIC HEIST TOTAL' : tier === 'super' ? 'SUPER HEIST TOTAL' : isBigWin ? 'VAULT CRACKED' : 'HEIST TOTAL'}
+							style={{ fontFamily: 'gold', fill: COLOR[tier], fontSize: sizes.height * (tier === 'regular' ? 0.17 : 0.13) }}
 						/>
 						<ResponsiveBitmapText
 							anchor={0.5}
@@ -67,7 +71,7 @@
 						<BitmapText
 							anchor={0.5}
 							y={sizes.height * 0.29}
-							text="FREE SPINS COMPLETE"
+							text={DONE[tier]}
 							style={{ fontFamily: 'gold', fill: 0xffffff, fontSize: sizes.height * 0.09 }}
 						/>
 					{/snippet}

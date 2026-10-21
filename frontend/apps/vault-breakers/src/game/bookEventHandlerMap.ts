@@ -142,6 +142,13 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 	},
 	freeSpinTrigger: async (bookEvent: BookEventOfType<'freeSpinTrigger'>) => {
 		eventEmitter.broadcast({ type: 'vaultMeterReset' });
+		// tier: read from the event in every mode; missing = 'regular'
+		const tier = bookEvent.fsType ?? 'regular';
+		const startValues = (bookEvent.startGrid ?? []).flat().filter((m) => m > 1);
+		stateGame.fsTier = tier;
+		stateGame.fsStartMult = startValues.length ? Math.min(...startValues) : 0;
+		// original tier stingers (code-synthesised, see static/assets/audio)
+		if (tier !== 'regular') eventEmitter.broadcast({ type: 'soundOnce', name: tier === 'epic' ? 'sfx_tier_epic' : 'sfx_tier_super' });
 		// animate scatters
 		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_scatter_win_v2' });
 		await animateSymbols({ positions: bookEvent.positions });
@@ -155,6 +162,8 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinIntroUpdate',
 			totalFreeSpins: bookEvent.totalFs,
+			tier: stateGame.fsTier,
+			startMultiplier: stateGame.fsStartMult,
 		});
 		previousTotalFs = bookEvent.totalFs;
 		stateGame.gameType = 'freegame';
@@ -190,6 +199,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		await eventEmitter.broadcastAsync({
 			type: 'freeSpinIntroUpdate',
 			totalFreeSpins: bookEvent.totalFs,
+			tier: stateGame.fsTier, // a retrigger keeps the tier
 			// spins added = new total minus previous total (from the event, not hardcoded)
 			extraSpins:
 				previousTotalFs > 0 && bookEvent.totalFs > previousTotalFs ? bookEvent.totalFs - previousTotalFs : undefined,
@@ -248,6 +258,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			type: 'freeSpinOutroCountUp',
 			amount: capWin(bookEvent.amount),
 			winLevelData,
+			tier: stateGame.fsTier,
 		});
 		winLevelSoundsStop();
 		eventEmitter.broadcast({ type: 'freeSpinOutroHide' });

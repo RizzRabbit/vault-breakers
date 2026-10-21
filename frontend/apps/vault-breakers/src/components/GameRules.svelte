@@ -8,6 +8,7 @@
 		PAYTABLE,
 		PAYTABLE_SIZES,
 		FS_PAY_NOTE,
+		SCATTER_TABLE,
 		fillPlaceholders,
 	} from '../game/rulesStrings';
 
@@ -45,6 +46,12 @@
 			</table>
 		</div>
 		<p class="note">One paytable for all modes.</p>
+		<table class="scatter">
+			<thead><tr><th>VAULTs</th><th>Award (base game and Ante)</th></tr></thead>
+			<tbody>
+				{#each SCATTER_TABLE as row (row.count)}<tr><td>{row.count}</td><td>{fillPlaceholders(row.award)}</td></tr>{/each}
+			</tbody>
+		</table>
 		{#if FS_PAY_NOTE}<p class="note">{fillPlaceholders(FS_PAY_NOTE)}</p>{/if}
 	{:else}
 		{#each blocks as block}

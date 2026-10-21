@@ -86,6 +86,9 @@ export const stateGame = $state({
 	tumbleBoardBase: [] as TumbleSymbol[][],
 	multiplierBoard: [] as (MultiplierSymbol | undefined)[][],
 	scatterCounter: 0,
+	// free-spin tier of the current feature + its starting spot multiplier (from the book)
+	fsTier: 'regular' as 'regular' | 'super' | 'epic',
+	fsStartMult: 0,
 	// set by the wincap book event; consumed by the MAX WIN REACHED screen at round end
 	wincapAmount: null as number | null,
 });

@@ -42,6 +42,8 @@ export type SoundEffectName =
 	| 'sfx_scatter_win'
 	| 'sfx_scatter_win_v2'
 	| 'sfx_superfreespin'
+	| 'sfx_tier_super'
+	| 'sfx_tier_epic'
 	| 'sfx_symbols_landing'
 	| 'sfx_wild_explode'
 	| 'sfx_winlevel_end'

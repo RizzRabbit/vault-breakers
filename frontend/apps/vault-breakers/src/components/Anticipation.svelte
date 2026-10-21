@@ -31,7 +31,9 @@
 			alpha = Math.max(0, alpha - 0.06);
 			if (alpha <= 0) return finish();
 		} else {
-			alpha = Math.min(1, alpha + 0.08) * (0.65 + 0.35 * Math.sin(now / 120));
+			// builds up with the scatters already landed: chasing 3 (teal), 4 = SUPER (gold), 5+ = EPIC (red, faster)
+			const speed = level === 'epic' ? 60 : level === 'super' ? 90 : 120;
+			alpha = Math.min(1, alpha + 0.08) * (0.65 + 0.35 * Math.sin(now / speed));
 		}
 		raf = requestAnimationFrame(tick);
 	};
@@ -46,6 +48,15 @@
 		if (props.reel.reelState.motion === 'stopped') stopping = true;
 	});
 
+	const level = $derived(
+		context.stateGame.scatterCounter >= 4 ? 'epic' : context.stateGame.scatterCounter >= 3 ? 'super' : 'regular',
+	);
+	const LOOK = {
+		regular: { fill: 0x00e5d4, border: 0x7ff7ec, width: 4 },
+		super: { fill: 0xffc832, border: 0xffe9a0, width: 6 },
+		epic: { fill: 0xf02828, border: 0xff8a7a, width: 8 },
+	} as const;
+	const look = $derived(LOOK[level]);
 	const x = $derived(
 		context.stateGameDerived.boardLayout().x -
 			context.stateGameDerived.boardLayout().width * 0.5 +
@@ -61,10 +72,10 @@
 	{y}
 	width={SYMBOL_SIZE}
 	height={SYMBOL_SIZE * BOARD_DIMENSIONS.y}
-	backgroundColor={0x00e5d4}
-	backgroundAlpha={0.22 * alpha}
-	borderColor={0x7ff7ec}
-	borderWidth={4}
+	backgroundColor={look.fill}
+	backgroundAlpha={(level === 'regular' ? 0.22 : 0.32) * alpha}
+	borderColor={look.border}
+	borderWidth={look.width}
 	borderAlpha={alpha}
 	borderRadius={10}
 />

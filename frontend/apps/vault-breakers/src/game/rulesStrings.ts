@@ -1,5 +1,5 @@
 // Vault Breakers rules + paytable strings. Single source for the info screen.
-// RULES_MD is copied verbatim from docs/RULES.md (commit 621ff4f, branch math-fix-unique-upgrade);
+// RULES_MD follows docs/RULES.md (ac60a6d) plus the locked free-spin tier spec (regular/super/epic, 10 spins each);
 // replace it when docs/RULES.md changes. Figures stay as {{NAMED}} placeholders; fill them in
 // RULES_VALUES (one edit). Unfilled values render as [PLACEHOLDER NAME].
 import { GAME_NUMBERS } from './gameNumbers';
@@ -9,7 +9,13 @@ export const RULES_VALUES = GAME_NUMBERS;
 
 // One paytable for every mode. Optional free-spin pay line: empty = hidden. Set e.g.
 // 'Free Spins pay 2x these values.' to switch it on (shown under the paytable and in the rules).
-export const FS_PAY_NOTE = 'Free spins pay the same paytable as the base game.';
+export const FS_PAY_NOTE = 'Free Spins pay from the same paytable as the base game, in every bet mode. Spot multipliers apply on top.';
+// VAULT scatter table (base and ante spins only). Every tier awards 10 spins; start spots are read from the book.
+export const SCATTER_TABLE: { count: string; award: string }[] = [
+	{ count: '3', award: '{{FS_SPINS}} Free Spins (REGULAR)' },
+	{ count: '4', award: '{{FS_SPINS}} Super Free Spins (x{{SUPER_START}} spots)' },
+	{ count: '5+', award: '{{FS_SPINS}} Epic Free Spins (x{{EPIC_START}} spots, minimum {{EPIC_MIN_WIN}}x)' },
+];
 export const PAYTABLE_SIZES = ['5', '6', '7', '8', '9-10', '11-12', '13-15', '16+'] as const;
 // payouts in x bet, by cluster size (keys = math symbol IDs)
 export const PAYTABLE: { id: string; name: string; pays: number[] }[] = [
@@ -40,8 +46,11 @@ export const RULES_MD = `
 
 ## Free Spins
 - {{FS_PAY_NOTE}}
-- 3, 4 or 5+ VAULTs award 10, 12 or 15 Free Spins.
-- 3+ VAULTs during Free Spins add 5 more spins. There's no limit on retriggers.
+- In the base game and Ante, VAULTs trigger one of three Free Spins tiers. Every tier awards {{FS_SPINS}} Free Spins:
+- 3 VAULTs: {{FS_SPINS}} Free Spins (REGULAR).
+- 4 VAULTs: {{FS_SPINS}} Super Free Spins (SUPER). Every spot starts at x{{SUPER_START}}.
+- 5+ VAULTs: {{FS_SPINS}} Epic Free Spins (EPIC). Every spot starts at x{{EPIC_START}}, and the round always pays at least {{EPIC_MIN_WIN}}x the bet.
+- 3+ VAULTs during Free Spins add {{RETRIGGER_SPINS}} more spins and keep the same tier. There's no limit on retriggers.
 
 ## Vault Meter (Free Spins only)
 - Each tumble after a win adds 1 to the meter. The first drop of each spin doesn't count.
@@ -51,8 +60,9 @@ export const RULES_MD = `
 ## Bet options
 - Base: 1x bet.
 - Ante: {{ANTE_COST}}x bet. VAULTs land more often, so Free Spins trigger about 1 in 140 spins instead of about 1 in 200.
-- Bonus Buy: {{BONUS_COST}}x bet. Starts Free Spins right away.
-- Super Buy: {{SUPER_COST}}x bet. Starts Free Spins with every spot already at x2.
+- Bonus Buy: {{BONUS_COST}}x bet. Starts REGULAR Free Spins right away.
+- Super Buy: {{SUPER_COST}}x bet. Starts SUPER Free Spins (every spot at x{{SUPER_START}}), the same round as a 4-VAULT trigger.
+- EPIC Free Spins can't be bought; they only come from 5+ VAULTs in the base game or Ante.
 
 ## Max win and RTP
 - Max win is {{MAX_WIN}}x the bet. When it's reached, the round ends right away and pays the max win.
