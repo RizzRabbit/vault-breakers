@@ -1,6 +1,6 @@
 // Offline mock RGS. Active when the URL has ?mock=true or no rgs_url is given.
 // Serves REAL books sampled from the published math library
-// (math/games/vault_breakers/library/publish_files/books_<mode>.jsonl.zst, math commit 6ec4aaf).
+// (math/games/vault_breakers/library/publish_files/books_<mode>.jsonl.zst, math commit 0032f25).
 // Extracted unmodified; payoutMultiplier is in bet x 100 units.
 import config from '../game/config';
 import { stateBet, stateModal } from 'state-shared';
@@ -9,10 +9,10 @@ type Book = { betMode: string; cost: number; id: number; payoutMultiplier: numbe
 const files = import.meta.glob('./books/*.json', { eager: true, import: 'default' }) as Record<string, Book>;
 const byName = (n: string) => files[`./books/${n}.json`];
 const ORDER: Record<string, string[]> = {
-	base: ['base_win', 'base_zero', 'base_fs'],
-	ante: ['ante_win', 'ante_zero', 'ante_fs'],
-	bonus: ['bonus_fs', 'bonus_fs2'],
-	super: ['super_fs', 'super_fs2'],
+	base: ['base_win', 'base_zero', 'base_shared', 'base_fs'],
+	ante: ['ante_win', 'ante_zero', 'ante_shared', 'ante_fs'],
+	bonus: ['bonus_fs'],
+	super: ['super_fs'],
 };
 const books: Record<string, Book[]> = Object.fromEntries(
 	Object.entries(ORDER).map(([m, names]) => [m, names.map(byName).filter(Boolean)]),
@@ -23,7 +23,7 @@ let balance = 1000 * M;
 let betID = 1;
 let pendingPayout = 0;
 
-// ?book=wincap forces the real 10,000x book for the current mode; otherwise books are
+// ?book=wincap forces the real 10,000x book for the current mode.
 // ?book=unmarked forces the SYNTHETIC unmarked-spot upgrade fixture (any mode). Otherwise books are
 // served round-robin so a test run deterministically walks every sample.
 const forced = () =>
@@ -31,8 +31,8 @@ const forced = () =>
 const counters: Record<string, number> = {};
 const pick = (mode: string) => {
 	const key = mode.toLowerCase();
-	// ?book=dup_<mode>_<id>: real books where a shared wild appears twice in winInfo/explodingSymbols
-	if (forced()?.startsWith('dup_') && byName(forced()!)) return byName(forced()!);
+	// ?book=<file> (e.g. base_shared, ante_fs, super_wincap) forces any fixture by name
+	if (forced() && forced() !== 'wincap' && forced() !== 'unmarked' && byName(forced()!)) return byName(forced()!);
 	if (forced() === 'unmarked') return byName('synthetic_unmarked_upgrade');
 	if (forced() === 'wincap') return byName(`${books[key] ? key : 'base'}_wincap`);
 	const l = books[key] ?? books.base;
