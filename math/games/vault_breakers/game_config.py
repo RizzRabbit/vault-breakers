@@ -291,6 +291,8 @@ class GameConfig(Config):
                 rw[gt] = {reel_swap.get(k, k): v for k, v in w.items()}
             if nd._win_criteria is not None and nd._criteria == "wincap":
                 nd._win_criteria = maxwin
+            if name == "super" and "scatter_triggers" in nd._conditions:
+                nd._conditions["scatter_triggers"] = {4: 1}  # Super Buy reveal always lands exactly 4 scatters
             dists.append(nd)
         return BetMode(
             name=name,
