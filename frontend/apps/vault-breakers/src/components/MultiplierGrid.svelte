@@ -45,7 +45,8 @@
 		const start = performance.now();
 		const tick = (now: number) => {
 			const t = Math.min(1, (now - start) / 420);
-			popScale = 1 + 0.6 * Math.sin(Math.PI * t);
+			const u = t < 0.35 ? t / 0.35 : (t - 0.35) / 0.65;
+			popScale = 1 + 0.6 * (t < 0.35 ? 1 - Math.pow(1 - u, 3) * (1 - 1.7 * u) : 1 - (1 - Math.pow(1 - u, 3))); // backOut rise, cubicOut fall
 			if (t < 1) popRaf = requestAnimationFrame(tick);
 			else popping = new Set();
 		};

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { type Snippet } from 'svelte';
 	import { GlobalStyle } from 'components-ui-html';
-	import { Authenticate, LoaderStakeEngine, LoaderExample, LoadI18n } from 'components-shared';
+	import { Authenticate, LoaderStakeEngine, LoadI18n } from 'components-shared';
 	import Game from '../components/Game.svelte';
 	import { setUiSkin } from 'components-ui-pixi';
 	import VbUiPlate from '../components/VbUiPlate.svelte';
@@ -20,10 +20,7 @@
 
 	const props: Props = $props();
 
-	let showYourLoader = $state(false);
-
 	const loaderUrlStakeEngine = new URL('../../stake-engine-loader.gif', import.meta.url).href;
-	const loaderUrl = new URL('../../loader.gif', import.meta.url).href;
 
 	setContext();
 	// Vault Breakers skin for the shared SDK UI (bet bar, buttons, buy menu)
@@ -38,12 +35,7 @@
 	</Authenticate>
 </GlobalStyle>
 
-<LoaderStakeEngine src={loaderUrlStakeEngine} oncomplete={() => (showYourLoader = true)} />
+<LoaderStakeEngine src={loaderUrlStakeEngine} />
 
-{#if showYourLoader}
-	<LoaderExample src={loaderUrl} />
-	<!-- '/loader.gif' is served from static folder of sveltekit -->
-	<!-- File location: apps/scatter/static/loader.gif -->
-{/if}
 
 {@render props.children()}

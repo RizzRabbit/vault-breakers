@@ -16,6 +16,11 @@
 		{ min: 3, text: 'FREE SPINS', color: 0x00e5d4, fill: 0xffffff },
 	];
 	const look = $derived(LOOK.find((l) => count >= l.min));
+	// mock/e2e only: record the banner text shown each time the count changes
+	$effect(() => {
+		const g = globalThis as any;
+		if (g.__VB_MOCK_RGS__) (g.__VB_BANNER__ ??= []).push(`${count} ${look?.text ?? '-'}`);
+	});
 	const pop = new Tween(1, { duration: 260, easing: cubicOut });
 	$effect(() => {
 		if (count >= 3) {

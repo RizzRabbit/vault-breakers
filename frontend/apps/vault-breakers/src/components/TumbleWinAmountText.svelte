@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Tween } from 'svelte/motion';
+	import { backOut, cubicOut } from 'svelte/easing';
 	import { untrack } from 'svelte';
 
 	import { Container } from 'pixi-svelte';
@@ -18,7 +19,7 @@
 
 	// Code-drawn tumble-win counter: count up; when animate is set, pop the value as well.
 	const props: Props = $props();
-	const amount = new Tween(0, { duration: 300 });
+	const amount = new Tween(0, { duration: 300, easing: cubicOut });
 	const scale = new Tween(1, { duration: 140 });
 
 	$effect(() => {
@@ -27,9 +28,9 @@
 		const done = props.oncomplete;
 		untrack(async () => {
 			if (animate) {
-				await scale.set(1.3);
+				await scale.set(1.3, { easing: backOut });
 				await amount.set(target);
-				await scale.set(1);
+				await scale.set(1, { easing: cubicOut });
 			} else {
 				await amount.set(target);
 			}

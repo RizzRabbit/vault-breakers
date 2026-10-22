@@ -50,7 +50,7 @@ export const BET_MODE_META: BetModeMeta = {
 		text: {
 			title: 'VAULT BONUS',
 			dialog: `Triggers FREE SPINS for ${config.betModes.bonus.cost}x the bet. Spot multipliers persist for the whole feature, up to x${config.maxSpotMultiplier}.`,
-			description: 'Buy straight into the Vault free spins.',
+			description: 'Regular Free Spins',
 			button: 'BUY',
 			tickerIdle: 'PLACE YOUR BET',
 			tickerSpin: 'VAULT BONUS ACTIVATED',
@@ -63,7 +63,7 @@ export const BET_MODE_META: BetModeMeta = {
 		text: {
 			title: 'SUPER VAULT',
 			dialog: `Triggers FREE SPINS for ${config.betModes.super.cost}x the bet with every spot starting at x${config.betModes.super.startingSpotMultiplier}.`,
-			description: 'Every spot starts at x2.',
+			description: 'Super Free Spins, x2 spots',
 			button: 'BUY',
 			tickerIdle: 'PLACE YOUR BET',
 			tickerSpin: 'SUPER VAULT ACTIVATED',

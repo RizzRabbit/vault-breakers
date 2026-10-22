@@ -55,7 +55,7 @@
 		const step = (now: number) => {
 			const t = Math.min(1, (now - start) / duration);
 			if (state === 'win') {
-				const p = Math.sin(t * Math.PI);
+				const p = Math.sin(Math.PI * (1 - Math.pow(1 - t, 2))); // quick pop, eased release
 				scale = 1 + 0.16 * p;
 				glow = 0.75 * p;
 			} else if (state === 'explosion') {
@@ -63,7 +63,7 @@
 				alpha = 1 - t;
 				glow = 0.8 * (1 - t);
 			} else {
-				scale = 1 - 0.08 * Math.sin(t * Math.PI);
+				scale = 1 - 0.09 * Math.sin(t * 2 * Math.PI) * (1 - t); // squash, then small overshoot, settle
 			}
 			if (t < 1) raf = requestAnimationFrame(step);
 			else {
