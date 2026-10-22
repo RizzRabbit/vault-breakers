@@ -10,6 +10,7 @@ class GameStateOverride(GameExecutables):
     def reset_book(self):
         """Override to reset spot multipliers for base game spins."""
         super().reset_book()
+        self.buy_trigger_bad = False
         # Reset multipliers at start of each base spin
         self.reset_grid_mults()
 
@@ -54,6 +55,11 @@ class GameStateOverride(GameExecutables):
         from copy import deepcopy
 
         self.fs_tier = self.get_fs_tier(scatter_key)
+        # Buys: the trigger must land exactly the forced count (bonus 3, super 4); tumbles can add
+        # extra scatters, so such outcomes are rejected and redrawn (see check_repeat).
+        need = {"bonus": 3, "super": 4}.get(self.betmode)
+        if need is not None and self.gametype == self.config.basegame_type and self.count_special_symbols(scatter_key) != need:
+            self.buy_trigger_bad = True
         self.record(
             {
                 "kind": self.count_special_symbols(scatter_key),
@@ -118,6 +124,9 @@ class GameStateOverride(GameExecutables):
                 self.repeat = True
 
             if self.get_current_distribution_conditions()["force_freegame"] and not (self.triggered_freegame):
+                self.repeat = True
+
+            if getattr(self, "buy_trigger_bad", False):
                 self.repeat = True
 
             if self.win_manager.running_bet_win == 0 and self.criteria != "0":
