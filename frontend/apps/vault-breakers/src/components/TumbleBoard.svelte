@@ -114,7 +114,8 @@
 
 								if (symbolIndex > 0 && symbolIndex < tumbleReel.length - 1) {
 									tumbleSymbol.symbolState = 'land';
-									context.stateGameDerived.onSymbolLand({ rawSymbol: tumbleSymbol.rawSymbol });
+									// a VAULT sliding down in a tumble is not a new land: don't count it again
+									if (tumbleSymbol.rawSymbol.name !== 'S') context.stateGameDerived.onSymbolLand({ rawSymbol: tumbleSymbol.rawSymbol });
 									await waitForResolve((resolve) => {
 										tumbleSymbol.oncomplete = () => {
 											tumbleSymbol.symbolState = 'static';

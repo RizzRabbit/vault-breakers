@@ -66,6 +66,9 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		}
 
 		stateGame.gameType = bookEvent.gameType;
+		// count only the VAULTs that land in this reveal: tumble slide-downs of the previous spin used to
+		// leave the counter above 0 after the post-spin clear, so the next spin started counting at 1+
+		eventEmitter.broadcast({ type: 'soundScatterCounterClear' });
 		await stateGameDerived.enhancedBoard.spin({ revealEvent: bookEvent });
 		eventEmitter.broadcast({ type: 'soundScatterCounterClear' });
 	},
