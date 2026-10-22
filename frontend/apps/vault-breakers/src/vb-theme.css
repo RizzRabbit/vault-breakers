@@ -132,9 +132,11 @@
 .pop-up-wrap .blur-layer {
 	position: fixed !important;
 }
-/* buy cards: description centred on every card */
+/* buy cards: description centred on every card. The SDK makes .description an inline-flex box, so a
+   single line is a shrink-wrapped flex item that text-align alone can't centre; justify-content does. */
 .bonus-card-wrap .description {
 	text-align: center !important;
+	justify-content: center !important;
 	align-self: stretch;
 	width: 100%;
 }
