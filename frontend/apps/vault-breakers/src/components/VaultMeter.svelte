@@ -12,6 +12,8 @@
 	import { MainContainer } from 'components-layout';
 	import { FadeContainer } from 'components-pixi';
 	import { BitmapText, Rectangle, Sprite } from 'pixi-svelte';
+	import { Tween } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
 
 	import { getContext } from '../game/context';
 	import { SYMBOL_SIZE } from '../game/constants';
@@ -38,6 +40,8 @@
 	let meter = $state(0);
 	let next = $state<number | null>(config.vaultMeter.thresholds[0]);
 	let flash = $state('');
+	// eased bar fill (visual only, never awaited, so round length is unchanged)
+	const fill = new Tween(0, { duration: 260, easing: cubicOut });
 	// all 25 spots at the x128 cap -> meter shows MAX
 	let gridMaxed = $state(false);
 
@@ -46,6 +50,7 @@
 		vaultMeterHide: () => (show = false),
 		vaultMeterReset: () => {
 			meter = 0;
+			fill.set(0, { duration: 0 });
 			gridMaxed = false;
 			next = config.vaultMeter.thresholds[0];
 			flash = '';
@@ -53,6 +58,7 @@
 		vaultMeterUpdate: (e) => {
 			show = true;
 			meter = e.meter;
+			fill.set(Math.min(1, e.meter / MAX_METER));
 			next = e.nextThreshold;
 		},
 		multiplierGridUpdate: (e) => {
@@ -95,11 +101,11 @@
 			borderWidth={2}
 			borderRadius={track.height / 2}
 		/>
-		{#if meter > 0}
+		{#if meter > 0 && fill.current > 0}
 			<Rectangle
 				x={track.x + 2}
 				y={track.y + 2}
-				width={Math.max(track.height - 4, (track.width - 4) * Math.min(1, meter / MAX_METER))}
+				width={Math.max(track.height - 4, (track.width - 4) * fill.current)}
 				height={track.height - 4}
 				backgroundColor={0x00e5d4}
 				borderRadius={(track.height - 4) / 2}

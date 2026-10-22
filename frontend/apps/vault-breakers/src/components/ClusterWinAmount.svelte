@@ -12,6 +12,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Tween } from 'svelte/motion';
+	import { backOut, cubicOut } from 'svelte/easing';
 
 	import { BitmapText } from 'pixi-svelte';
 	import { stateBetDerived } from 'state-shared';
@@ -27,7 +28,7 @@
 
 	const props: Props = $props();
 	const context = getContext();
-	const y = new Tween(0);
+	const y = new Tween(0, { easing: cubicOut });
 	const scale = new Tween(1);
 	let show = $state(true);
 
@@ -45,7 +46,7 @@
 			await waitForTimeout(SECOND);
 			context.eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_multiplier_combine_a' });
 			await scale.set(0.1, { duration: 200 / stateBetDerived.timeScale() });
-			await scale.set(1, { duration: 200 / stateBetDerived.timeScale() });
+			await scale.set(1, { duration: 200 / stateBetDerived.timeScale(), easing: backOut });
 		}
 	});
 
