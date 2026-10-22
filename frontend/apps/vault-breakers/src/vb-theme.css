@@ -117,3 +117,24 @@
 	border-color: #55606e !important;
 	background: #1e2633 !important;
 }
+
+/* tall popups (game rules) scroll instead of clipping: the wrap scrolls, the layer grows with its content */
+.pop-up-wrap {
+	overflow-y: auto !important;
+	align-items: flex-start !important;
+	-webkit-overflow-scrolling: touch;
+}
+.pop-up-wrap .top-layer {
+	height: auto !important;
+	min-height: 100%;
+}
+.pop-up-wrap .close-button-wrap,
+.pop-up-wrap .blur-layer {
+	position: fixed !important;
+}
+/* buy cards: description centred on every card */
+.bonus-card-wrap .description {
+	text-align: center !important;
+	align-self: stretch;
+	width: 100%;
+}
